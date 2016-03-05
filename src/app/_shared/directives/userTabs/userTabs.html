@@ -1,0 +1,14 @@
+<div>
+  <db-top-navbar></db-top-navbar>
+
+  <div>
+    <header class="header header--dark header--logged-in header--user scope">
+      <div class="content">
+        <h1 class="headline headline--big headline--bold headline--white">{{title}}</h1>
+        <h4 class="headline headline--sub headline--light-gray">{{description}}</h4>
+      </div>
+    </header>
+
+    <section class="content {{dynamicClassName}}" ui-view=""></section>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<form ng-submit="ctrl.submit()">
+  <input style="width:100%; height: 40px;" type="text" ng-model="ctrl.url">
+</form>
+
+<ul>
+  <li ng-repeat="stream in ctrl.streams">
+    <a target="_blank" ng-href="{{stream}}">{{stream}}</a>
+  </li>
+</ul>
+
+<video width=400 ng-src="{{ctrl.videoSrc}}" controls></video>
+
+<ul>
+  <li ng-repeat="epizode in ctrl.epizodes">
+    <a target="_blank" href="#" ng-click="ctrl.play($event, epizode.url)">{{epizode.url}}</a>
+  </li>
+</ul>

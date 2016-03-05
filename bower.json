@@ -1,0 +1,10 @@
+{
+  "name": "joj",
+  "version": "0.1.0",
+  "dependencies": {
+    "angular": "~1.5.0",
+    "angular-ui-router": "~0.2.18",
+    "restangular": "~1.5.2"
+  },
+  "devDependencies": {}
+}
