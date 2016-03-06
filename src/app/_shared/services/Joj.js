@@ -7,8 +7,9 @@ angular.module('joj.shared')
     service.nodes = ['http://n16.joj.sk/storage'];
 
 
-    service.get = function (url) {
+    service.getEpizodesList = function (url) {
       var defered = $q.defer();
+
       jsonpService.get(url).then(function (r) {
         var epizodes = EpizodesExtractorService.extractEpizodes(r);
         defered.resolve(epizodes);

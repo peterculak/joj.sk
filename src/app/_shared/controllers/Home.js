@@ -5,7 +5,7 @@ angular.module('joj.shared')
 
     var ctrl = this;
 
-    ctrl.url = '';
+    ctrl.url = 'http://varenie.joj.sk/moja-mama-vari-lepsie-ako-tvoja-archiv/2016-03-04-moja-mama-vari-lepsie-ako-tvoja-premiera.html';
 
     ctrl.streams = [];
 
@@ -13,9 +13,9 @@ angular.module('joj.shared')
     ctrl.videoSrc = '';
 
     ctrl.submit = function () {
-      JojService.get(ctrl.url).then(function (r) {
-        for (var i in r) {
-          ctrl.epizodes.push({url: r[i]});
+      JojService.getEpizodesList(ctrl.url).then(function (epizodes) {
+        for (var i in epizodes) {
+          ctrl.epizodes.push({url: epizodes[i]});
         }
       });
     };
@@ -27,5 +27,7 @@ angular.module('joj.shared')
         ctrl.videoSrc = $sce.trustAsResourceUrl(streams[streams.length - 1]);
       });
       return false;
-    }
+    };
+
+    ctrl.submit();
   });
