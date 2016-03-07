@@ -5,7 +5,7 @@ angular.module('joj.shared')
     var service = {};
 
     service.extractEpizodes = function (data) {
-      var re = /href="(http:\/\/varenie.joj.sk.*html)"/gmi
+      var re = /href="(http:\/\/varenie.joj.sk.*-archiv.*html)"/gmi;
       var matches = [];
       while ((match = re.exec(data.contents)) != null) {
         matches.push(match[1]);

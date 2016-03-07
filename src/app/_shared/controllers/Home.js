@@ -8,20 +8,58 @@ angular.module('joj.shared')
     ctrl.url = 'http://varenie.joj.sk/moja-mama-vari-lepsie-ako-tvoja-archiv/2016-03-04-moja-mama-vari-lepsie-ako-tvoja-premiera.html';
 
     ctrl.streams = [];
-
     ctrl.epizodes = [];
     ctrl.videoSrc = '';
 
+    ctrl.playing = null;
+
     ctrl.submit = function () {
+      ctrl.reset();
       JojService.getEpizodesList(ctrl.url).then(function (epizodes) {
+        ctrl.play(epizodes[0]);
         for (var i in epizodes) {
           ctrl.epizodes.push({url: epizodes[i]});
         }
       });
     };
 
-    ctrl.play = function (event, url) {
-      event.preventDefault();
+    ctrl.reset = function () {
+      ctrl.epizodes = [];
+      ctrl.ta3LiveStreamUrl = '';
+      ctrl.videoSrc = '';
+      ctrl.playing = '';
+      $('#jojLiveStream').hide();
+    };
+
+    ctrl.ta3Live = function () {
+      ctrl.reset();
+      ctrl.playing = 'ta3';
+      ctrl.ta3LiveStreamUrl = $sce.trustAsResourceUrl('http://www.ta3.com/live.html?embed=1');
+      return false;
+    };
+
+    ctrl.jojLive = function () {
+      ctrl.reset();
+      ctrl.playing = 'jojLive';
+      JojService.playLiveStream('jojLiveStream');
+      return false;
+    };
+
+    ctrl.playJojPlusLive = function () {
+      ctrl.reset();
+      ctrl.playing = 'jojPlus';
+      JojService.playJojPlusLiveStream('jojLiveStream');
+      return false;
+    };
+
+    ctrl.playWauLive = function () {
+      ctrl.reset();
+      ctrl.playing = 'jojPlus';
+      JojService.playWauLiveStream('jojLiveStream');
+    };
+
+    ctrl.play = function (url) {
+      ctrl.playing = 'jojArchive';
       JojService.getStreamUrls(url).then(function (streams) {
         ctrl.streams = streams;
         ctrl.videoSrc = $sce.trustAsResourceUrl(streams[streams.length - 1]);

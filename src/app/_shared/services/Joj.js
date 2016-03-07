@@ -42,6 +42,53 @@ angular.module('joj.shared')
       });
       return defered.promise;
     };
+
+    var params = {
+      wmode: "opaque",
+      allowFullScreen: "true",
+      allowScriptAccess: "always"
+    };
+    var attributes = {};
+
+    service.playLiveStream = function (divId) {
+      var flashvars = {
+        basePath: "http:\/\/live.joj.sk\/",
+        pageId: 4,
+        channel: 1,
+        playerURL: "http:\/\/player.joj.sk\/JojPlayer.5.7.swf",
+        ui: "uiPlay|uiFullScreen|uiLargePlay|uiVolume|uiQuality"
+      };
+      var params = {
+        wmode: "opaque",
+        allowFullScreen: "true",
+        allowScriptAccess: "always"
+      };
+      var attributes = {};
+      swfobject.embedSWF("http:\/\/player.joj.sk\/JojLivePanel.5.4.swf", divId, "640", "360", "10", "", flashvars, params, attributes);
+    };
+
+    service.playJojPlusLiveStream = function (divId) {
+      var flashvars = {
+        basePath: "http:\/\/plus.joj.sk\/",
+        pageId: 54,
+        channel: 26,
+        playerURL: "http:\/\/player.joj.sk\/JojPlayer.5.7.swf",
+        ui: "uiPlay|uiFullScreen|uiLargePlay|uiVolume|uiQuality"
+      };
+      swfobject.embedSWF("http:\/\/player.joj.sk\/JojLivePanel.5.4.swf", divId, "640", "360", "10", "", flashvars, params, attributes);
+    };
+
+    service.playWauLiveStream = function (divId) {
+      var flashvars = {
+        basePath: "http:\/\/wau.joj.sk\/",
+        pageId: 36655,
+        channel: 40,
+        playerURL: "http:\/\/player.joj.sk\/JojPlayer.5.7.swf",
+        ui: "uiPlay|uiFullScreen|uiLargePlay|uiVolume|uiQuality"
+      };
+      var attributes = {};
+      swfobject.embedSWF("http:\/\/player.joj.sk\/JojLivePanel.5.4.swf", divId, "640", "360", "10", "", flashvars, params, attributes);
+    };
     
     return service;
   });

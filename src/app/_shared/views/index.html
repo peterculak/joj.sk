@@ -1,17 +1,24 @@
+<a href="" ng-click="ctrl.ta3Live()">TA3</a>
+<a href="" ng-click="ctrl.jojLive()">JOJ</a>
+<a href="" ng-click="ctrl.playJojPlusLive()">JOJ+</a>
+<a href="" ng-click="ctrl.playWauLive()">WAU</a>
+
 <form ng-submit="ctrl.submit()">
   <input style="width:100%; height: 40px;" type="text" ng-model="ctrl.url">
 </form>
 
-<ul>
+<iframe ng-show="ctrl.playing === 'ta3'" ng-src="{{ctrl.ta3LiveStreamUrl}}" width="500" height="320" frameborder="0" scrolling="no"></iframe>
+
+<div ng-show="ctrl.playing === 'jojLive'" id="jojLiveStream"></div>
+
+<ul ng-show="ctrl.playing === 'jojArchive'">
   <li ng-repeat="stream in ctrl.streams">
     <a target="_blank" ng-href="{{stream}}">{{stream}}</a>
   </li>
 </ul>
-
-<video width=400 ng-src="{{ctrl.videoSrc}}" controls></video>
-
-<ul>
+<video ng-show="ctrl.playing === 'jojArchive'" width=400 ng-src="{{ctrl.videoSrc}}" controls></video>
+<ul ng-show="ctrl.playing === 'jojArchive'">
   <li ng-repeat="epizode in ctrl.epizodes">
-    <a target="_blank" href="#" ng-click="ctrl.play($event, epizode.url)">{{epizode.url}}</a>
+    <a target="_blank" href="" ng-click="ctrl.play(epizode.url, $event)">{{epizode.url}}</a>
   </li>
 </ul>

@@ -118,8 +118,7 @@ gulp.task('watch', function() {
   gulp.watch([
       src.app.files,
       dist.app.templates,
-      dist.index,
-      dist.styles.files
+      dist.index
     ]).on('change', g.livereload.changed);
 });
 
