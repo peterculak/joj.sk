@@ -66,7 +66,8 @@ gulp.task('index', function() {
       addRootSlash: false,
       ignorePath: '/src'
     }))
-    .pipe(gulpif(branch === 'production', ga(constants.ga)))
+    .pipe(ga(constants.ga))
+    //.pipe(gulpif(branch === 'production', ga(constants.ga)))
     .pipe(gulp.dest(''+dist));
 });
 
@@ -261,20 +262,5 @@ gulp.task('default', function() {
 
 var getConstants = function () {
   var myConfig = require('./config.json');
-
-  var constants = null;
-
-  if (branch !== 'production' && branch !== 'staging' && branch !== 'development') {
-    constants = myConfig['%branch%'];
-    constants.name = constants.name.replace('%branch%', branch);
-    constants.siteUrl = constants.siteUrl.replace('%branch%', branch);
-    constants.pagesUrl = constants.pagesUrl.replace('%branch%', branch);
-    constants.apiEndPoint = constants.apiEndPoint.replace('%branch%', branch);
-    constants.cookieOptions.domain = constants.cookieOptions.domain.replace('%branch%', branch);
-    constants.ga.url = constants.ga.url.replace('%branch%', branch);
-  } else {
-    constants = myConfig[branch];
-  }
-
-  return constants;
+  return myConfig[branch];
 };
