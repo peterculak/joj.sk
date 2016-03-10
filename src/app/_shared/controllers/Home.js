@@ -32,6 +32,11 @@ angular.module('joj.shared')
       if (dajtoVideo) {
         dajtoVideo.off();
       }
+      if (vxgPlayer && vxgPlayer.isPlaying()) {
+        vxgPlayer.stop();
+      }
+      $('#vxgPlayerWrapper').addClass('hidden');
+      $('.vxgplayer-loader').removeClass('hidden');
     };
 
     ctrl.ta3Live = function () {
@@ -101,17 +106,67 @@ angular.module('joj.shared')
       ctrl.reset();
       ctrl.playing = 'dajtoStream';
       $timeout(function () {
-        //ctrl.streamUrl = $sce.trustAsResourceUrl('http://cdn.srv.markiza.sk/plive/dajto.smil/manifest.m3u8');
         loadStream('dajto', 'http://cdn.srv.markiza.sk/plive/dajto.smil/manifest.m3u8');
       });
+    };
 
+    var vxgPlayer;
+    var dajtoVideo;
+
+    ctrl.playNova = function () {
+      ctrl.reset();
+      ctrl.playing = 'vgx';
+      playVxg('http://212.79.96.134:8003/');
+    };
+
+    ctrl.playNovaCinema = function () {
+      ctrl.reset();
+      ctrl.playing = 'vgx';
+      playVxg('http://212.79.96.134:8020/');
+    };
+
+    ctrl.playPrima = function () {
+      ctrl.reset();
+      ctrl.playing = 'vgx';
+      playVxg('http://212.79.96.134:8004/');
+    };
+
+    ctrl.playPrimaLove = function () {
+      ctrl.reset();
+      ctrl.playing = 'vgx';
+      playVxg('http://212.79.96.134:8019/');
+    };
+
+    ctrl.playPrimaZoom = function () {
+      ctrl.reset();
+      ctrl.playing = 'vgx';
+      playVxg('http://iptv.klfree.cz:8011');
+    };
+
+    ctrl.playOcko = function () {
+      ctrl.reset();
+      ctrl.playing = 'vgx';
+      playVxg('http://81.201.52.159:8016');
+    };
+
+    var playVxg = function (url) {
+      $('#vxgPlayerWrapper').removeClass('hidden');
+      if (!vxgPlayer) {
+        vxgPlayer = vxgplayer('vxg_media_player');
+      }
+      $timeout(function(){
+        vxgPlayer.src(url);
+        vxgPlayer.play();
+      }, 500);
+      $timeout(function () {
+        $('.vxgplayer-loader').addClass('hidden');
+      }, 2000);
     };
 
     $timeout(function(){
+      $('#vxgPlayerWrapper').addClass('hidden');
       ctrl.jojLive();
     }, 2000);
-
-    var dajtoVideo;
 
     var loadStream = function (videoId, url) {
       dajtoVideo = _V_(videoId);

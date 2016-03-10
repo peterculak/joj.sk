@@ -3,6 +3,12 @@
 <a href="" ng-click="ctrl.playJojPlusLive()">JOJ+</a>
 <a href="" ng-click="ctrl.playWauLive()">WAU</a>
 <a href="" ng-click="ctrl.playDajto()">DAJTO</a>
+<a href="" ng-click="ctrl.playNova()">NOVA</a>
+<a href="" ng-click="ctrl.playNovaCinema()">NOVA CINEMA</a>
+<a href="" ng-click="ctrl.playPrima()">PRIMA</a>
+<a href="" ng-click="ctrl.playPrimaLove()">PRIMA LOVE</a>
+<a href="" ng-click="ctrl.playPrimaZoom()">PRIMA ZOOM</a>
+<a href="" ng-click="ctrl.playPrimaZoom()">OCKO</a>
 <!--<a href="" ng-click="ctrl.playCT1()">CT1</a>-->
 <!--<a href="" ng-click="ctrl.playCT2()">CT2</a>-->
 <!--<a href="" ng-click="ctrl.playCT24()">CT24</a>-->
@@ -12,6 +18,27 @@
 <!--</form>-->
 
 <div class="center-vertical">
+  <div id="vxgPlayerWrapper" class="center-vertical vxgPlayerWrapper">
+    <div class="vxgplayer"
+         id="vxg_media_player"
+         width="640"
+         height="360"
+         url=""
+         nmf-src="bower_components/vxgplayer/pnacl/Release/media_player.nmf"
+         nmf-path="media_player.nmf"
+         latency="100000"
+         autohide="2"
+         volume="0.7"
+         avsync
+         controls
+         mute
+         aspect-ratio
+         aspect-ratio-mode="1"
+         auto-reconnect>
+
+    </div>
+  </div>
+
   <iframe ng-show="ctrl.playing === 'ta3'" ng-src="{{ctrl.ta3LiveStreamUrl}}" width="640" height="360" frameborder="0" scrolling="no"></iframe>
   <div ng-show="ctrl.playing === 'jojLive'" id="jojLiveStream"></div>
   <div ng-show="ctrl.playing === 'ctLiveStream'" id="ctLiveStream"></div>
@@ -20,7 +47,7 @@
     <video id="dajto" class="center-vertical video-js vjs-default-skin" controls preload="none" width="640" height="360"
            poster="http://video-js.zencoder.com/oceans-clip.png"
            data-setup='{"techOrder": ["flash"]}'>
-      <source src="http://cdn.srv.markiza.sk/plive/dajto.smil/manifest.m3u8" type='video/mp4' />
+      <source src="http://81.201.52.159:8006" type='video/mp4' />
     </video>
   </div>
 
