@@ -12,7 +12,7 @@ angular.module('joj.vendors', [
   //'ui.select',
   //'ngSanitize',
   //'ngFileUpload',
-  //'angulartics',
-  //'angulartics.google.analytics',
+  'angulartics',
+  'angulartics.google.analytics'
   //'ngAnimate'
 ]);
