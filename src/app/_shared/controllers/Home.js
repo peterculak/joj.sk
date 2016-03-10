@@ -107,6 +107,10 @@ angular.module('joj.shared')
 
     };
 
+    $timeout(function(){
+      ctrl.jojLive();
+    }, 2000);
+
     var dajtoVideo;
 
     var loadStream = function (videoId, url) {

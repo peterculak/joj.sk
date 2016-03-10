@@ -4,7 +4,7 @@ angular.module('joj', [
   'joj.shared'
 ])
 
-  .config(function ($httpProvider, $stateProvider, $urlRouterProvider, RestangularProvider) {
+  .config(function ($httpProvider, $stateProvider, $urlRouterProvider, $locationProvider, RestangularProvider) {
     'use strict';
 
   $stateProvider
@@ -23,6 +23,8 @@ angular.module('joj', [
       state.go('404');
       return $location.path();
     });
+
+    $locationProvider.html5Mode(true);
 
     RestangularProvider.setBaseUrl('http://varenie.joj.sk');
     RestangularProvider.setDefaultHeaders({

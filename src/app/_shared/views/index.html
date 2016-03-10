@@ -7,30 +7,32 @@
 <!--<a href="" ng-click="ctrl.playCT2()">CT2</a>-->
 <!--<a href="" ng-click="ctrl.playCT24()">CT24</a>-->
 
-<form ng-submit="ctrl.submit()">
-  <input style="width:100%; height: 40px;" type="text" ng-model="ctrl.url">
-</form>
+<!--<form ng-submit="ctrl.submit()">-->
+  <!--<input style="width:100%; height: 40px;" type="text" ng-model="ctrl.url">-->
+<!--</form>-->
 
-<iframe ng-show="ctrl.playing === 'ta3'" ng-src="{{ctrl.ta3LiveStreamUrl}}" width="500" height="320" frameborder="0" scrolling="no"></iframe>
-<div ng-show="ctrl.playing === 'jojLive'" id="jojLiveStream"></div>
-<div ng-show="ctrl.playing === 'ctLiveStream'" id="ctLiveStream"></div>
+<div class="center-vertical">
+  <iframe ng-show="ctrl.playing === 'ta3'" ng-src="{{ctrl.ta3LiveStreamUrl}}" width="640" height="360" frameborder="0" scrolling="no"></iframe>
+  <div ng-show="ctrl.playing === 'jojLive'" id="jojLiveStream"></div>
+  <div ng-show="ctrl.playing === 'ctLiveStream'" id="ctLiveStream"></div>
 
-<div ng-show="ctrl.playing === 'dajtoStream'">
-<video id="dajto" class="video-js vjs-default-skin" controls preload="none" width="640" height="264"
-       poster="http://video-js.zencoder.com/oceans-clip.png"
-       data-setup='{"techOrder": ["flash"]}'>
-  <source src="http://cdn.srv.markiza.sk/plive/dajto.smil/manifest.m3u8" type='video/mp4' />
-</video>
+  <div class="center-vertical" ng-show="ctrl.playing === 'dajtoStream'">
+    <video id="dajto" class="center-vertical video-js vjs-default-skin" controls preload="none" width="640" height="360"
+           poster="http://video-js.zencoder.com/oceans-clip.png"
+           data-setup='{"techOrder": ["flash"]}'>
+      <source src="http://cdn.srv.markiza.sk/plive/dajto.smil/manifest.m3u8" type='video/mp4' />
+    </video>
+  </div>
+
+  <ul ng-show="ctrl.playing === 'jojArchive'">
+    <li ng-repeat="stream in ctrl.streams">
+      <a target="_blank" ng-href="{{stream}}">{{stream}}</a>
+    </li>
+  </ul>
+  <video ng-show="ctrl.playing === 'jojArchive'" width="640" height="360" ng-src="{{ctrl.videoSrc}}" controls></video>
+  <ul ng-show="ctrl.playing === 'jojArchive'">
+    <li ng-repeat="epizode in ctrl.epizodes">
+      <a target="_blank" href="" ng-click="ctrl.play(epizode, $event)">{{epizode.date + ', ' + epizode.title}}</a>
+    </li>
+  </ul>
 </div>
-
-<ul ng-show="ctrl.playing === 'jojArchive'">
-  <li ng-repeat="stream in ctrl.streams">
-    <a target="_blank" ng-href="{{stream}}">{{stream}}</a>
-  </li>
-</ul>
-<video ng-show="ctrl.playing === 'jojArchive'" width=400 ng-src="{{ctrl.videoSrc}}" controls></video>
-<ul ng-show="ctrl.playing === 'jojArchive'">
-  <li ng-repeat="epizode in ctrl.epizodes">
-    <a target="_blank" href="" ng-click="ctrl.play(epizode, $event)">{{epizode.date + ', ' + epizode.title}}</a>
-  </li>
-</ul>
