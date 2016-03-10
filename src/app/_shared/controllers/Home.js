@@ -157,10 +157,10 @@ angular.module('joj.shared')
       $timeout(function(){
         vxgPlayer.src(url);
         vxgPlayer.play();
-      }, 500);
+      }, 1000);
       $timeout(function () {
         $('.vxgplayer-loader').addClass('hidden');
-      }, 2000);
+      }, 3000);
     };
 
     $timeout(function(){
