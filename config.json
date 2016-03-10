@@ -2,7 +2,7 @@
   "development": {
     "name": "development",
     "ga": {
-      "url": "stream-tv.sk",
+      "url": "streamtv.sk",
       "uid": "UA-74974547-1",
       "anonymizeIp": false,
       "tag": "body"
