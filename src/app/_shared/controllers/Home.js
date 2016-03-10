@@ -120,6 +120,4 @@ angular.module('joj.shared')
         dajtoVideo.play();
       });
     };
-
-    ctrl.submit();
   });
