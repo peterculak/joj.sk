@@ -1,9 +1,10 @@
 angular.module('joj.shared')
 
-  .controller('HomeCtrl', function (JojService, $sce) {
+  .controller('HomeCtrl', function (JojService, $sce, Player, $timeout) {
     'use strict';
 
     var ctrl = this;
+    var player;
 
     ctrl.url = 'http://varenie.joj.sk/moja-mama-vari-lepsie-ako-tvoja-archiv/2016-03-04-moja-mama-vari-lepsie-ako-tvoja-premiera.html';
 
@@ -14,11 +15,10 @@ angular.module('joj.shared')
     ctrl.playing = null;
 
     ctrl.submit = function () {
-      ctrl.reset();
       JojService.getEpizodesList(ctrl.url).then(function (epizodes) {
         ctrl.play(epizodes[0]);
         for (var i in epizodes) {
-          ctrl.epizodes.push({url: epizodes[i]});
+          ctrl.epizodes.push(epizodes[i]);
         }
       });
     };
@@ -29,6 +29,9 @@ angular.module('joj.shared')
       ctrl.videoSrc = '';
       ctrl.playing = '';
       $('#jojLiveStream').hide();
+      if (dajtoVideo) {
+        dajtoVideo.off();
+      }
     };
 
     ctrl.ta3Live = function () {
@@ -40,31 +43,78 @@ angular.module('joj.shared')
 
     ctrl.jojLive = function () {
       ctrl.reset();
-      ctrl.playing = 'jojLive';
+      ctrl.playing = 'jojLiveStream';
       JojService.playLiveStream('jojLiveStream');
       return false;
     };
 
     ctrl.playJojPlusLive = function () {
       ctrl.reset();
-      ctrl.playing = 'jojPlus';
+      ctrl.playing = 'jojLiveStream';
       JojService.playJojPlusLiveStream('jojLiveStream');
       return false;
     };
 
     ctrl.playWauLive = function () {
       ctrl.reset();
-      ctrl.playing = 'jojPlus';
+      ctrl.playing = 'jojLiveStream';
       JojService.playWauLiveStream('jojLiveStream');
     };
 
-    ctrl.play = function (url) {
-      ctrl.playing = 'jojArchive';
-      JojService.getStreamUrls(url).then(function (streams) {
+    ctrl.play = function (epizode) {
+      ctrl.playing = 'jojLiveStream';
+      ctrl.reset();
+      JojService.getStreamUrls(epizode.url).then(function (streams) {
         ctrl.streams = streams;
         ctrl.videoSrc = $sce.trustAsResourceUrl(streams[streams.length - 1]);
       });
       return false;
+    };
+
+    ctrl.playCT1 = function () {
+      ctrl.reset();
+      Player.play('jojLiveStream', [{
+        title: 'CT1',
+        file: 'http://80.188.78.181/atip/4274100aea8199011d868b4768c56d8e/1457456592116/5115a74bb6df54748296b572ea23baa9/102-tv-pc/1504.m3u8?time=1457456633556'
+      }]);
+    };
+
+    ctrl.playCT2 = function () {
+      ctrl.reset();
+      Player.play('jojLiveStream', [{
+        title: 'CT2',
+        file: 'http://80.188.78.148/atip/8225ff0f13d0e0a92fcde1e5d61f1da1/1457461766384/sess/0b2f74ff8c467b1972e6f4ddeeccbb9b/61924494877123753/1504.k.m3u8'
+      }]);
+    };
+
+    ctrl.playCT24 = function () {
+      ctrl.reset();
+      ctrl.playing = 'ct24';
+      $timeout(function () {
+        ctrl.streamUrl = $sce.trustAsResourceUrl('http://80.188.65.18:80/cdn/uri/get/?token=0aa18f2b7f711c93a7155e6c77801138f2bcf63c&contentType=live&expiry=1457492400&id=2402&playerType=flash&quality=web&region=1&skipIpAddressCheck=false&userId=d93d2980-7d0e-4e30-9877-cda8b6f45d71');
+        player = videojs('streamPlaying');
+        player.play();
+      });
+    };
+
+    ctrl.playDajto = function () {
+      ctrl.reset();
+      ctrl.playing = 'dajtoStream';
+      $timeout(function () {
+        //ctrl.streamUrl = $sce.trustAsResourceUrl('http://cdn.srv.markiza.sk/plive/dajto.smil/manifest.m3u8');
+        loadStream('dajto', 'http://cdn.srv.markiza.sk/plive/dajto.smil/manifest.m3u8');
+      });
+
+    };
+
+    var dajtoVideo;
+
+    var loadStream = function (videoId, url) {
+      dajtoVideo = _V_(videoId);
+      dajtoVideo.src(url);
+      dajtoVideo.on('loadstart',function(){
+        dajtoVideo.play();
+      });
     };
 
     ctrl.submit();
