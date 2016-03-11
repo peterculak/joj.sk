@@ -154,8 +154,8 @@ angular.module('joj.shared')
       if (!vxgPlayer) {
         vxgPlayer = vxgplayer('vxg_media_player');
       }
+      vxgPlayer.src(url);
       $timeout(function(){
-        vxgPlayer.src(url);
         vxgPlayer.play();
       }, 1000);
       $timeout(function () {
