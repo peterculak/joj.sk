@@ -114,46 +114,62 @@ angular.module('joj.shared')
     ctrl.vxgPlayerUrl = '';
     var dajtoVideo;
 
-    ctrl.playNova = function () {
-      ctrl.reset();
-      ctrl.playing = 'vgx';
-      playVxg('http://212.79.96.134:8003/');
-    };
+    ctrl.vgx = [
+      {
+        id: 'nova',
+        url: 'http://212.79.96.134:8003',
+      },
+      {
+        id: 'nova-cinema',
+        url: 'http://212.79.96.134:8020',
+      },
+      {
+        id: 'prima',
+        url: 'http://212.79.96.134:8004',
+      },
+      {
+        id: 'prima-love',
+        url: 'http://212.79.96.134:8019',
+      },
+      {
+        id: 'prima-zoom',
+        url: 'http://iptv.klfree.cz:8011',
+      },
+      {
+        id: 'ocko',
+        url: 'http://81.201.52.159:8016',
+      },
+      {
+        id: 'prima-cool',
+        url: 'http://212.79.96.134:8021',
+      },
+      {
+        id: 'ct1',
+        url: 'http://212.79.96.134:8001',
+      },
+      {
+        id: 'ct2',
+        url: 'http://212.79.96.134:8002',
+      },
+      {
+        id: 'ct4',
+        url: 'http://212.79.96.134:8014',
+      },
+      {
+        id: 'ct24',
+        url: 'http://212.79.96.134:8015',
+      }
+    ];
 
-    ctrl.playNovaCinema = function () {
-      ctrl.reset();
-      ctrl.playing = 'vgx';
-      playVxg('http://212.79.96.134:8020/');
-    };
-
-    ctrl.playPrima = function () {
-      ctrl.reset();
-      ctrl.playing = 'vgx';
-      playVxg('http://212.79.96.134:8004/');
-    };
-
-    ctrl.playPrimaLove = function () {
-      ctrl.reset();
-      ctrl.playing = 'vgx';
-      playVxg('http://212.79.96.134:8019/');
-    };
-
-    ctrl.playPrimaZoom = function () {
-      ctrl.reset();
-      ctrl.playing = 'vgx';
-      playVxg('http://iptv.klfree.cz:8011');
-    };
-
-    ctrl.playOcko = function () {
-      ctrl.reset();
-      ctrl.playing = 'vgx';
-      playVxg('http://81.201.52.159:8016');
-    };
-
-    ctrl.playPrimaCool = function () {
-      ctrl.reset();
-      ctrl.playing = 'vgx';
-      playVxg('http://212.79.96.134:8021/');
+    ctrl.playVgx = function (id) {
+      for (var i in ctrl.vgx) {
+        if (ctrl.vgx[i].id === id) {
+          ctrl.reset();
+          ctrl.playing = 'vgx';
+          playVxg(ctrl.vgx[i].url);
+          break;
+        }
+      }
     };
 
     var playVxg = function (url) {
