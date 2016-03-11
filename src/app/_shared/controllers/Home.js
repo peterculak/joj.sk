@@ -155,12 +155,12 @@ angular.module('joj.shared')
       $timeout(function(){
         $('#vxgPlayerWrapper').removeClass('hidden');
         vxgPlayer = vxgplayer('vxg_media_player');
-      }, 500);
+      }, 100);
 
       $timeout(function(){
         vxgPlayer.src(url);
         vxgPlayer.play();
-      }, 1000);
+      }, 1500);
 
       $timeout(function () {
         $('.vxgplayer-loader').addClass('hidden');
