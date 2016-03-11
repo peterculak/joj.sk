@@ -110,7 +110,7 @@ angular.module('joj.shared')
       });
     };
 
-    var vxgPlayer;
+    var vxgPlayer = vxgplayer('vxg_media_player');
     ctrl.vxgPlayerUrl = '';
     var dajtoVideo;
 
@@ -152,15 +152,12 @@ angular.module('joj.shared')
 
     var playVxg = function (url) {
 
-      $timeout(function(){
-        $('#vxgPlayerWrapper').removeClass('hidden');
-        vxgPlayer = vxgplayer('vxg_media_player');
-      }, 100);
+      $('#vxgPlayerWrapper').removeClass('hidden');
 
       $timeout(function(){
         vxgPlayer.src(url);
         vxgPlayer.play();
-      }, 1500);
+      }, 1000);
 
       $timeout(function () {
         $('.vxgplayer-loader').addClass('hidden');
