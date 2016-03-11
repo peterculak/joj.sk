@@ -111,6 +111,7 @@ angular.module('joj.shared')
     };
 
     var vxgPlayer;
+    ctrl.vxgPlayerUrl = '';
     var dajtoVideo;
 
     ctrl.playNova = function () {
@@ -150,15 +151,17 @@ angular.module('joj.shared')
     };
 
     var playVxg = function (url) {
-      $('#vxgPlayerWrapper').removeClass('hidden');
-      if (!vxgPlayer) {
-        alert('new player');
-        vxgPlayer = vxgplayer('vxg_media_player');
-      }
-      vxgPlayer.src(url);
+
       $timeout(function(){
+        $('#vxgPlayerWrapper').removeClass('hidden');
+        vxgPlayer = vxgplayer('vxg_media_player');
+      }, 500);
+
+      $timeout(function(){
+        vxgPlayer.src(url);
         vxgPlayer.play();
       }, 1000);
+
       $timeout(function () {
         $('.vxgplayer-loader').addClass('hidden');
       }, 3000);
