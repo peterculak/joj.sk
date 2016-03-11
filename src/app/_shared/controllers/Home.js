@@ -152,6 +152,7 @@ angular.module('joj.shared')
     var playVxg = function (url) {
       $('#vxgPlayerWrapper').removeClass('hidden');
       if (!vxgPlayer) {
+        alert('new player');
         vxgPlayer = vxgplayer('vxg_media_player');
       }
       vxgPlayer.src(url);
