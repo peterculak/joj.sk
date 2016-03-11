@@ -150,6 +150,12 @@ angular.module('joj.shared')
       playVxg('http://81.201.52.159:8016');
     };
 
+    ctrl.playPrimaCool = function () {
+      ctrl.reset();
+      ctrl.playing = 'vgx';
+      playVxg('http://212.79.96.134:8021/');
+    };
+
     var playVxg = function (url) {
 
       $('#vxgPlayerWrapper').removeClass('hidden');
