@@ -14,3 +14,24 @@
 .hidden {
   display: none!important;
 }
+
+#tv-channels {
+  position: absolute;
+  z-index: 999;
+  top: 10px;
+  left: 15px;
+
+  height: 100%;
+  overflow: scroll;
+  a {
+    float: left;
+    clear: both;
+  }
+}
+
+.player-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

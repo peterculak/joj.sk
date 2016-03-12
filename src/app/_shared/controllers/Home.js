@@ -1,10 +1,12 @@
 angular.module('joj.shared')
 
-  .controller('HomeCtrl', function (JojService, $sce, Player, $timeout) {
+  .controller('HomeCtrl', function (JojService, $sce, Player, Playlist, $timeout) {
     'use strict';
 
     var ctrl = this;
     var player;
+
+    ctrl.playlist = Playlist;
 
     ctrl.url = 'http://varenie.joj.sk/moja-mama-vari-lepsie-ako-tvoja-archiv/2016-03-04-moja-mama-vari-lepsie-ako-tvoja-premiera.html';
 
@@ -103,10 +105,22 @@ angular.module('joj.shared')
     };
 
     ctrl.playDajto = function () {
+      playM3U8('http://cdn.srv.markiza.sk/plive/dajto.smil/manifest.m3u8');
+    };
+
+    ctrl.playSTV2 = function () {
+      playM3U8('http://e15.stv.livebox.sk/stv-tv/_definst_/stv2-1.smil/playlist.m3u8?auth=b64:X2FueV98MTQ1NzczMjMxMHw4N2RlZTEyY2U2MDY1YjMzMGI5YWVhNjllOGIzYjA4ZWVhMzkxZjQ0');
+    };
+
+    ctrl.playSTV1 = function () {
+      playM3U8('http://e22.stv.livebox.sk/stv-tv/_definst_/stv1-2.smil/playlist.m3u8?auth=b64:X2FueV98MTQ1NzczMjU2MXxhMTk0Zjg3OWFlYWIxZWM5ODk3MGFiMTA4NmY0M2ZlMDAyYTQxYjQy');
+    };
+
+    var playM3U8 = function (url) {
       ctrl.reset();
       ctrl.playing = 'dajtoStream';
       $timeout(function () {
-        loadStream('dajto', 'http://cdn.srv.markiza.sk/plive/dajto.smil/manifest.m3u8');
+        loadStream('dajto', url);
       });
     };
 
@@ -114,59 +128,12 @@ angular.module('joj.shared')
     ctrl.vxgPlayerUrl = '';
     var dajtoVideo;
 
-    ctrl.vgx = [
-      {
-        id: 'nova',
-        url: 'http://212.79.96.134:8003',
-      },
-      {
-        id: 'nova-cinema',
-        url: 'http://212.79.96.134:8020',
-      },
-      {
-        id: 'prima',
-        url: 'http://212.79.96.134:8004',
-      },
-      {
-        id: 'prima-love',
-        url: 'http://212.79.96.134:8019',
-      },
-      {
-        id: 'prima-zoom',
-        url: 'http://iptv.klfree.cz:8011',
-      },
-      {
-        id: 'ocko',
-        url: 'http://81.201.52.159:8016',
-      },
-      {
-        id: 'prima-cool',
-        url: 'http://212.79.96.134:8021',
-      },
-      {
-        id: 'ct1',
-        url: 'http://212.79.96.134:8001',
-      },
-      {
-        id: 'ct2',
-        url: 'http://212.79.96.134:8002',
-      },
-      {
-        id: 'ct4',
-        url: 'http://212.79.96.134:8014',
-      },
-      {
-        id: 'ct24',
-        url: 'http://212.79.96.134:8015',
-      }
-    ];
-
-    ctrl.playVgx = function (id) {
-      for (var i in ctrl.vgx) {
-        if (ctrl.vgx[i].id === id) {
+    ctrl.playVgx = function (name) {
+      for (var i in Playlist.vgx) {
+        if (Playlist.vgx[i].name === name) {
           ctrl.reset();
           ctrl.playing = 'vgx';
-          playVxg(ctrl.vgx[i].url);
+          playVxg(Playlist.vgx[i].url);
           break;
         }
       }
