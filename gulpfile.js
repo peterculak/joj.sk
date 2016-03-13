@@ -222,7 +222,7 @@ gulp.task('index:build', function() {
     // ng-annotate & Uglify app
     .pipe(appJs)
     .pipe(g.ngAnnotate())
-    .pipe(gulpif(branch === 'production' || branch === 'staging', g.uglify()))
+    .pipe(g.uglify())
       .on('error', function(err) { console.warn(err.message) })
     .pipe(appJs.restore())
 
