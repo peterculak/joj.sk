@@ -1,8 +1,8 @@
 <?php
 
-$data = file_get_contents('playlist.txt');
+$data = file_get_contents('sk_cz_clean.m3u');
 
-$lines = explode("\r", $data);
+$lines = explode("\n", $data);
 
 $items = [];
 for ($i = 3; $i <= 174; $i+=2) {
