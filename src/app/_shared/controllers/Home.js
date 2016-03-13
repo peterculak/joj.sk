@@ -34,9 +34,12 @@ angular.module('joj.shared')
       if (dajtoVideo) {
         dajtoVideo.off();
       }
-      if (vxgPlayer && vxgPlayer.isPlaying()) {
-        vxgPlayer.stop();
+      if (ctrl.isChrome()) {
+        if (vxgPlayer && vxgPlayer.isPlaying()) {
+          vxgPlayer.stop();
+        }
       }
+
       $('#vxgPlayerWrapper').addClass('hidden');
       $('.vxgplayer-loader').removeClass('hidden');
     };
@@ -124,7 +127,16 @@ angular.module('joj.shared')
       });
     };
 
-    var vxgPlayer = vxgplayer('vxg_media_player');
+    ctrl.isChrome = function () {
+      return navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+    };
+
+    if (ctrl.isChrome()) {
+      var vxgPlayer = vxgplayer('vxg_media_player');
+    } else {
+      var vxgPlayer = document.getElementById("vlc");
+    }
+
     ctrl.vxgPlayerUrl = '';
     var dajtoVideo;
 
@@ -143,17 +155,23 @@ angular.module('joj.shared')
 
       $('#vxgPlayerWrapper').removeClass('hidden');
 
-      $timeout(function(){
-        vxgPlayer.src(url);
-      }, 1000);
+      if (ctrl.isChrome()) {
 
-      $timeout(function(){
-        vxgPlayer.play();
-      }, 2000);
+        $timeout(function () {
+          vxgPlayer.src(url);
+        }, 1000);
 
-      $timeout(function () {
-        $('.vxgplayer-loader').addClass('hidden');
-      }, 3000);
+        $timeout(function () {
+          vxgPlayer.play();
+        }, 2000);
+
+        $timeout(function () {
+          $('.vxgplayer-loader').addClass('hidden');
+        }, 3000);
+      } else {
+        var vlc = document.getElementById('vlc');
+        vlc.playlist.playItem( vlc.playlist.add(url) );
+      }
     };
 
     $timeout(function(){
