@@ -211,12 +211,12 @@ gulp.task('index:build', function() {
 
     // Uglify vendors
     .pipe(vendorJs)
-    .pipe(gulpif(g.uglify())
+    .pipe(g.uglify())
     .pipe(vendorJs.restore())
 
     // Uglify libs
     .pipe(libsJs)
-    .pipe(gulpif(g.uglify())
+    .pipe(g.uglify())
     .pipe(libsJs.restore())
 
     // ng-annotate & Uglify app
