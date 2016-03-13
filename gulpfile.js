@@ -206,17 +206,17 @@ gulp.task('index:build', function() {
 
     // Uglify Modernizr
     .pipe(modernizr)
-    .pipe(gulpif(branch === 'production' || branch === 'staging', g.uglify()))
+    .pipe(g.uglify())
     .pipe(modernizr.restore())
 
     // Uglify vendors
     .pipe(vendorJs)
-    .pipe(gulpif(branch === 'production' || branch === 'staging', g.uglify()))
+    .pipe(gulpif(g.uglify())
     .pipe(vendorJs.restore())
 
     // Uglify libs
     .pipe(libsJs)
-    .pipe(gulpif(branch === 'production' || branch === 'staging', g.uglify()))
+    .pipe(gulpif(g.uglify())
     .pipe(libsJs.restore())
 
     // ng-annotate & Uglify app
