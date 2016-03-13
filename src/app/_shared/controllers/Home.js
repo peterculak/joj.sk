@@ -142,13 +142,17 @@ angular.module('joj.shared')
 
     ctrl.playVgx = function (name) {
       for (var i in Playlist.vgx) {
-        if (Playlist.vgx[i].name === name) {
+        if (Playlist.vgx[i].n === name) {
           ctrl.reset();
           ctrl.playing = 'vgx';
-          playVxg(Playlist.vgx[i].url);
+          playVxg(window.atob(Playlist.vgx[i].u));
           break;
         }
       }
+    };
+
+    ctrl.base64decode = function (name) {
+      return window.atob(name);
     };
 
     var playVxg = function (url) {

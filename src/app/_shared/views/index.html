@@ -7,7 +7,7 @@
   <a href="" ng-click="ctrl.playWauLive()">WAU</a>
   <a href="" ng-click="ctrl.playDajto()">DAJTO</a>
 
-  <a href="" ng-click="ctrl.playVgx(playlistItem.name)" ng-repeat="playlistItem in ctrl.playlist.vgx">{{playlistItem.name}}</a>
+  <a href="" ng-click="ctrl.playVgx(playlistItem.n)" ng-repeat="playlistItem in ctrl.playlist.vgx">{{ctrl.base64decode(playlistItem.n)}}</a>
 </div>
 <!--<form ng-submit="ctrl.submit()">-->
   <!--<input style="width:100%; height: 40px;" type="text" ng-model="ctrl.url">-->
