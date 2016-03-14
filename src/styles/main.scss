@@ -30,8 +30,7 @@
 }
 
 .player-screen {
+  left: calc(50% - 230px);
+  top: calc(50% - 230px);
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
