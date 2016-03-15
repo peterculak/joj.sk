@@ -1,6 +1,6 @@
 angular.module('joj.shared')
 
-  .controller('HomeCtrl', function (JojService, $sce, Player, Playlist, $timeout) {
+  .controller('HomeCtrl', function (JojService, $sce, Player, Playlist, VlcService, $timeout) {
     'use strict';
 
     var ctrl = this;
@@ -141,12 +141,17 @@ angular.module('joj.shared')
     var dajtoVideo;
 
     ctrl.playVgx = function (name) {
-      for (var i in Playlist.vgx) {
-        if (Playlist.vgx[i].n === name) {
-          ctrl.reset();
-          ctrl.playing = 'vgx';
-          playVxg(window.atob(Playlist.vgx[i].u));
-          break;
+      if (!ctrl.isChrome() && !VlcService.isInstalled()) {
+        ctrl.vlcMissing = true;
+      } else {
+        ctrl.vlcMissing = false;
+        for (var i in Playlist.vgx) {
+          if (Playlist.vgx[i].n === name) {
+            ctrl.reset();
+            ctrl.playing = 'vgx';
+            playVxg(window.atob(Playlist.vgx[i].u));
+            break;
+          }
         }
       }
     };

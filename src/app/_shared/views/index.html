@@ -10,10 +10,26 @@
   <a href="" ng-click="ctrl.playVgx(playlistItem.n)" ng-repeat="playlistItem in ctrl.playlist.vgx">{{ctrl.base64decode(playlistItem.n)}}</a>
 </div>
 <!--<form ng-submit="ctrl.submit()">-->
-  <!--<input style="width:100%; height: 40px;" type="text" ng-model="ctrl.url">-->
+<!--<input style="width:100%; height: 40px;" type="text" ng-model="ctrl.url">-->
 <!--</form>-->
 
-<div class="player-screen">
+<div class="vlc-help" ng-show="ctrl.vlcMissing">
+  <h1>Na prehratie videa je potrebný prehávač VLC</h1>
+  <p>
+    1. Stiahnite si najnovšiu verziu VLC Playera <br />
+    <a class="download" href="http://www.videolan.org/vlc/" target="_blank">
+      <img src="/images/vlc-navod-1.jpg">
+    </a>
+    <br />
+    2. Otvorte stiahnutý súbor a začnite inštaláciu VLC Playera. <br /><br />
+    3. V okne inštalácie “Voľba súčastí programu” je potrebné, aby boli zaškrtnuté všetky možnosti ... <br />
+    <img src="/images/vlc-navod-4.png"> <br /><br />
+
+    4. Po nainštalovaní môžete je treba zatvoriť a otvoriť prehliadač.
+  </p>
+</div>
+
+<div ng-show="!ctrl.vlcMissing" class="player-screen">
   <div id="vxgPlayerWrapper" class="vxgPlayerWrapper">
     <div ng-show="ctrl.isChrome()" class="vxgplayer"
          id="vxg_media_player"
@@ -33,18 +49,19 @@
          auto-reconnect>
     </div>
     <embed width="640" height="360" ng-show="!ctrl.isChrome()" type="application/x-vlc-plugin"
-           pluginspage="http://www.videolan.org"version="VideoLAN.VLCPlugin.2"
-           id="vlc" loop="yes"autoplay="yes" target="{{ctrl.vxgPlayerUrl}}"></embed>
+           pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"
+           id="vlc" loop="yes" autoplay="yes" target="{{ctrl.vxgPlayerUrl}}"></embed>
   </div>
 
-  <iframe ng-show="ctrl.playing === 'ta3'" ng-src="{{ctrl.ta3LiveStreamUrl}}" width="640" height="360" frameborder="0" scrolling="no"></iframe>
+  <iframe ng-show="ctrl.playing === 'ta3'" ng-src="{{ctrl.ta3LiveStreamUrl}}" width="640" height="360" frameborder="0"
+          scrolling="no"></iframe>
   <div ng-show="ctrl.playing === 'jojLive'" id="jojLiveStream"></div>
   <div ng-show="ctrl.playing === 'ctLiveStream'" id="ctLiveStream"></div>
 
   <div class="center-vertical" ng-show="ctrl.playing === 'dajtoStream'">
     <video id="dajto" class="center-vertical video-js vjs-default-skin" controls preload="none" width="640" height="360"
            data-setup='{"techOrder": ["flash"]}'>
-      <source src="http://cdn.srv.markiza.sk/plive/dajto.smil/manifest.m3u8" type='video/mp4' />
+      <source src="http://cdn.srv.markiza.sk/plive/dajto.smil/manifest.m3u8" type='video/mp4'/>
     </video>
   </div>
 
