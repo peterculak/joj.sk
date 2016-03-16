@@ -39,3 +39,11 @@
     color: rgb(255, 64, 129);
   }
 }
+
+md-tab-content md-content div {
+  height: calc(100vh - 66px);
+}
+
+md-toolbar.md-default-theme:not(.md-menu-toolbar) .md-button:not(.md-raised), md-toolbar:not(.md-menu-toolbar) .md-button:not(.md-raised) {
+  color: black;
+}

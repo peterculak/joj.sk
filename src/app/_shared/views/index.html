@@ -1,5 +1,5 @@
 <md-content layout="row" flex>
-  <div layout="column" class="flex-15">
+  <div>
     <div>
       <md-button ng-click="toggleLeft()"
                  class="md-primary" hide-gt-md>
@@ -12,20 +12,29 @@
         md-is-locked-open="$mdMedia('gt-md')"
         md-disable-backdrop
         md-whiteframe="4">
-      <md-toolbar class="md-theme-indigo">
-        <h1 class="md-toolbar-tools">TV STANICE</h1>
-      </md-toolbar>
-      <md-content layout-padding>
-          <md-list>
-            <md-list-item><md-button flex ng-click="ctrl.ta3Live()">TA3</md-button> </md-list-item>
-            <md-list-item><md-button flex ng-click="ctrl.jojLive()">JOJ</md-button> </md-list-item>
-            <md-list-item><md-button flex ng-click="ctrl.playJojPlusLive()">JOJ+</md-button> </md-list-item>
-            <md-list-item><md-button flex ng-click="ctrl.playWauLive()">WAU</md-button> </md-list-item>
-            <md-list-item ng-repeat="playlistItem in ctrl.playlist.vgx">
-              <md-button flex ng-click="ctrl.playVgx(playlistItem.n)">{{ctrl.base64decode(playlistItem.n)}}</md-button>
-            </md-list-item>
-          </md-list>
-      </md-content>
+        <md-tabs md-theme="light-blue" md-dynamic-height md-border-bottom>
+          <md-tab label="tv stanice">
+            <md-content layout-padding>
+              <div layout="column">
+                <md-list>
+                  <md-list-item><md-button flex ng-click="ctrl.ta3Live()">TA3</md-button> </md-list-item>
+                  <md-list-item><md-button flex ng-click="ctrl.jojLive()">JOJ</md-button> </md-list-item>
+                  <md-list-item><md-button flex ng-click="ctrl.playJojPlusLive()">JOJ+</md-button> </md-list-item>
+                  <md-list-item><md-button flex ng-click="ctrl.playWauLive()">WAU</md-button> </md-list-item>
+                  <md-list-item ng-repeat="playlistItem in ctrl.playlist.vgx">
+                    <md-button flex ng-click="ctrl.playVgx(playlistItem.n)">{{ctrl.base64decode(playlistItem.n)}}</md-button>
+                  </md-list-item>
+                </md-list>
+              </div>
+            </md-content>
+          </md-tab>
+          <md-tab label="archiv">
+            <md-content class="md-padding">
+              <p>archiv</p>
+            </md-content>
+          </md-tab>
+        </md-tabs>
+
     </md-sidenav>
   </div>
 
