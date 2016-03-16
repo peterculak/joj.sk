@@ -33,7 +33,7 @@ angular.module('joj', [
 
   })
 
-  .run(function ($rootScope, $timeout, $mdSidenav) {
+  .run(function ($rootScope, $timeout, $mdSidenav, $mdIcon) {
     'use strict';
 
     $rootScope.toggleLeft = buildDelayedToggler('left');

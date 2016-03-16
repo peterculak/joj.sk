@@ -25,3 +25,17 @@
   position: absolute;
   left: calc(50% - 230px);
 }
+
+#mb_button--help {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+.md-dialog-content {
+  a {
+    color: rgb(255, 64, 129);
+  }
+}

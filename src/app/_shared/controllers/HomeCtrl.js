@@ -1,6 +1,6 @@
 angular.module('joj.shared')
 
-  .controller('HomeCtrl', function ($scope, JojService, $sce, Player, Playlist, $timeout, VlcService, $mdSidenav) {
+  .controller('HomeCtrl', function ($scope, JojService, $sce, Player, Playlist, $timeout, VlcService, $mdSidenav, $mdMedia, $mdDialog) {
     'use strict';
 
     var ctrl = this;
@@ -186,6 +186,28 @@ angular.module('joj.shared')
         vlc.playlist.playItem( vlc.playlist.add(url) );
       }
     };
+
+    ctrl.showHelpDialog = function () {
+      $mdDialog.show();
+    };
+
+    ctrl.showHelpDialog = function(ev) {
+      var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
+      $mdDialog.show({
+        controller: DialogController,
+        templateUrl: 'app/_shared/views/help.tmpl.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose: true,
+        fullscreen: useFullScreen
+      })
+    };
+
+    function DialogController($scope, $mdDialog) {
+      $scope.hide = function() {
+        $mdDialog.hide();
+      };
+    }
 
     $timeout(function(){
       $('#vxgPlayerWrapper').addClass('hidden');

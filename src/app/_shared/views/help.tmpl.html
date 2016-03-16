@@ -1,0 +1,45 @@
+<md-dialog aria-label="Mango (Fruit)" ng-cloak>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>NÁPOVEDA</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <p>Pre prvé štyri kanály (ta3, joj, joj+, wau) je potrebné mať nainštalovaný flash plugin (čo má v dnešnej dobe
+          vačšina ľudí).<br/>
+          Ak Vám ide Youtube tak ho máte z najvačšou pravdepodobnosťou nainštalovaný.<br/><br/>
+          Pre všetky ostatné kanály je potrebný extra plugin pre prehliadač.
+        </p>
+
+        <h2>Mozilla Firefox</h2>
+        <p>
+          Tí čo používate prehliadač Mozilla Firefox je potrebné nainštalovať <b><a
+            href="http://www.videolan.org/vlc/download-windows.en_GB.html" target="_blank">VLC prehrávač.</a></b>
+        </p>
+        <p>
+          <b>Pre pozeranie odporúčam používať <a href="https://www.mozilla.org/sk/firefox/new/" target="_blank">Mozillu Firefox</a> + VLC.
+            Dekódvanie videa ide rýchlejšie a úplne plynule, v Chrome to dekódovanie trochu seká.</b>
+        </p>
+
+        <h2>Chrome</h2>
+        <p>
+          Tí čo používate Chrome je potrebné nainštalovať VXG Plugin pre chrome a stránka by Vás mala na to vyzvať a
+          stačí len preklikať inštaláciu.
+        </p>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="hide()">
+        Zatvoriť
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
+
