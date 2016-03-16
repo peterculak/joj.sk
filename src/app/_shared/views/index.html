@@ -21,7 +21,6 @@
             <md-list-item><md-button flex ng-click="ctrl.jojLive()">JOJ</md-button> </md-list-item>
             <md-list-item><md-button flex ng-click="ctrl.playJojPlusLive()">JOJ+</md-button> </md-list-item>
             <md-list-item><md-button flex ng-click="ctrl.playWauLive()">WAU</md-button> </md-list-item>
-            <md-list-item><md-button flex ng-click="ctrl.playDajto()">DAJTO</md-button> </md-list-item>
             <md-list-item ng-repeat="playlistItem in ctrl.playlist.vgx">
               <md-button flex ng-click="ctrl.playVgx(playlistItem.n)">{{ctrl.base64decode(playlistItem.n)}}</md-button>
             </md-list-item>
@@ -75,13 +74,6 @@
         <iframe ng-show="ctrl.playing === 'ta3'" ng-src="{{ctrl.ta3LiveStreamUrl}}" width="640" height="360" frameborder="0" scrolling="no"></iframe>
         <div ng-show="ctrl.playing === 'jojLive'" id="jojLiveStream"></div>
         <div ng-show="ctrl.playing === 'ctLiveStream'" id="ctLiveStream"></div>
-
-        <div class="center-vertical" ng-show="ctrl.playing === 'dajtoStream'">
-          <video id="dajto" class="center-vertical video-js vjs-default-skin" controls preload="none" width="640" height="360"
-                 data-setup='{"techOrder": ["flash"]}'>
-            <source src="http://cdn.srv.markiza.sk/plive/dajto.smil/manifest.m3u8" type='video/mp4'/>
-          </video>
-        </div>
 
         <ul ng-show="ctrl.playing === 'jojArchive'">
           <li ng-repeat="stream in ctrl.streams">
