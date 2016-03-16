@@ -1,6 +1,6 @@
 angular.module('joj.shared')
 
-  .controller('HomeCtrl', function (JojService, $sce, Player, Playlist, VlcService, $timeout) {
+  .controller('HomeCtrl', function ($scope, JojService, $sce, Player, Playlist, $timeout, VlcService, $mdSidenav) {
     'use strict';
 
     var ctrl = this;
@@ -15,6 +15,10 @@ angular.module('joj.shared')
     ctrl.videoSrc = '';
 
     ctrl.playing = null;
+
+    ctrl.toggleLeft = function () {
+      $mdSidenav('left').toggle();
+    };
 
     ctrl.submit = function () {
       JojService.getEpizodesList(ctrl.url).then(function (epizodes) {

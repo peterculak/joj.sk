@@ -1,79 +1,102 @@
-<div id="tv-channels">
-  <a href="" ng-click="ctrl.ta3Live()">TA3</a>
-  <!--<a href="" ng-click="ctrl.playSTV1()">STV1</a>-->
-  <!--<a href="" ng-click="ctrl.playSTV2()">STV2</a>-->
-  <a href="" ng-click="ctrl.jojLive()">JOJ</a>
-  <a href="" ng-click="ctrl.playJojPlusLive()">JOJ+</a>
-  <a href="" ng-click="ctrl.playWauLive()">WAU</a>
-  <a href="" ng-click="ctrl.playDajto()">DAJTO</a>
-
-  <a href="" ng-click="ctrl.playVgx(playlistItem.n)" ng-repeat="playlistItem in ctrl.playlist.vgx">{{ctrl.base64decode(playlistItem.n)}}</a>
-</div>
-<!--<form ng-submit="ctrl.submit()">-->
-<!--<input style="width:100%; height: 40px;" type="text" ng-model="ctrl.url">-->
-<!--</form>-->
-
-<div class="vlc-help" ng-show="ctrl.vlcMissing">
-  <h1>Na prehratie videa je potrebný prehávač VLC</h1>
-  <p>
-    1. Stiahnite si najnovšiu verziu VLC Playera <br />
-    <a class="download" href="http://www.videolan.org/vlc/" target="_blank">
-      <img src="/images/vlc-navod-1.jpg">
-    </a>
-    <br />
-    2. Otvorte stiahnutý súbor a začnite inštaláciu VLC Playera. <br /><br />
-    3. V okne inštalácie “Voľba súčastí programu” je potrebné, aby boli zaškrtnuté všetky možnosti ... <br />
-    <img src="/images/vlc-navod-4.png"> <br /><br />
-
-    4. Po nainštalovaní môžete je treba znovu načítať stránku alebo zatvoriť a otvoriť prehliadač.
-  </p>
-</div>
-
-<div ng-show="!ctrl.vlcMissing" class="player-screen">
-  <div id="vxgPlayerWrapper" class="vxgPlayerWrapper">
-    <div ng-show="ctrl.isChrome()" class="vxgplayer"
-         id="vxg_media_player"
-         width="640"
-         height="360"
-         url="{{ctrl.vxgPlayerUrl}}"
-         nmf-src="bower_components/vxgplayer/pnacl/Release/media_player.nmf"
-         nmf-path="media_player.nmf"
-         latency="100000"
-         autohide="2"
-         volume="0.7"
-         avsync
-         controls
-         mute
-         aspect-ratio
-         aspect-ratio-mode="1"
-         auto-reconnect>
+<md-content layout="row" flex>
+  <div layout="column">
+    <div>
+      <md-button ng-click="toggleLeft()"
+                 class="md-primary" hide-gt-md>
+        TV Stanice
+      </md-button>
     </div>
-    <embed width="640" height="360" ng-show="!ctrl.isChrome()" type="application/x-vlc-plugin"
-           pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"
-           id="vlc" loop="yes" autoplay="yes" target="{{ctrl.vxgPlayerUrl}}"></embed>
+    <md-sidenav
+        layout="column" class="md-sidenav-left md-whiteframe-z2"
+        md-component-id="left"
+        md-is-locked-open="$mdMedia('gt-md')"
+        md-disable-backdrop
+        md-whiteframe="4">
+      <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">TV STANICE</h1>
+      </md-toolbar>
+      <md-content layout-padding>
+          <md-list>
+            <md-list-item><md-button flex ng-click="ctrl.ta3Live()">TA3</md-button> </md-list-item>
+            <md-list-item><md-button flex ng-click="ctrl.jojLive()">JOJ</md-button> </md-list-item>
+            <md-list-item><md-button flex ng-click="ctrl.playJojPlusLive()">JOJ+</md-button> </md-list-item>
+            <md-list-item><md-button flex ng-click="ctrl.playWauLive()">WAU</md-button> </md-list-item>
+            <md-list-item><md-button flex ng-click="ctrl.playDajto()">DAJTO</md-button> </md-list-item>
+            <md-list-item ng-repeat="playlistItem in ctrl.playlist.vgx">
+              <md-button flex ng-click="ctrl.playVgx(playlistItem.n)">{{ctrl.base64decode(playlistItem.n)}}</md-button>
+            </md-list-item>
+          </md-list>
+      </md-content>
+    </md-sidenav>
   </div>
 
-  <iframe ng-show="ctrl.playing === 'ta3'" ng-src="{{ctrl.ta3LiveStreamUrl}}" width="640" height="360" frameborder="0"
-          scrolling="no"></iframe>
-  <div ng-show="ctrl.playing === 'jojLive'" id="jojLiveStream"></div>
-  <div ng-show="ctrl.playing === 'ctLiveStream'" id="ctLiveStream"></div>
+  <div layout="column" flex id="content">
+    <md-content layout="column" flex class="md-padding">
+        <div class="vlc-help" ng-show="ctrl.vlcMissing">
+          <h1>Na prehratie videa je potrebný prehávač VLC</h1>
+          <p>
+            1. Stiahnite si najnovšiu verziu VLC Playera <br />
+            <a class="download" href="http://www.videolan.org/vlc/" target="_blank">
+              <img src="/images/vlc-navod-1.jpg">
+            </a>
+            <br />
+            2. Otvorte stiahnutý súbor a začnite inštaláciu VLC Playera. <br /><br />
+            3. V okne inštalácie “Voľba súčastí programu” je potrebné, aby boli zaškrtnuté všetky možnosti ... <br />
+            <img src="/images/vlc-navod-4.png"> <br /><br />
 
-  <div class="center-vertical" ng-show="ctrl.playing === 'dajtoStream'">
-    <video id="dajto" class="center-vertical video-js vjs-default-skin" controls preload="none" width="640" height="360"
-           data-setup='{"techOrder": ["flash"]}'>
-      <source src="http://cdn.srv.markiza.sk/plive/dajto.smil/manifest.m3u8" type='video/mp4'/>
-    </video>
+            4. Po nainštalovaní môžete je treba znovu načítať stránku alebo zatvoriť a otvoriť prehliadač.
+          </p>
+        </div>
+
+      <div ng-show="!ctrl.vlcMissing" class="player-screen">
+        <div id="vxgPlayerWrapper" class="vxgPlayerWrapper">
+          <div ng-show="ctrl.isChrome()" class="vxgplayer"
+               id="vxg_media_player"
+               width="640"
+               height="360"
+               url="{{ctrl.vxgPlayerUrl}}"
+               nmf-src="bower_components/vxgplayer/pnacl/Release/media_player.nmf"
+               nmf-path="media_player.nmf"
+               latency="100000"
+               autohide="2"
+               volume="0.7"
+               avsync
+               controls
+               mute
+               aspect-ratio
+               aspect-ratio-mode="1"
+               auto-reconnect>
+          </div>
+          <embed width="640" height="360" ng-show="!ctrl.isChrome()" type="application/x-vlc-plugin"
+                 pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"
+                 id="vlc" loop="yes" autoplay="yes" target="{{ctrl.vxgPlayerUrl}}"></embed>
+        </div>
+
+        <iframe ng-show="ctrl.playing === 'ta3'" ng-src="{{ctrl.ta3LiveStreamUrl}}" width="640" height="360" frameborder="0" scrolling="no"></iframe>
+        <div ng-show="ctrl.playing === 'jojLive'" id="jojLiveStream"></div>
+        <div ng-show="ctrl.playing === 'ctLiveStream'" id="ctLiveStream"></div>
+
+        <div class="center-vertical" ng-show="ctrl.playing === 'dajtoStream'">
+          <video id="dajto" class="center-vertical video-js vjs-default-skin" controls preload="none" width="640" height="360"
+                 data-setup='{"techOrder": ["flash"]}'>
+            <source src="http://cdn.srv.markiza.sk/plive/dajto.smil/manifest.m3u8" type='video/mp4'/>
+          </video>
+        </div>
+
+        <ul ng-show="ctrl.playing === 'jojArchive'">
+          <li ng-repeat="stream in ctrl.streams">
+            <a target="_blank" ng-href="{{stream}}">{{stream}}</a>
+          </li>
+        </ul>
+        <video ng-show="ctrl.playing === 'jojArchive'" width="640" height="360" ng-src="{{ctrl.videoSrc}}" controls></video>
+        <ul ng-show="ctrl.playing === 'jojArchive'">
+          <li ng-repeat="epizode in ctrl.epizodes">
+            <a target="_blank" href="" ng-click="ctrl.play(epizode, $event)">{{epizode.date + ', ' + epizode.title}}</a>
+          </li>
+        </ul>
+      </div>
+
+    </md-content>
   </div>
+</md-content>
 
-  <ul ng-show="ctrl.playing === 'jojArchive'">
-    <li ng-repeat="stream in ctrl.streams">
-      <a target="_blank" ng-href="{{stream}}">{{stream}}</a>
-    </li>
-  </ul>
-  <video ng-show="ctrl.playing === 'jojArchive'" width="640" height="360" ng-src="{{ctrl.videoSrc}}" controls></video>
-  <ul ng-show="ctrl.playing === 'jojArchive'">
-    <li ng-repeat="epizode in ctrl.epizodes">
-      <a target="_blank" href="" ng-click="ctrl.play(epizode, $event)">{{epizode.date + ', ' + epizode.title}}</a>
-    </li>
-  </ul>
-</div>

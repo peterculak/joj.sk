@@ -13,6 +13,7 @@ angular.module('joj.vendors', [
   //'ngSanitize',
   //'ngFileUpload',
   'angulartics',
-  'angulartics.google.analytics'
+  'angulartics.google.analytics',
+  'ngMaterial'
   //'ngAnimate'
 ]);
