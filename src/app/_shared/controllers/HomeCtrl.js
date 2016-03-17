@@ -96,6 +96,7 @@ angular.module('joj.shared')
         ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(streams[streams.length - 1]);
         ctrl.playing = 'jojArchive';
         ctrl.channel = epizode.url;
+        ctrl.toggleLeft();
       });
       return false;
     };
