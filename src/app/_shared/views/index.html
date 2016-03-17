@@ -17,20 +17,32 @@
             <md-content layout-padding>
               <div layout="column">
                 <md-list>
-                  <md-list-item><md-button flex ng-click="ctrl.ta3Live()">TA3</md-button> </md-list-item>
-                  <md-list-item><md-button flex ng-click="ctrl.jojLive()">JOJ</md-button> </md-list-item>
-                  <md-list-item><md-button flex ng-click="ctrl.playJojPlusLive()">JOJ+</md-button> </md-list-item>
-                  <md-list-item><md-button flex ng-click="ctrl.playWauLive()">WAU</md-button> </md-list-item>
+                  <md-list-item><md-button ng-class="{'md-raised md-primary' : ctrl.channel === 'ta' }" flex ng-click="ctrl.ta3Live()">TA3</md-button> </md-list-item>
+                  <md-list-item><md-button ng-class="{'md-raised md-primary' : ctrl.channel === 'joj' }" flex ng-click="ctrl.jojLive()">JOJ</md-button> </md-list-item>
+                  <md-list-item><md-button ng-class="{'md-raised md-primary' : ctrl.channel === 'joj+' }" flex ng-click="ctrl.playJojPlusLive()">JOJ+</md-button> </md-list-item>
+                  <md-list-item><md-button ng-class="{'md-raised md-primary' : ctrl.channel === 'wau' }" flex ng-click="ctrl.playWauLive()">WAU</md-button> </md-list-item>
                   <md-list-item ng-repeat="playlistItem in ctrl.playlist.vgx">
-                    <md-button flex ng-click="ctrl.playVgx(playlistItem.n)">{{ctrl.base64decode(playlistItem.n)}}</md-button>
+                    <md-button ng-class="{'md-raised md-primary' : ctrl.channel === playlistItem.u }" flex ng-click="ctrl.playVgx(playlistItem.n)">{{ctrl.base64decode(playlistItem.n)}}</md-button>
                   </md-list-item>
                 </md-list>
               </div>
             </md-content>
           </md-tab>
-          <md-tab label="archiv">
-            <md-content class="md-padding">
-              <p>archiv</p>
+          <md-tab label="joj archív">
+            <md-content layout-padding>
+              <div layout="column">
+                <form ng-submit="ctrl.submit()">
+                  <md-select placeholder="Zvoľte reláciu z archívu JOJ" ng-change="fetchEpizodes()" ng-model="archiveItem">
+                    <md-option ng-repeat="item in archive" value="{{item}}">
+                      {{item.title}}
+                    </md-option>
+                  </md-select>
+                </form>
+
+                <md-list>
+                  <md-list-item ng-repeat="epizode in epizodes"><md-button ng-class="{'md-raised md-primary' : ctrl.channel === epizode.url }" title="{{epizode.title}}" flex ng-click="ctrl.play(epizode)">{{epizode.title}} ({{epizode.date}})</md-button> </md-list-item>
+                </md-list>
+              </div>
             </md-content>
           </md-tab>
         </md-tabs>
@@ -84,17 +96,8 @@
         <div ng-show="ctrl.playing === 'jojLive'" id="jojLiveStream"></div>
         <div ng-show="ctrl.playing === 'ctLiveStream'" id="ctLiveStream"></div>
 
-        <ul ng-show="ctrl.playing === 'jojArchive'">
-          <li ng-repeat="stream in ctrl.streams">
-            <a target="_blank" ng-href="{{stream}}">{{stream}}</a>
-          </li>
-        </ul>
-        <video ng-show="ctrl.playing === 'jojArchive'" width="640" height="360" ng-src="{{ctrl.videoSrc}}" controls></video>
-        <ul ng-show="ctrl.playing === 'jojArchive'">
-          <li ng-repeat="epizode in ctrl.epizodes">
-            <a target="_blank" href="" ng-click="ctrl.play(epizode, $event)">{{epizode.date + ', ' + epizode.title}}</a>
-          </li>
-        </ul>
+        <video ng-show="ctrl.playing === 'jojArchive'" width="640" height="360" ng-src="{{ctrl.videoFromArchiveUrl}}" controls></video>
+
       </div>
 
       <md-button ng-click="ctrl.showHelpDialog()" id="mb_button--help" aria-label="Napoveda" class="md-fab" >

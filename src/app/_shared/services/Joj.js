@@ -6,6 +6,16 @@ angular.module('joj.shared')
 
     service.nodes = ['http://n16.joj.sk/storage'];
 
+    service.getArchive = function () {
+      var defered = $q.defer();
+
+      jsonpService.get('http://www.joj.sk/archiv.html').then(function (r) {
+        var archive = EpizodesExtractorService.extractArchive(r);
+        defered.resolve(archive);
+      });
+      return defered.promise;
+    };
+
 
     service.getEpizodesList = function (url) {
       var defered = $q.defer();

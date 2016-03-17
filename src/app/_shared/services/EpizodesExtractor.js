@@ -4,14 +4,24 @@ angular.module('joj.shared')
 
     var service = {};
 
-    service.extractEpizodes = function (data) {
-      var data = data.contents.replace(/(?:\r\n|\r|\n)/g, '');
-      //var re = /href="(http:\/\/varenie.joj.sk.*-archiv.*html)"/gmi;
-      var re = /<html.*\/html>/gmi;
-      var match = re.exec(data);
-      var obj = $(match[0]);
+    service.extractArchive = function (data) {
+      var dom = extractHtmlDocument(data);
+      var archiveList = $('.archiveList ul', dom);
 
-      var ep = $('.episodeListing > .box-carousel', obj);
+      var archiveItems = [];
+      archiveList.each(function (key, element) {
+        var li = $('li', element);
+        var a = $('span.title a', li);
+        archiveItems.push({title: a.attr('title'), url: a.attr('href')});
+      });
+      return archiveItems.sort(function (a, b) {
+        return b.title < a.title;
+      });
+    };
+
+    service.extractEpizodes = function (data) {
+      var dom = extractHtmlDocument(data);
+      var ep = $('.episodeListing > .box-carousel', dom);
       var epizodes = $('li', ep);
 
       var matches = [];
@@ -44,6 +54,14 @@ angular.module('joj.shared')
         matches.push(match[1]);
       }
       return matches;
+    };
+
+    var extractHtmlDocument = function (data) {
+      var data = data.contents.replace(/(?:\r\n|\r|\n)/g, '');
+      var re = /<html.*\/html>/gmi;
+      var match = re.exec(data);
+      var obj = $(match[0]);
+      return obj;
     };
 
     return service;

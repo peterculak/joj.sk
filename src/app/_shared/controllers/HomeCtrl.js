@@ -16,17 +16,25 @@ angular.module('joj.shared')
 
     ctrl.playing = null;
 
-    ctrl.toggleLeft = function () {
-      $mdSidenav('left').toggle();
-    };
+    JojService.getArchive().then(function(r){
+      $scope.archive = r;
+    });
 
-    ctrl.submit = function () {
-      JojService.getEpizodesList(ctrl.url).then(function (epizodes) {
+    $scope.archiveItem = {};
+
+    $scope.fetchEpizodes = function () {
+      var item = JSON.parse($scope.archiveItem);
+      JojService.getEpizodesList(item.url).then(function (epizodes) {
         ctrl.play(epizodes[0]);
+        $scope.epizodes = [];
         for (var i in epizodes) {
-          ctrl.epizodes.push(epizodes[i]);
+          $scope.epizodes.push(epizodes[i]);
         }
       });
+    };
+
+    ctrl.toggleLeft = function () {
+      $mdSidenav('left').toggle();
     };
 
     ctrl.reset = function () {
@@ -46,11 +54,13 @@ angular.module('joj.shared')
 
       $('#vxgPlayerWrapper').addClass('hidden');
       $('.vxgplayer-loader').removeClass('hidden');
+      ctrl.channel = '';
     };
 
     ctrl.ta3Live = function () {
       ctrl.reset();
       ctrl.playing = 'ta3';
+      ctrl.channel = 'ta3';
       ctrl.ta3LiveStreamUrl = $sce.trustAsResourceUrl('http://www.ta3.com/live.html?embed=1');
       return false;
     };
@@ -58,6 +68,7 @@ angular.module('joj.shared')
     ctrl.jojLive = function () {
       ctrl.reset();
       ctrl.playing = 'jojLiveStream';
+      ctrl.channel = 'joj';
       JojService.playLiveStream('jojLiveStream');
       return false;
     };
@@ -65,6 +76,7 @@ angular.module('joj.shared')
     ctrl.playJojPlusLive = function () {
       ctrl.reset();
       ctrl.playing = 'jojLiveStream';
+      ctrl.channel = 'joj+';
       JojService.playJojPlusLiveStream('jojLiveStream');
       return false;
     };
@@ -72,15 +84,18 @@ angular.module('joj.shared')
     ctrl.playWauLive = function () {
       ctrl.reset();
       ctrl.playing = 'jojLiveStream';
+      ctrl.channel = 'wau';
       JojService.playWauLiveStream('jojLiveStream');
     };
 
     ctrl.play = function (epizode) {
-      ctrl.playing = 'jojLiveStream';
+      ctrl.playing = 'jojArchive';
       ctrl.reset();
       JojService.getStreamUrls(epizode.url).then(function (streams) {
         ctrl.streams = streams;
-        ctrl.videoSrc = $sce.trustAsResourceUrl(streams[streams.length - 1]);
+        ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(streams[streams.length - 1]);
+        ctrl.playing = 'jojArchive';
+        ctrl.channel = epizode.url;
       });
       return false;
     };
@@ -154,6 +169,7 @@ angular.module('joj.shared')
             ctrl.reset();
             ctrl.playing = 'vgx';
             playVxg(window.atob(Playlist.vgx[i].u));
+            ctrl.channel = Playlist.vgx[i].u;
             break;
           }
         }
