@@ -59,7 +59,7 @@ angular.module('joj.shared')
         }
       }
 
-      $('#vxgPlayerWrapper').addClass('hidden');
+      $('#vxgPlayerWrapper').addClass('vxgHidden');
       $('.vxgplayer-loader').removeClass('hidden');
       ctrl.channel = '';
     };
@@ -190,7 +190,7 @@ angular.module('joj.shared')
 
     var playVxg = function (url) {
 
-      $('#vxgPlayerWrapper').removeClass('hidden');
+      $('#vxgPlayerWrapper').removeClass('vxgHidden');
 
       if (ctrl.isChrome()) {
 
@@ -234,7 +234,7 @@ angular.module('joj.shared')
     }
 
     $timeout(function(){
-      $('#vxgPlayerWrapper').addClass('hidden');
+      $('#vxgPlayerWrapper').addClass('vxgHidden');
       ctrl.jojLive();
     }, 2000);
 

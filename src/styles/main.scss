@@ -11,6 +11,12 @@
   float: left;
 }
 
+.vxgPlayerWrapper.vxgHidden {
+  position: absolute;
+  top: -5000px;
+  left: -5000px;
+}
+
 .vxgplayer-error {
   display: none!important;
 }
