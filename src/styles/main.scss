@@ -62,6 +62,9 @@ video {
   video {
     width: 80%;
     height: auto;
+    position: relative;
+    top: 80px;
+    left: 20px;
   }
   .player-screen {
     left: calc(50% - 160px);
