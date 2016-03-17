@@ -38,7 +38,7 @@
                   </md-select>
                 </form>
 
-                <md-list>
+                <md-list class="epizodes">
                   <md-list-item ng-repeat="epizode in epizodes"><md-button ng-class="{'md-raised md-primary' : ctrl.channel === epizode.url }" title="{{epizode.title}}" flex ng-click="ctrl.play(epizode)">{{epizode.title}} ({{epizode.date}})</md-button> </md-list-item>
                 </md-list>
               </div>
