@@ -14,6 +14,11 @@ angular.module('joj.shared')
     ctrl.epizodes = [];
     ctrl.videoSrc = '';
 
+    $scope.selectedIndex = 0;
+    if (mobileAndTabletcheck()) {
+      $scope.selectedIndex = 1;
+    }
+
     ctrl.playing = null;
 
     JojService.getArchive().then(function(r){
