@@ -61,9 +61,17 @@ video {
   .player-screen {
     left: calc(50% - 160px);
   }
+
+  md-list {
+    margin-top: 20px;
+  }
 }
 
 .menu {
   position: absolute;
   z-index: 1;
+}
+
+.md-list {
+
 }
