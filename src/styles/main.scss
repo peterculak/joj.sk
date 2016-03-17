@@ -47,3 +47,15 @@ md-tab-content md-content div {
 md-toolbar.md-default-theme:not(.md-menu-toolbar) .md-button:not(.md-raised), md-toolbar:not(.md-menu-toolbar) .md-button:not(.md-raised) {
   color: black;
 }
+
+video {
+  width: 640px;
+  height: 360px;
+}
+
+@media (max-width:640px) {
+  video {
+    width: 80%;
+    height: auto;
+  }
+}

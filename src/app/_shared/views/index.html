@@ -3,7 +3,7 @@
     <div>
       <md-button ng-click="toggleLeft()"
                  class="md-primary" hide-gt-md>
-        TV Stanice
+        <md-icon>menu</md-icon>
       </md-button>
     </div>
     <md-sidenav
@@ -96,7 +96,7 @@
         <div ng-show="ctrl.playing === 'jojLive'" id="jojLiveStream"></div>
         <div ng-show="ctrl.playing === 'ctLiveStream'" id="ctLiveStream"></div>
 
-        <video ng-show="ctrl.playing === 'jojArchive'" width="640" height="360" ng-src="{{ctrl.videoFromArchiveUrl}}" controls></video>
+        <video ng-show="ctrl.playing === 'jojArchive'" ng-src="{{ctrl.videoFromArchiveUrl}}" controls></video>
 
       </div>
 
