@@ -4,6 +4,9 @@ angular.module('joj.shared')
 
     var service = {};
 
+    service.fetchingEpizodes = false;
+    service.fetchingStreams  = false;
+
     service.nodes = ['http://n16.joj.sk/storage'];
 
     service.getArchive = function () {
@@ -19,10 +22,11 @@ angular.module('joj.shared')
 
     service.getEpizodesList = function (url) {
       var defered = $q.defer();
-
+      service.fetchingEpizodes = true;
       jsonpService.get(url).then(function (r) {
         var epizodes = EpizodesExtractorService.extractEpizodes(r);
         defered.resolve(epizodes);
+        service.fetchingEpizodes = false;
       });
       return defered.promise;
     };
@@ -40,6 +44,7 @@ angular.module('joj.shared')
 
     service.getStreamUrls = function (url) {
       var defered = $q.defer();
+      service.fetchingStreams = true;
       service.getEpizodeIdFromUrl(url).then(function (videoId) {
         Varenie.one().get({clip: videoId}).then(function(streamInfo){
           var tmp = EpizodesExtractorService.extractStreamUrls(streamInfo);
@@ -48,6 +53,7 @@ angular.module('joj.shared')
             urls.push(service.nodes[0] + '/' + tmp[i].replace('dat/', ''));
           }
           defered.resolve(urls);
+          service.fetchingStreams = false;
         });
       });
       return defered.promise;

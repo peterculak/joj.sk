@@ -53,6 +53,11 @@ video {
   height: 360px;
 }
 
+.progress-player {
+  top: 180px;
+  left: 320px;
+}
+
 @media (max-width:640px) {
   video {
     width: 80%;
@@ -64,6 +69,11 @@ video {
 
   .epizodes {
     margin-top: 60px;
+  }
+
+  .progress-player {
+    top: 180px;
+    left: 160px;
   }
 }
 

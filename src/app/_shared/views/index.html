@@ -41,6 +41,8 @@
                 <md-list class="epizodes">
                   <md-list-item ng-repeat="epizode in epizodes"><md-button ng-class="{'md-raised md-primary' : ctrl.channel === epizode.url }" title="{{epizode.title}}" flex ng-click="ctrl.play(epizode)">{{epizode.title}} ({{epizode.date}})</md-button> </md-list-item>
                 </md-list>
+
+                <md-progress-linear ng-show="jojService.fetchingEpizodes" md-mode="indeterminate"></md-progress-linear>
               </div>
             </md-content>
           </md-tab>
@@ -95,7 +97,8 @@
         <div ng-show="ctrl.playing === 'jojLive'" id="jojLiveStream"></div>
         <div ng-show="ctrl.playing === 'ctLiveStream'" id="ctLiveStream"></div>
 
-        <video ng-show="ctrl.playing === 'jojArchive'" ng-src="{{ctrl.videoFromArchiveUrl}}" controls></video>
+        <md-progress-circular ng-show="jojService.fetchingStreams" class="progress-player" md-mode="indeterminate"></md-progress-circular>
+        <video ng-show="ctrl.playing === 'jojArchive' && !jojService.fetchingStreams && !jojService.fetchingEpizodes" ng-src="{{ctrl.videoFromArchiveUrl}}" controls></video>
 
       </div>
 

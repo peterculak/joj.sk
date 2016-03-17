@@ -19,6 +19,8 @@ angular.module('joj.shared')
       $scope.selectedIndex = 1;
     }
 
+    $scope.jojService = JojService;
+
     ctrl.playing = null;
 
     JojService.getArchive().then(function(r){
@@ -28,10 +30,10 @@ angular.module('joj.shared')
     $scope.archiveItem = {};
 
     $scope.fetchEpizodes = function () {
+      $scope.epizodes = [];
       var item = JSON.parse($scope.archiveItem);
       JojService.getEpizodesList(item.url).then(function (epizodes) {
         ctrl.play(epizodes[0]);
-        $scope.epizodes = [];
         for (var i in epizodes) {
           $scope.epizodes.push(epizodes[i]);
         }
