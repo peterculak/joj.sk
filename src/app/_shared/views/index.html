@@ -69,7 +69,7 @@
           </p>
         </div>
 
-      <div ng-show="!ctrl.vlcMissing" class="player-screen">
+      <div ng-cloak ng-show="!ctrl.vlcMissing" class="player-screen">
         <div id="vxgPlayerWrapper" class="vxgPlayerWrapper">
           <div ng-show="ctrl.isChrome()" class="vxgplayer"
                id="vxg_media_player"
@@ -88,17 +88,17 @@
                aspect-ratio-mode="1"
                auto-reconnect>
           </div>
-          <embed width="640" height="360" ng-show="!ctrl.isChrome()" type="application/x-vlc-plugin"
+          <embed ng-cloak width="640" height="360" ng-show="!ctrl.isChrome()" type="application/x-vlc-plugin"
                  pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"
                  id="vlc" loop="yes" autoplay="yes" target="{{ctrl.vxgPlayerUrl}}"></embed>
         </div>
 
-        <iframe ng-show="ctrl.playing === 'ta3'" ng-src="{{ctrl.ta3LiveStreamUrl}}" width="640" height="360" frameborder="0" scrolling="no"></iframe>
-        <div ng-show="ctrl.playing === 'jojLive'" id="jojLiveStream"></div>
-        <div ng-show="ctrl.playing === 'ctLiveStream'" id="ctLiveStream"></div>
+        <iframe ng-cloak ng-show="ctrl.playing === 'ta3'" ng-src="{{ctrl.ta3LiveStreamUrl}}" width="640" height="360" frameborder="0" scrolling="no"></iframe>
+        <div ng-cloak ng-show="ctrl.playing === 'jojLive'" id="jojLiveStream"></div>
+        <div ng-cloak ng-show="ctrl.playing === 'ctLiveStream'" id="ctLiveStream"></div>
 
         <md-progress-circular ng-show="jojService.fetchingStreams" class="progress-player" md-mode="indeterminate"></md-progress-circular>
-        <video ng-show="ctrl.playing === 'jojArchive' && !jojService.fetchingStreams && !jojService.fetchingEpizodes" ng-src="{{ctrl.videoFromArchiveUrl}}" controls></video>
+        <video ng-cloak ng-show="ctrl.playing === 'jojArchive' && !jojService.fetchingStreams && !jojService.fetchingEpizodes" ng-src="{{ctrl.videoFromArchiveUrl}}" controls></video>
 
       </div>
 
