@@ -97,16 +97,18 @@
         <div ng-show="ctrl.playing === 'jojLive'" id="jojLiveStream"></div>
         <div ng-show="ctrl.playing === 'ctLiveStream'" id="ctLiveStream"></div>
 
-        <div ng-show="isMobile && ctrl.channel === '' && !jojService.fetchingStreams && !jojService.fetchingEpizodes">
-          <h1>Mobil / tablet</h1>
-          <p>
-            1. Kliknite na menu v ľavom hornom rohu a zvoľte reláciu z archívu<br /><br />
+        <md-content>
+          <div ng-show="isMobile && ctrl.channel === '' && !jojService.fetchingStreams && !jojService.fetchingEpizodes">
+            <h1>Mobil / tablet</h1>
+            <p>
+              1. Kliknite na menu v ľavom hornom rohu a zvoľte reláciu z archívu<br /><br />
 
-            2. Zvoľte želanú epizódu zo zoznamu<br /><br />
+              2. Zvoľte želanú epizódu zo zoznamu<br /><br />
 
-            3. Po načítaní videa kliknite tlačítko prehrávať
-          </p>
-        </div>
+              3. Po načítaní videa kliknite tlačítko prehrávať
+            </p>
+          </div>
+        </md-content>
 
         <md-progress-circular ng-show="jojService.fetchingStreams" class="progress-player" md-mode="indeterminate"></md-progress-circular>
         <video ng-show="ctrl.playing === 'jojArchive' && !jojService.fetchingStreams && !jojService.fetchingEpizodes" ng-src="{{ctrl.videoFromArchiveUrl}}" controls></video>
