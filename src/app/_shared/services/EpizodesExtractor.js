@@ -22,18 +22,30 @@ angular.module('joj.shared')
     service.extractEpizodes = function (data) {
       var dom = extractHtmlDocument(data);
       var ep = $('.episodeListing > .box-carousel', dom);
-      var epizodes = $('li', ep);
+      if (ep.length) {
+        var epizodes = $('li', ep);
+      } else {
+        var epizodes = $('article', dom);
+      }
 
       var matches = [];
 
       epizodes.each(function(key, epizode){
         var a = $('a', epizode);
         var date = $('.date', epizode);
+        if (!date.length) {
+          var date = $('time', epizode);
+        }
         var title = $('.title', epizode);
+        if (!title.length) {
+          var actualTitle = a.attr('title');
+        } else {
+          var actualTitle = title.html();
+        }
         if (date.html().indexOf('href') === -1) {
           matches.push({
             date: date.html(),
-            title: title.html(),
+            title: actualTitle,
             url: a.attr('href')
           });
         }
