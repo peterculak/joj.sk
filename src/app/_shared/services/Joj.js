@@ -59,13 +59,6 @@ angular.module('joj.shared')
       return defered.promise;
     };
 
-    var params = {
-      wmode: "opaque",
-      allowFullScreen: "true",
-      allowScriptAccess: "always"
-    };
-    var attributes = {};
-
     service.playLiveStream = function (divId) {
       var flashvars = {
         basePath: "http:\/\/live.joj.sk\/",

@@ -8,11 +8,10 @@ angular.module('joj.shared')
 
     ctrl.playlist = Playlist;
 
-    ctrl.url = 'http://varenie.joj.sk/moja-mama-vari-lepsie-ako-tvoja-archiv/2016-03-04-moja-mama-vari-lepsie-ako-tvoja-premiera.html';
-
     ctrl.streams = [];
     ctrl.epizodes = [];
     ctrl.videoSrc = '';
+    ctrl.isPlaying = false;
 
     $scope.selectedIndex = 0;
     if (mobileAndTabletcheck()) {
@@ -33,7 +32,6 @@ angular.module('joj.shared')
       $scope.epizodes = [];
       var item = JSON.parse($scope.archiveItem);
       JojService.getEpizodesList(item.url).then(function (epizodes) {
-        ctrl.play(epizodes[0]);
         for (var i in epizodes) {
           $scope.epizodes.push(epizodes[i]);
         }
@@ -98,12 +96,12 @@ angular.module('joj.shared')
     ctrl.play = function (epizode) {
       ctrl.playing = 'jojArchive';
       ctrl.reset();
+      ctrl.toggleLeft();
       JojService.getStreamUrls(epizode.url).then(function (streams) {
         ctrl.streams = streams;
         ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(streams[streams.length - 1]);
         ctrl.playing = 'jojArchive';
         ctrl.channel = epizode.url;
-        ctrl.toggleLeft();
       });
       return false;
     };
