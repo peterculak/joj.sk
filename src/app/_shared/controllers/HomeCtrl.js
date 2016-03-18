@@ -237,7 +237,9 @@ angular.module('joj.shared')
 
     $timeout(function(){
       $('#vxgPlayerWrapper').addClass('vxgHidden');
-      ctrl.jojLive();
+      if (!mobileAndTabletcheck()) {
+        ctrl.jojLive();
+      }
     }, 2000);
 
     var loadStream = function (videoId, url) {
