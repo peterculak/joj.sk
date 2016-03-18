@@ -12,6 +12,7 @@ angular.module('joj.shared')
     ctrl.epizodes = [];
     ctrl.videoSrc = '';
     ctrl.isPlaying = false;
+    ctrl.channel = '';
 
     $scope.selectedIndex = 0;
     $scope.isMobile = false;
