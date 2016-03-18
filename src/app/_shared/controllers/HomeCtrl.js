@@ -14,6 +14,7 @@ angular.module('joj.shared')
     ctrl.isPlaying = false;
 
     $scope.selectedIndex = 0;
+    alert(mobileAndTabletcheck());
     if (mobileAndTabletcheck()) {
       $scope.selectedIndex = 1;
     }
