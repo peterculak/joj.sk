@@ -231,6 +231,7 @@ angular.module('joj.shared')
       $scope.hide = function() {
         $mdDialog.hide();
       };
+      $scope.isMobile = mobileAndTabletcheck();
     }
 
     $timeout(function(){

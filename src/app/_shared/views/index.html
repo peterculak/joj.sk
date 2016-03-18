@@ -97,7 +97,7 @@
         <div ng-show="ctrl.playing === 'jojLive'" id="jojLiveStream"></div>
         <div ng-show="ctrl.playing === 'ctLiveStream'" id="ctLiveStream"></div>
 
-        <div ng-show="mobileAndTabletcheck() && !jojService.fetchingStreams && !jojService.fetchingEpizodes && !ctrl.isPlaying">
+        <div ng-show="isMobile && !jojService.fetchingStreams && !jojService.fetchingEpizodes && !ctrl.isPlaying">
           <h1>Mobil / tablet</h1>
           <p>
             1. Kliknite na menu v ľavom hornom rohu a zvoľte reláciu z archívu<br /><br />
