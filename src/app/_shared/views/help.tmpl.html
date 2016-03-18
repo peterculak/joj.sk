@@ -10,7 +10,7 @@
       </div>
     </md-toolbar>
     <md-dialog-content>
-      <div ng-show="!mobileAndTabletcheck()" class="md-dialog-content">
+      <div ng-show="!isMobile" class="md-dialog-content">
         <p>Pre prvé štyri kanály (ta3, joj, joj+, wau) je potrebné mať nainštalovaný flash plugin (čo má v dnešnej dobe
           vačšina ľudí).<br/>
           Ak Vám ide Youtube tak ho máte z najvačšou pravdepodobnosťou nainštalovaný.<br/><br/>
@@ -33,7 +33,7 @@
           stačí len preklikať inštaláciu.
         </p>
       </div>
-      <div ng-show="mobileAndTabletcheck()">
+      <div ng-show="isMobile">
         <h2>Mobil / tablet</h2>
         <p>
           1. Kliknite na menu v ľavom hornom rohu a zvoľte reláciu z archívu<br /><br />

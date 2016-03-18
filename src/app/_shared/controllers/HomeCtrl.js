@@ -14,9 +14,10 @@ angular.module('joj.shared')
     ctrl.isPlaying = false;
 
     $scope.selectedIndex = 0;
-    alert(mobileAndTabletcheck());
+    $scope.isMobile = false;
     if (mobileAndTabletcheck()) {
       $scope.selectedIndex = 1;
+      $scope.isMobile = mobileAndTabletcheck();
     }
 
     $scope.jojService = JojService;
