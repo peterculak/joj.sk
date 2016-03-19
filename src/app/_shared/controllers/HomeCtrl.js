@@ -193,25 +193,28 @@ angular.module('joj.shared')
     };
 
     var playVxg = function (url) {
-
-      $('#vxgPlayerWrapper').removeClass('vxgHidden');
-
-      if (ctrl.isChrome()) {
-
-        $timeout(function () {
-          vxgPlayer.src(url);
-        }, 1000);
-
-        $timeout(function () {
-          vxgPlayer.play();
-        }, 2000);
-
-        $timeout(function () {
-          $('.vxgplayer-loader').addClass('hidden');
-        }, 3000);
+      if (mobileAndTabletcheck()) {
+        window.open('vlc://' + url);
       } else {
-        var vlc = document.getElementById('vlc');
-        vlc.playlist.playItem( vlc.playlist.add(url) );
+        $('#vxgPlayerWrapper').removeClass('vxgHidden');
+
+        if (ctrl.isChrome()) {
+
+          $timeout(function () {
+            vxgPlayer.src(url);
+          }, 1000);
+
+          $timeout(function () {
+            vxgPlayer.play();
+          }, 2000);
+
+          $timeout(function () {
+            $('.vxgplayer-loader').addClass('hidden');
+          }, 3000);
+        } else {
+          var vlc = document.getElementById('vlc');
+          vlc.playlist.playItem( vlc.playlist.add(url) );
+        }
       }
     };
 
