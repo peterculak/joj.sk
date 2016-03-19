@@ -93,4 +93,9 @@ angular.module('joj', [
       return check;
     };
 
+    window.isAndroid = function () {
+      var ua = navigator.userAgent.toLowerCase();
+      return ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
+    }
+
   });
