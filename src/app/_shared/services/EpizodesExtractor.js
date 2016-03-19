@@ -15,7 +15,7 @@ angular.module('joj.shared')
         archiveItems.push({title: a.attr('title'), url: a.attr('href')});
       });
       return archiveItems.sort(function (a, b) {
-        return b.title < a.title;
+        return b.title < a.title ? 0 : -1;
       });
     };
 
