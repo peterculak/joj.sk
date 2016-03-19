@@ -1,6 +1,6 @@
 angular.module('joj.shared')
 
-  .factory('JojService', function (jsonpService, EpizodesExtractorService, $q, Restangular) {
+  .factory('JojService', function (jsonpService, JojEpizodesExtractor, $q, Restangular) {
 
     var service = {};
 
@@ -13,7 +13,7 @@ angular.module('joj.shared')
       var defered = $q.defer();
 
       jsonpService.get('http://www.joj.sk/archiv.html').then(function (r) {
-        var archive = EpizodesExtractorService.extractArchive(r);
+        var archive = JojEpizodesExtractor.extractArchive(r);
         defered.resolve(archive);
       });
       return defered.promise;
@@ -24,7 +24,7 @@ angular.module('joj.shared')
       var defered = $q.defer();
       service.fetchingEpizodes = true;
       jsonpService.get(url).then(function (r) {
-        var epizodes = EpizodesExtractorService.extractEpizodes(r);
+        var epizodes = JojEpizodesExtractor.extractEpizodes(r);
         defered.resolve(epizodes);
         service.fetchingEpizodes = false;
       });
@@ -34,20 +34,20 @@ angular.module('joj.shared')
     service.getEpizodeIdFromUrl = function (url) {
       var defered = $q.defer();
       jsonpService.get(url).then(function (r) {
-        var videoId = EpizodesExtractorService.getVideoId(r);
+        var videoId = JojEpizodesExtractor.getVideoId(r);
         defered.resolve(videoId);
       });
       return defered.promise;
     };
 
-    var Varenie = Restangular.service('services/Video.php');
+    var JojApi = Restangular.service('services/Video.php');
 
     service.getStreamUrls = function (url) {
       var defered = $q.defer();
       service.fetchingStreams = true;
       service.getEpizodeIdFromUrl(url).then(function (videoId) {
-        Varenie.one().get({clip: videoId}).then(function(streamInfo){
-          var tmp = EpizodesExtractorService.extractStreamUrls(streamInfo);
+        JojApi.one().get({clip: videoId}).then(function(streamInfo){
+          var tmp = JojEpizodesExtractor.extractStreamUrls(streamInfo);
           var urls = [];
           for (var i in tmp) {
             urls.push(service.nodes[0] + '/' + tmp[i].replace('dat/', ''));

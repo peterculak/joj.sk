@@ -1,21 +1,19 @@
 angular.module('joj.shared')
 
-  .factory('EpizodesExtractorService', function ($q) {
+  .factory('MarkizaEpizodesExtractor', function ($q) {
 
     var service = {};
 
     service.extractArchive = function (data) {
       var dom = extractHtmlDocument(data);
-      var archiveList = $('.archiveList ul', dom);
-
+      var archiveList = $('ul.menuTree > li', dom);
       var archiveItems = [];
       archiveList.each(function (key, element) {
-        var li = $('li', element);
-        var a = $('span.title a', li);
+        var a = $('a', element);
         archiveItems.push({title: a.attr('title'), url: a.attr('href')});
       });
       return archiveItems.sort(function (a, b) {
-        return b.title < a.title ? 0 : -1;
+        return b.title < a.title;
       });
     };
 

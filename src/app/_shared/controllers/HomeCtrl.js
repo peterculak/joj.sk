@@ -1,6 +1,6 @@
 angular.module('joj.shared')
 
-  .controller('HomeCtrl', function ($scope, JojService, $sce, Player, Playlist, $timeout, VlcService, $mdSidenav, $mdMedia, $mdDialog) {
+  .controller('HomeCtrl', function ($scope, JojService, MarkizaService, $sce, Player, Playlist, $timeout, VlcService, $mdSidenav, $mdMedia, $mdDialog) {
     'use strict';
 
     var ctrl = this;
@@ -29,6 +29,10 @@ angular.module('joj.shared')
 
     JojService.getArchive().then(function(r){
       $scope.archive['joj'] = r;
+    });
+
+    MarkizaService.getArchive().then(function(r){
+      $scope.archive['markiza'] = r;
     });
 
     $scope.archiveItem = {};

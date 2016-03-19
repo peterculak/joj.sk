@@ -49,6 +49,18 @@
               </div>
             </md-content>
           </md-tab>
+
+          <md-tab label="markíza archív">
+            <md-content layout-padding>
+              <div layout="column">
+                <md-list ng-show="!showEpizodes">
+                  <md-list-item ng-repeat="item in archive['markiza']">
+                    <md-button ng-class="{'md-raised md-primary' : ctrl.epizode.title === item.title }" flex ng-click="fetchJojEpizodes(item)">{{item.title}}</md-button>
+                  </md-list-item>
+                </md-list>
+              </div>
+            </md-content>
+          </md-tab>
         </md-tabs>
 
     </md-sidenav>
