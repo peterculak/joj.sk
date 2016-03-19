@@ -121,13 +121,11 @@
         <div ng-show="ctrl.playing === 'jojLive'" id="jojLiveStream"></div>
         <div ng-show="ctrl.playing === 'ctLiveStream'" id="ctLiveStream"></div>
 
-        <div>
-          <video id="flashHlsVideoPlayer" class="video-js vjs-default-skin" controls preload="none" width="640" height="360"
-                 poster="http://video-js.zencoder.com/oceans-clip.png"
-                 data-setup='{"techOrder": ["flash"]}'>
-            <source src="http://mf.srv.markiza.sk:1935/brick-01/_definst_/smil:cache/00/0007/000718/00071813.smil/manifest.m3u8" type='video/mp4' />
-          </video>
-        </div>
+        <video id="flashHlsVideoPlayer" class="video-js vjs-default-skin vxgHidden" controls preload="none" width="640" height="360"
+               poster="http://video-js.zencoder.com/oceans-clip.png"
+               data-setup='{"techOrder": ["flash"]}'>
+          <source src="http://mf.srv.markiza.sk:1935/brick-01/_definst_/smil:cache/00/0007/000718/00071813.smil/manifest.m3u8" type='video/mp4' />
+        </video>
 
 
         <md-content layout-padding flex>

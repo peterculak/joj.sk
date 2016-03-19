@@ -11,7 +11,7 @@
   float: left;
 }
 
-.vxgPlayerWrapper.vxgHidden {
+.vxgHidden {
   position: absolute;
   top: -5000px;
   left: -5000px;
@@ -104,4 +104,3 @@ video {
   position: absolute;
   z-index: 1;
 }
-

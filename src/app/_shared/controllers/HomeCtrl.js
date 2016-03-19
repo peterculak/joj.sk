@@ -68,7 +68,7 @@ angular.module('joj.shared')
       ctrl.playing = '';
       $('#jojLiveStream').hide();
       if (dajtoVideo) {
-        dajtoVideo.off();
+        dajtoVideo.pause();
       }
       if (ctrl.isChrome()) {
         if (vxgPlayer && vxgPlayer.isPlaying()) {
@@ -81,6 +81,7 @@ angular.module('joj.shared')
 
       $('#vxgPlayerWrapper').addClass('vxgHidden');
       $('.vxgplayer-loader').removeClass('hidden');
+      $('#flashHlsVideoPlayer').addClass('vxgHidden');
       ctrl.channel = '';
     };
 
@@ -137,6 +138,7 @@ angular.module('joj.shared')
         if (mobileAndTabletcheck()) {
           openInVlc(stream);
         } else {
+          $('#flashHlsVideoPlayer').removeClass('vxgHidden');
           $timeout(function () {
             loadStream('flashHlsVideoPlayer', stream);
           });
@@ -202,7 +204,7 @@ angular.module('joj.shared')
     }
 
     ctrl.vxgPlayerUrl = '';
-    var dajtoVideo;
+    window.dajtoVideo = null;
 
     ctrl.playVgx = function (name) {
       if (!ctrl.isChrome() && !VlcService.isInstalled()) {
