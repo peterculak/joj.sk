@@ -14,6 +14,8 @@ angular.module('joj.shared')
     ctrl.isPlaying = false;
     ctrl.channel = '';
 
+    $scope.archive = {};
+
     $scope.selectedIndex = 0;
     $scope.isMobile = false;
     if (mobileAndTabletcheck()) {
@@ -26,17 +28,17 @@ angular.module('joj.shared')
     ctrl.playing = null;
 
     JojService.getArchive().then(function(r){
-      $scope.archive = r;
+      $scope.archive['joj'] = r;
     });
 
     $scope.archiveItem = {};
 
-    $scope.fetchEpizodes = function () {
-      $scope.epizodes = [];
-      var item = JSON.parse($scope.archiveItem);
-      JojService.getEpizodesList(item.url).then(function (epizodes) {
+    $scope.fetchJojEpizodes = function (archiveItem) {
+      $scope.showEpizodes = true;
+      $scope.archive['joj'].epizodes = [];
+      JojService.getEpizodesList(archiveItem.url).then(function (epizodes) {
         for (var i in epizodes) {
-          $scope.epizodes.push(epizodes[i]);
+          $scope.archive['joj'].epizodes.push(epizodes[i]);
         }
       });
     };

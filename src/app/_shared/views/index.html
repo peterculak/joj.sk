@@ -27,21 +27,24 @@
               </div>
             </md-content>
           </md-tab>
+
           <md-tab label="joj archív">
             <md-content layout-padding>
               <div layout="column">
-                <form ng-submit="ctrl.submit()">
-                  <md-select placeholder="Zvoľte reláciu z archívu JOJ" ng-change="fetchEpizodes()" ng-model="archiveItem">
-                    <md-option ng-repeat="item in archive" value="{{item}}">
-                      {{item.title}}
-                    </md-option>
-                  </md-select>
-                </form>
-
-                <md-list class="epizodes">
-                  <md-list-item ng-repeat="epizode in epizodes"><md-button ng-class="{'md-raised md-primary' : ctrl.channel === epizode.url }" title="{{epizode.title}}" flex ng-click="ctrl.play(epizode)">{{epizode.title}} ({{epizode.date}})</md-button> </md-list-item>
+                <md-list ng-show="!showEpizodes">
+                  <md-list-item ng-repeat="item in archive['joj']">
+                    <md-button ng-class="{'md-raised md-primary' : ctrl.epizode.title === item.title }" flex ng-click="fetchJojEpizodes(item)">{{item.title}}</md-button>
+                  </md-list-item>
                 </md-list>
 
+                <md-button ng-click="showEpizodes = 0" ng-show="showEpizodes" aria-label="Späť">
+                  <md-icon> arrow_back </md-icon>
+                </md-button>
+                <md-list ng-show="showEpizodes">
+                  <md-list-item ng-repeat="epizode in archive['joj'].epizodes">
+                    <md-button ng-class="{'md-raised md-primary' : ctrl.epizode.title === epizode.title }" flex ng-click="ctrl.play(epizode)">{{epizode.title}}</md-button>
+                  </md-list-item>
+                </md-list>
                 <md-progress-linear ng-show="jojService.fetchingEpizodes" md-mode="indeterminate"></md-progress-linear>
               </div>
             </md-content>
@@ -51,23 +54,22 @@
     </md-sidenav>
   </div>
 
-  <div layout="column" flex id="content">
-    <md-content layout="column" flex class="md-padding">
-        <div class="vlc-help" ng-show="ctrl.vlcMissing">
-          <h1>Na prehratie videa je potrebný prehávač VLC</h1>
-          <p>
-            1. Stiahnite si najnovšiu verziu VLC Playera <br />
-            <a class="download" href="http://www.videolan.org/vlc/" target="_blank">
-              <img src="/images/vlc-navod-1.jpg">
-            </a>
-            <br />
-            2. Otvorte stiahnutý súbor a začnite inštaláciu VLC Playera. <br /><br />
-            3. V okne inštalácie “Voľba súčastí programu” je potrebné, aby boli zaškrtnuté všetky možnosti ... <br />
-            <img src="/images/vlc-navod-4.png"> <br /><br />
+  <md-content layout="column" flex class="md-padding">
+    <div class="vlc-help" ng-show="ctrl.vlcMissing">
+      <h1>Na prehratie videa je potrebný prehávač VLC</h1>
+      <p>
+        1. Stiahnite si najnovšiu verziu VLC Playera <br />
+        <a class="download" href="http://www.videolan.org/vlc/" target="_blank">
+          <img src="/images/vlc-navod-1.jpg">
+        </a>
+        <br />
+        2. Otvorte stiahnutý súbor a začnite inštaláciu VLC Playera. <br /><br />
+        3. V okne inštalácie “Voľba súčastí programu” je potrebné, aby boli zaškrtnuté všetky možnosti ... <br />
+        <img src="/images/vlc-navod-4.png"> <br /><br />
 
-            4. Po nainštalovaní môžete je treba znovu načítať stránku alebo zatvoriť a otvoriť prehliadač.
-          </p>
-        </div>
+        4. Po nainštalovaní môžete je treba znovu načítať stránku alebo zatvoriť a otvoriť prehliadač.
+      </p>
+    </div>
 
       <div ng-show="!ctrl.vlcMissing" class="player-screen">
         <div id="vxgPlayerWrapper" class="vxgPlayerWrapper vxgHidden">
