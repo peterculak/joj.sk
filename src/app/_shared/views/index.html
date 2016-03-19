@@ -28,46 +28,46 @@
             </md-content>
           </md-tab>
 
-          <md-tab label="joj archív">
-            <md-content layout-padding>
-              <div layout="column">
-                <md-list ng-show="!showEpizodes">
-                  <md-list-item ng-repeat="item in archive['joj']">
-                    <md-button ng-class="{'md-raised md-primary' : ctrl.epizode.title === item.title }" flex ng-click="fetchJojEpizodes(item)">{{item.title}}</md-button>
-                  </md-list-item>
-                </md-list>
-
-                <md-button ng-click="showEpizodes = 0" ng-show="showEpizodes" aria-label="Späť">
-                  <md-icon> arrow_back </md-icon>
-                </md-button>
-                <md-list ng-show="showEpizodes">
-                  <md-list-item ng-repeat="epizode in archive['joj'].epizodes">
-                    <md-button ng-class="{'md-raised md-primary' : ctrl.epizode.title === epizode.title }" flex ng-click="ctrl.playJojArchiveItem(epizode)">{{epizode.title}}</md-button>
-                  </md-list-item>
-                </md-list>
-                <md-progress-linear ng-show="jojService.fetchingEpizodes" md-mode="indeterminate"></md-progress-linear>
-              </div>
-            </md-content>
-          </md-tab>
-
           <md-tab label="markíza archív">
             <md-content layout-padding>
               <div layout="column">
-                <md-list ng-show="!showEpizodes">
+                <md-list ng-show="!showMarkizaEpizodes">
                   <md-list-item ng-repeat="item in archive['markiza']">
                     <md-button ng-class="{'md-raised md-primary' : ctrl.epizode.title === item.title }" flex ng-click="fetchMarkizaEpizodes(item)">{{item.title}}</md-button>
                   </md-list-item>
                 </md-list>
 
-                <md-button ng-click="showEpizodes = 0" ng-show="showEpizodes" aria-label="Späť">
+                <md-button ng-click="showMarkizaEpizodes = 0" ng-show="showMarkizaEpizodes" aria-label="Späť">
                   <md-icon> arrow_back </md-icon>
                 </md-button>
-                <md-list ng-show="showEpizodes">
+                <md-list ng-show="showMarkizaEpizodes">
                   <md-list-item ng-repeat="epizode in archive['markiza'].epizodes">
                     <md-button ng-class="{'md-raised md-primary' : ctrl.epizode.title === epizode.title }" flex ng-click="ctrl.playMarkizaArchiveItem(epizode)">{{epizode.title}}</md-button>
                   </md-list-item>
                 </md-list>
                 <md-progress-linear ng-show="markizaService.fetchingEpizodes" md-mode="indeterminate"></md-progress-linear>
+              </div>
+            </md-content>
+          </md-tab>
+
+          <md-tab label="joj archív">
+            <md-content layout-padding>
+              <div layout="column">
+                <md-list ng-show="!showJojEpizodes">
+                  <md-list-item ng-repeat="item in archive['joj']">
+                    <md-button ng-class="{'md-raised md-primary' : ctrl.epizode.title === item.title }" flex ng-click="fetchJojEpizodes(item)">{{item.title}}</md-button>
+                  </md-list-item>
+                </md-list>
+
+                <md-button ng-click="showJojEpizodes = 0" ng-show="showJojEpizodes" aria-label="Späť">
+                  <md-icon> arrow_back </md-icon>
+                </md-button>
+                <md-list ng-show="showJojEpizodes">
+                  <md-list-item ng-repeat="epizode in archive['joj'].epizodes">
+                    <md-button ng-class="{'md-raised md-primary' : ctrl.epizode.title === epizode.title }" flex ng-click="ctrl.playJojArchiveItem(epizode)">{{epizode.title}}</md-button>
+                  </md-list-item>
+                </md-list>
+                <md-progress-linear ng-show="jojService.fetchingEpizodes" md-mode="indeterminate"></md-progress-linear>
               </div>
             </md-content>
           </md-tab>

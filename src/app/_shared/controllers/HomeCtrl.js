@@ -38,7 +38,7 @@ angular.module('joj.shared')
     $scope.archiveItem = {};
 
     $scope.fetchJojEpizodes = function (archiveItem) {
-      $scope.showEpizodes = true;
+      $scope.showJojEpizodes = true;
       $scope.archive['joj'].epizodes = [];
       JojService.getEpizodesList(archiveItem.url).then(function (epizodes) {
         for (var i in epizodes) {
@@ -48,7 +48,7 @@ angular.module('joj.shared')
     };
 
     $scope.fetchMarkizaEpizodes = function (archiveItem) {
-      $scope.showEpizodes = true;
+      $scope.showMarkizaEpizodes = true;
       $scope.archive['markiza'].epizodes = [];
       MarkizaService.getEpizodesList(archiveItem.url).then(function (epizodes) {
         for (var i in epizodes) {
