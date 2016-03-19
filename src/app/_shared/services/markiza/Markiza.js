@@ -1,6 +1,6 @@
 angular.module('joj.shared')
 
-  .factory('MarkizaService', function (jsonpService, MarkizaEpizodesExtractor, $q, Restangular) {
+  .factory('MarkizaService', function (jsonpService, MarkizaEpizodesExtractor, $q, RestMarkiza) {
 
     var service = {};
 
@@ -34,7 +34,7 @@ angular.module('joj.shared')
       return last.split('_').shift();
     };
 
-    var MarkizaApi = Restangular.service('json/video.json');
+    var MarkizaApi = RestMarkiza.service('json/video.json');
 
     service.getStreamUrls = function (url) {
       var defered = $q.defer();

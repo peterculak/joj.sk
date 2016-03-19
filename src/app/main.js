@@ -25,15 +25,9 @@ angular.module('joj', [
     });
 
     $locationProvider.html5Mode(true);
-
-    RestangularProvider.setBaseUrl('http://www.markiza.sk');
-    RestangularProvider.setDefaultHeaders({
-      'Accept': 'application/json'
-    });
-
   })
 
-  .run(function ($rootScope, $timeout, $mdSidenav, $mdIcon) {
+  .run(function ($rootScope, $timeout, $mdSidenav) {
     'use strict';
 
     $rootScope.toggleLeft = buildDelayedToggler('left');

@@ -1,6 +1,6 @@
 angular.module('joj.shared')
 
-  .factory('JojService', function (jsonpService, JojEpizodesExtractor, $q, Restangular) {
+  .factory('JojService', function (jsonpService, JojEpizodesExtractor, $q, RestJoj) {
 
     var service = {};
 
@@ -40,7 +40,7 @@ angular.module('joj.shared')
       return defered.promise;
     };
 
-    var JojApi = Restangular.service('services/Video.php');
+    var JojApi = RestJoj.service('services/Video.php');
 
     service.getStreamUrls = function (url) {
       var defered = $q.defer();
