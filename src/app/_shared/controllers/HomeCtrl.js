@@ -134,7 +134,13 @@ angular.module('joj.shared')
       MarkizaService.getStreamUrls(epizode.url).then(function (stream) {
         ctrl.playing = 'flashHlsVideo';
         ctrl.channel = epizode.url;
-        loadStream('flashHlsVideoPlayer', epizode.url);
+        if (mobileAndTabletcheck()) {
+          openInVlc(stream);
+        } else {
+          $timeout(function () {
+            loadStream('flashHlsVideoPlayer', stream);
+          });
+        }
       });
       return false;
     };
@@ -219,9 +225,13 @@ angular.module('joj.shared')
       return window.atob(name);
     };
 
+    var openInVlc = function (url) {
+      window.open('vlc://' + url);
+    };
+
     var playVxg = function (url) {
       if (mobileAndTabletcheck()) {
-        window.open('vlc://' + url);
+        openInVlc(url);
       } else {
         $('#vxgPlayerWrapper').removeClass('vxgHidden');
 
