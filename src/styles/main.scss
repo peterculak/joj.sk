@@ -68,6 +68,11 @@ video {
   left: 320px;
 }
 
+#ta3frame {
+  width: 640px;
+  height: 360px;
+}
+
 @media (max-width:640px) {
   video {
     width: 80%;
@@ -88,9 +93,15 @@ video {
     top: 180px;
     left: 160px;
   }
+
+  #ta3frame {
+    width: 320px;
+    height: 160px;
+  }
 }
 
 .menu {
   position: absolute;
   z-index: 1;
 }
+

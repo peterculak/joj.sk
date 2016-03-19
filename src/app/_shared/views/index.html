@@ -93,7 +93,7 @@
                  id="vlc" loop="yes" autoplay="yes" target="{{ctrl.vxgPlayerUrl}}"></embed>
         </div>
 
-        <iframe ng-show="ctrl.playing === 'ta3'" ng-src="{{ctrl.ta3LiveStreamUrl}}" width="640" height="360" frameborder="0" scrolling="no"></iframe>
+        <iframe id="ta3frame" ng-show="ctrl.playing === 'ta3'" ng-src="{{ctrl.ta3LiveStreamUrl}}" frameborder="0" scrolling="no"></iframe>
         <div ng-show="ctrl.playing === 'jojLive'" id="jojLiveStream"></div>
         <div ng-show="ctrl.playing === 'ctLiveStream'" id="ctLiveStream"></div>
 
