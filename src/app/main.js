@@ -26,7 +26,7 @@ angular.module('joj', [
 
     $locationProvider.html5Mode(true);
 
-    RestangularProvider.setBaseUrl('http://www.joj.sk');
+    RestangularProvider.setBaseUrl('http://www.markiza.sk');
     RestangularProvider.setDefaultHeaders({
       'Accept': 'application/json'
     });

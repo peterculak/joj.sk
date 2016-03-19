@@ -4,13 +4,22 @@ angular.module('joj.shared')
 
     var service = {};
 
+    service.nodes = [];
+
     service.extractArchive = function (data) {
       var dom = extractHtmlDocument(data);
       var archiveList = $('ul.menuTree > li', dom);
       var archiveItems = [];
       archiveList.each(function (key, element) {
-        var a = $('a', element);
-        archiveItems.push({title: a.attr('title'), url: a.attr('href')});
+        if ($(element).hasClass('has-child')) {
+          var a = $('a', $(element).next());
+          var parent = $('a', element);
+          var title = parent.attr('title');
+        } else {
+          var a = $('a', element);
+          var title = a.attr('title');
+        }
+        archiveItems.push({title: title, url: a.attr('href')});
       });
       return archiveItems.sort(function (a, b) {
         return b.title < a.title;
@@ -19,33 +28,27 @@ angular.module('joj.shared')
 
     service.extractEpizodes = function (data) {
       var dom = extractHtmlDocument(data);
-      var ep = $('.episodeListing > .box-carousel', dom);
-      if (ep.length) {
-        var epizodes = $('li', ep);
-      } else {
-        var epizodes = $('article', dom);
-      }
+      var ep = $('div.video-list', dom);
+      var epizodes = $('div.item', ep);
 
       var matches = [];
 
       epizodes.each(function(key, epizode){
-        var a = $('a', epizode);
-        var date = $('.date', epizode);
-        if (!date.length) {
-          var date = $('time', epizode);
-        }
-        var title = $('.title', epizode);
-        if (!title.length) {
-          var actualTitle = a.attr('title');
-        } else {
-          var actualTitle = title.html();
-        }
-        if (date.html().indexOf('href') === -1) {
-          matches.push({
+        var imageContainer = $('div.image', epizode);
+        var image = $('img', imageContainer);
+        var date = $('span.date', epizode);
+        var length = $('span.length', epizode);
+        var a = $('a', imageContainer);
+        var title = $('h2 a', epizode);
+
+        if (a) {
+          var data = {
             date: date.html(),
-            title: actualTitle,
-            url: a.attr('href')
-          });
+            title: title.html(),
+            url: a.attr('href'),
+            length: length.html()
+          };
+          matches.push(data);
         }
       });
       return matches;
@@ -57,13 +60,13 @@ angular.module('joj.shared')
       return match[1];
     };
 
+    /**
+     *
+     * @param data json
+     * @returns {Array}
+     */
     service.extractStreamUrls = function (data) {
-      var re = /path="(.*?)"/gmi;
-      var matches = [];
-      while ((match = re.exec(data)) != null) {
-        matches.push(match[1]);
-      }
-      return matches;
+      return data.playlist[0].baseUrl + '/' + data.playlist[0].url.replace('f4m', 'm3u8');
     };
 
     var extractHtmlDocument = function (data) {

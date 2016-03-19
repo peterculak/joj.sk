@@ -8,7 +8,6 @@ angular.module('joj.shared')
 
     ctrl.playlist = Playlist;
 
-    ctrl.streams = [];
     ctrl.epizodes = [];
     ctrl.videoSrc = '';
     ctrl.isPlaying = false;
@@ -24,6 +23,7 @@ angular.module('joj.shared')
     }
 
     $scope.jojService = JojService;
+    $scope.markizaService = MarkizaService;
 
     ctrl.playing = null;
 
@@ -43,6 +43,16 @@ angular.module('joj.shared')
       JojService.getEpizodesList(archiveItem.url).then(function (epizodes) {
         for (var i in epizodes) {
           $scope.archive['joj'].epizodes.push(epizodes[i]);
+        }
+      });
+    };
+
+    $scope.fetchMarkizaEpizodes = function (archiveItem) {
+      $scope.showEpizodes = true;
+      $scope.archive['markiza'].epizodes = [];
+      MarkizaService.getEpizodesList(archiveItem.url).then(function (epizodes) {
+        for (var i in epizodes) {
+          $scope.archive['markiza'].epizodes.push(epizodes[i]);
         }
       });
     };
@@ -105,15 +115,30 @@ angular.module('joj.shared')
       JojService.playWauLiveStream('jojLiveStream');
     };
 
-    ctrl.play = function (epizode) {
+    ctrl.playJojArchiveItem = function (epizode) {
       ctrl.playing = 'jojArchive';
       ctrl.reset();
       ctrl.toggleLeft();
       JojService.getStreamUrls(epizode.url).then(function (streams) {
-        ctrl.streams = streams;
         ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(streams[streams.length - 1]);
         ctrl.playing = 'jojArchive';
         ctrl.channel = epizode.url;
+      });
+      return false;
+    };
+
+    ctrl.playMarkizaArchiveItem = function (epizode) {
+      ctrl.playing = 'jojArchive';
+      ctrl.reset();
+      ctrl.toggleLeft();
+      MarkizaService.getStreamUrls(epizode.url).then(function (stream) {
+        //ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(stream);
+        ctrl.playing = 'jojArchive';
+        ctrl.channel = epizode.url;
+        Player.play('jojLiveStream', [{
+          title: epizode.title,
+          file: stream
+        }]);
       });
       return false;
     };
