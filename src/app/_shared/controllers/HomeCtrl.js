@@ -20,6 +20,7 @@ angular.module('joj.shared')
     if (mobileAndTabletcheck()) {
       $scope.selectedIndex = 1;
       $scope.isMobile = mobileAndTabletcheck();
+      $scope.showMarkizaEpizodes = 1;
     }
 
     $scope.jojService = JojService;
