@@ -1,6 +1,6 @@
 <?php
 
-$data = file_get_contents('sk_cz_clean.m3u');
+$data = file_get_contents('cz_and_sport.m3u');
 
 $lines = explode("\n", $data);
 

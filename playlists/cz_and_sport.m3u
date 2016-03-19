@@ -1,0 +1,47 @@
+#EXTM3U
+#EXTINF:0,CT1
+http://212.79.96.134:8001
+#EXTINF:0,CT2
+http://212.79.96.134:8002
+#EXTINF:0,Nova
+http://212.79.96.134:8003
+#EXTINF:0,Nova Cinema
+http://212.79.96.134:8020
+#EXTINF:0,Prima
+http://212.79.96.134:8004
+#EXTINF:0,Prima Love
+http://212.79.96.134:8019
+#EXTINF:0,Prima Zoom
+http://212.79.96.134:8011
+#EXTINF:0,Ocko
+http://212.79.96.134:8012
+#EXTINF:0,Slagr TV
+http://212.79.96.134:8013
+#EXTINF:0,Noe
+http://212.79.96.134:8017
+#EXTINF:0,Retro
+http://212.79.96.134:8018
+#EXTINF:0,TV Barrandov
+http://212.79.96.134:8022
+#EXTINF:0,TV Barrandov Plus
+http://212.79.96.134:8028
+#EXTINF:0,1 Classic
+http://212.79.96.134:8024
+#EXTINF:0,Neviem
+http://212.79.96.134:8009
+#EXTINF:0,Sky Sports 1
+rtmp://lb.miplayer.net:1935/goLive/_definst_/ibrodtv21_6vhudlq8
+#EXTINF:0,Sky Sports 2
+rtmp://lb.miplayer.net:1935/goLive/_definst_/ibrodtv22_j5p1mted
+#EXTINF:0,Sky Sports 3
+rtmp://lb.miplayer.net:1935/goLive/_definst_/ibrodtv23_5px3ntfs
+#EXTINF:0,Sky Sports 4
+rtmp://lb.miplayer.net:1935/goLive/_definst_/ibrodtv24_f84rdmkk
+#EXTINF:0,Sky Sports 5
+rtmp://lb.miplayer.net:1935/goLive/_definst_/ibrodtv25_wt250ssk
+#EXTINF:0,BT Sport Europe
+rtmp://lb.miplayer.net:1935/goLive/_definst_/ibrodtvbteu_5msgj44x
+#EXTINF:0,BT Sports 1
+http://bit.ly/20JY8YL
+#EXTINF:0,BT Sports 2
+http://bit.ly/1RTqgYZ
