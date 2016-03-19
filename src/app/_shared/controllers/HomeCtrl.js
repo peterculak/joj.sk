@@ -58,6 +58,9 @@ angular.module('joj.shared')
         if (vxgPlayer && vxgPlayer.isPlaying()) {
           vxgPlayer.stop();
         }
+      } else {
+        var vlc = document.getElementById('vlc');
+        vlc.playlist.stop();
       }
 
       $('#vxgPlayerWrapper').addClass('vxgHidden');

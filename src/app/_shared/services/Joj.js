@@ -85,7 +85,9 @@ angular.module('joj.shared')
         ui: "uiPlay|uiFullScreen|uiLargePlay|uiVolume|uiQuality"
       };
       var attributes = {};
-      var params = {};
+      var params = {
+        allowFullScreen: "true"
+      };
       swfobject.embedSWF("http:\/\/player.joj.sk\/JojLivePanel.5.4.swf", divId, "640", "360", "10", "", flashvars, params, attributes);
     };
 
@@ -98,7 +100,9 @@ angular.module('joj.shared')
         ui: "uiPlay|uiFullScreen|uiLargePlay|uiVolume|uiQuality"
       };
       var attributes = {};
-      var params = {};
+      var params = {
+        allowFullScreen: "true"
+      };
       swfobject.embedSWF("http:\/\/player.joj.sk\/JojLivePanel.5.4.swf", divId, "640", "360", "10", "", flashvars, params, attributes);
     };
     
