@@ -3,9 +3,8 @@
 $data = file_get_contents('cz_and_sport.m3u');
 
 $lines = explode("\n", $data);
-
 $items = [];
-for ($i = 3; $i <= 174; $i+=2) {
+for ($i = 1; $i <= 174; $i+=2) {
     $line1 = $lines[$i];
     $line2 = isset($lines[$i+1]) ? $lines[$i+1] : null;
 
