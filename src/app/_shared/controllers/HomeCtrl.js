@@ -132,13 +132,9 @@ angular.module('joj.shared')
       ctrl.reset();
       ctrl.toggleLeft();
       MarkizaService.getStreamUrls(epizode.url).then(function (stream) {
-        //ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(stream);
-        ctrl.playing = 'jojArchive';
+        ctrl.playing = 'flashHlsVideo';
         ctrl.channel = epizode.url;
-        Player.play('jojLiveStream', [{
-          title: epizode.title,
-          file: stream
-        }]);
+        loadStream('flashHlsVideoPlayer', epizode.url);
       });
       return false;
     };
