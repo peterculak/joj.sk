@@ -206,7 +206,7 @@ angular.module('joj.shared')
     }
 
     ctrl.vxgPlayerUrl = '';
-    window.dajtoVideo = null;
+    var dajtoVideo;
 
     ctrl.playVgx = function (name) {
       if (!ctrl.isChrome() && !VlcService.isInstalled()) {
