@@ -122,6 +122,7 @@ angular.module('joj.shared')
       ctrl.playing = 'jojArchive';
       ctrl.reset();
       ctrl.toggleLeft();
+      ctrl.epizode = epizode;
       JojService.getStreamUrls(epizode.url).then(function (streams) {
         ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(JojService.findHighQualityStream(streams));
         ctrl.playing = 'jojArchive';
@@ -134,6 +135,7 @@ angular.module('joj.shared')
       ctrl.playing = 'jojArchive';
       ctrl.reset();
       ctrl.toggleLeft();
+      ctrl.epizode = epizode;
       MarkizaService.getStreamUrls(epizode.url).then(function (stream) {
         ctrl.playing = 'flashHlsVideo';
         ctrl.channel = epizode.url;
