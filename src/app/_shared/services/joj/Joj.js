@@ -61,8 +61,8 @@ angular.module('joj.shared')
         return q['720p']['url'];
       }
 
-      if (q['hi']) {
-        return q['hi']['url'];
+      if (q['pal']) {
+        return q['pal']['url'];
       }
 
       if (q['540p']) {
