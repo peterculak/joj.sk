@@ -143,7 +143,7 @@ angular.module('joj.shared')
           $('#flashHlsVideoPlayer').removeClass('vxgHidden');
           $timeout(function () {
             loadStream('flashHlsVideoPlayer', stream);
-          }, 500);
+          }, 1000);
         }
       });
       return false;
