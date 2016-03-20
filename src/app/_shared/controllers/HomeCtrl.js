@@ -230,7 +230,7 @@ angular.module('joj.shared')
     };
 
     var openInVlc = function (url) {
-      window.open('vlc://' + url);
+      window.open(url);
     };
 
     var playVxg = function (url) {
