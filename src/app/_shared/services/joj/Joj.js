@@ -7,8 +7,6 @@ angular.module('joj.shared')
     service.fetchingEpizodes = false;
     service.fetchingStreams  = false;
 
-    service.nodes = ['http://n16.joj.sk/storage'];
-
     service.getArchive = function () {
       var defered = $q.defer();
 
@@ -47,16 +45,31 @@ angular.module('joj.shared')
       service.fetchingStreams = true;
       service.getEpizodeIdFromUrl(url).then(function (videoId) {
         JojApi.one().get({clip: videoId}).then(function(streamInfo){
-          var tmp = JojEpizodesExtractor.extractStreamUrls(streamInfo);
-          var urls = [];
-          for (var i in tmp) {
-            urls.push(service.nodes[0] + '/' + tmp[i].replace('dat/', ''));
-          }
-          defered.resolve(urls);
+          defered.resolve(JojEpizodesExtractor.extractStreamUrls(streamInfo));
           service.fetchingStreams = false;
         });
       });
       return defered.promise;
+    };
+
+    service.findHighQualityStream = function (streams) {
+      var q = [];
+      for (var i in streams) {
+        q[streams[i]['quality']] = streams[i];
+      }
+      if (q['720p']) {
+        return q['720p']['url'];
+      }
+
+      if (q['hi']) {
+        return q['hi']['url'];
+      }
+
+      if (q['540p']) {
+        return q['540p']['url'];
+      }
+
+      return streams[streams.length - 1]['url'];
     };
 
     service.playLiveStream = function (divId) {

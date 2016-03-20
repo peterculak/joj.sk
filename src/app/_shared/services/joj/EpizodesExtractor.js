@@ -4,6 +4,8 @@ angular.module('joj.shared')
 
     var service = {};
 
+    service.nodes = ['http://n16.joj.sk/storage'];
+
     service.extractArchive = function (data) {
       var dom = extractHtmlDocument(data);
       var archiveList = $('.archiveList ul', dom);
@@ -55,15 +57,28 @@ angular.module('joj.shared')
 
     service.getVideoId = function (data) {
       var re = /data-divid="(.*?)-/;
-      var match = re.exec(data.contents)
+      var match = re.exec(data.contents);
       return match[1];
     };
 
     service.extractStreamUrls = function (data) {
-      var re = /path="(.*?)"/gmi;
+      var re = /file .*?>/gmi;
       var matches = [];
       while ((match = re.exec(data)) != null) {
-        matches.push(match[1]);
+        var rep = /path="(.*?)"/gmi;
+        var p = rep.exec(match[0]);
+
+        var req = /quality="(.*?)"/gmi;
+        var q = req.exec(match[0]);
+
+        var reqId = /id="(.*?)"/gmi;
+        var qId = reqId.exec(match[0]);
+
+        matches.push({
+          url: service.nodes[0] + '/' + p[1].replace('dat/', ''),
+          quality: q[1],
+          qualityId: qId[1],
+        });
       }
       return matches;
     };

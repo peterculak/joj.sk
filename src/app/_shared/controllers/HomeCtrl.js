@@ -123,7 +123,7 @@ angular.module('joj.shared')
       ctrl.reset();
       ctrl.toggleLeft();
       JojService.getStreamUrls(epizode.url).then(function (streams) {
-        ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(streams[streams.length - 1]);
+        ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(JojService.findHighQualityStream(streams));
         ctrl.playing = 'jojArchive';
         ctrl.channel = epizode.url;
       });
