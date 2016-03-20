@@ -111,7 +111,7 @@
                aspect-ratio-mode="1"
                auto-reconnect>
           </div>
-          <embed width="640" height="360" ng-show="!ctrl.isChrome()" type="application/x-vlc-plugin"
+          <embed width="640" height="360" ng-if="!ctrl.isChrome()" type="application/x-vlc-plugin"
                  pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"
                  id="vlc" loop="yes" autoplay="yes" target="{{ctrl.vxgPlayerUrl}}"></embed>
         </div>
