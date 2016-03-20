@@ -138,7 +138,7 @@ angular.module('joj.shared')
         ctrl.playing = 'flashHlsVideo';
         ctrl.channel = epizode.url;
         if (mobileAndTabletcheck()) {
-          openInVlc(stream);
+          window.open(stream);
         } else {
           $('#flashHlsVideoPlayer').removeClass('vxgHidden');
           $timeout(function () {
