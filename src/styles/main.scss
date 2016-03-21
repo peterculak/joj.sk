@@ -123,4 +123,30 @@ md-grid-tile {
   &:hover {
     cursor: pointer;
   }
+
+  div {
+    height: 100%;
+  }
+}
+
+md-icon {
+  &.play {
+    color: rgba(255,255,255,.18);
+    font-size: 500%;
+    transform: translate(-50%,-160%);
+
+    transition: all 350ms cubic-bezier(.215, .61, .215, 1);
+    -webkit-transition: all 350ms cubic-bezier(.215, .61, .215, 1);
+    -moz-transition: all 350ms cubic-bezier(.215, .61, .215, 1);
+    -o-transition: all 350ms cubic-bezier(.215, .61, .215, 1);
+
+    &--small {
+      font-size: 220%;
+      transform: translateY(-70%);
+    }
+
+    &:hover {
+      color: white;
+    }
+  }
 }

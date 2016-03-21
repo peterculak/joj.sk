@@ -127,13 +127,15 @@
         md-gutter="12px" md-gutter-gt-sm="8px">
       <md-grid-tile ng-click="ctrl.playMarkizaArchiveItem(epizode)" ng-repeat="epizode in whatson['markiza']" class="gray"
                     md-rowspan="2" md-rowspan-gt-md="3" md-colspan="1" md-colspan-gt-md="2" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
-        <md-grid-tile-footer>
-          <h3>{{epizode.title}}</h3>
-        </md-grid-tile-footer>
+          <md-icon layout="row" class="play"> play_circle_outline </md-icon>
+          <md-grid-tile-footer>
+            <h3>{{epizode.title}}</h3>
+          </md-grid-tile-footer>
       </md-grid-tile>
 
       <md-grid-tile ng-click="ctrl.playJojArchiveItem(epizode)" ng-repeat="epizode in whatson['joj']" class="gray"
                     md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
+        <md-icon class="play play--small"> play_circle_outline </md-icon>
         <md-grid-tile-footer>
           <h3>{{epizode.title}} - {{epizode.type}}</h3>
         </md-grid-tile-footer>
