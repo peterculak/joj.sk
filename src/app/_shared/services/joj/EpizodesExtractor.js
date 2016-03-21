@@ -54,7 +54,7 @@ angular.module('joj.shared')
           matches.push({
             date: date.html(),
             title: actualTitle,
-            type: type.length ? type : null,
+            type: type.length ? type.html() : null,
             url: a.attr('href'),
             image: image.length ? image.attr('src') : null
           });
