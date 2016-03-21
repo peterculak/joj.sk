@@ -33,7 +33,7 @@
               <div layout="column">
                 <md-list ng-show="!showMarkizaEpizodes">
                   <md-list-item ng-repeat="item in archive['markiza']">
-                    <md-button title="{{item.title}}" ng-class="{'md-raised md-primary' : ctrl.epizode.title === item.title }" flex ng-click="fetchMarkizaEpizodes(item)">{{item.title}}</md-button>
+                    <md-button title="{{item.title}}" flex ng-click="fetchMarkizaEpizodes(item)">{{item.title}}</md-button>
                   </md-list-item>
                 </md-list>
 
@@ -55,7 +55,7 @@
               <div layout="column">
                 <md-list ng-show="!showJojEpizodes">
                   <md-list-item ng-repeat="item in archive['joj']">
-                    <md-button ng-class="{'md-raised md-primary' : ctrl.epizode.title === item.title }" flex ng-click="fetchJojEpizodes(item)">{{item.title}}</md-button>
+                    <md-button flex ng-click="fetchJojEpizodes(item)">{{item.title}}</md-button>
                   </md-list-item>
                 </md-list>
 
