@@ -46,8 +46,10 @@ angular.module('joj.shared')
         var type = $('p.type', epizode);
 
         var valid = true;
-        if (date.length && date.html().indexOf('href') === -1) {
-          valid = false;
+        if (date && date.html()) {
+          if (date.html().indexOf('href') > -1) {
+            valid = false;
+          }
         }
 
         if (valid) {
@@ -66,7 +68,7 @@ angular.module('joj.shared')
     service.extractEpizodes = function (data) {
       var dom = extractHtmlDocument(data);
       var ep = $('.episodeListing > .box-carousel', dom);
-      return extractEpizodes(ep);
+      return extractEpizodes(ep, dom);
     };
 
     service.getVideoId = function (data) {

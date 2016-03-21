@@ -42,7 +42,7 @@
                 </md-button>
                 <md-list ng-show="showMarkizaEpizodes">
                   <md-list-item ng-repeat="epizode in archive['markiza'].epizodes">
-                    <md-button title="{{epizode.title}}" ng-class="{'md-raised md-primary' : ctrl.epizode.title === epizode.title }" flex ng-click="ctrl.playMarkizaArchiveItem(epizode)">{{epizode.title}}</md-button>
+                    <md-button title="{{epizode.title}} ({{epizode.date}})" ng-class="{'md-raised md-primary' : ctrl.epizode.title === epizode.title }" flex ng-click="ctrl.playMarkizaArchiveItem(epizode)">{{epizode.title}} ({{epizode.date}})</md-button>
                   </md-list-item>
                 </md-list>
                 <md-progress-linear ng-show="markizaService.fetchingEpizodes" md-mode="indeterminate"></md-progress-linear>
@@ -64,7 +64,7 @@
                 </md-button>
                 <md-list ng-show="showJojEpizodes">
                   <md-list-item ng-repeat="epizode in archive['joj'].epizodes">
-                    <md-button title="{{epizode.title}}" ng-class="{'md-raised md-primary' : ctrl.epizode.title === epizode.title }" flex ng-click="ctrl.playJojArchiveItem(epizode)">{{epizode.title}}</md-button>
+                    <md-button title="{{epizode.title}} ({{epizode.date}})" ng-class="{'md-raised md-primary' : ctrl.epizode.title === epizode.title }" flex ng-click="ctrl.playJojArchiveItem(epizode)">{{epizode.title}} ({{epizode.date}})</md-button>
                   </md-list-item>
                 </md-list>
                 <md-progress-linear ng-show="jojService.fetchingEpizodes" md-mode="indeterminate"></md-progress-linear>
