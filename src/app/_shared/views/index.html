@@ -115,17 +115,24 @@
           <source src="http://mf.srv.markiza.sk:1935/brick-01/_definst_/smil:cache/00/0007/000718/00071813.smil/manifest.m3u8" type='video/mp4' />
         </video>
 
-        <md-progress-circular ng-show="jojService.fetchingStreams" class="progress-player" md-mode="indeterminate"></md-progress-circular>
-        <video ng-show="ctrl.playing === 'jojArchive' && !jojService.fetchingStreams && !jojService.fetchingEpizodes" ng-src="{{ctrl.videoFromArchiveUrl}}" controls></video>
+        <video id="html5video" ng-show="ctrl.playing === 'jojArchive' && !jojService.fetchingStreams && !jojService.fetchingEpizodes" ng-src="{{ctrl.videoFromArchiveUrl}}" controls></video>
 
       </div>
 
+    <md-progress-circular ng-show="jojService.fetchingStreams || markizaService.fetchingStreams" class="progress-player" md-mode="indeterminate"></md-progress-circular>
 
-    <md-grid-list ng-show="!ctrl.playing"
+    <md-grid-list ng-show="!ctrl.playing && !jojService.fetchingStreams && !markizaService.fetchingStreams"
         md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6"
         md-row-height-gt-md="2:1" md-row-height="3:1"
         md-gutter="12px" md-gutter-gt-sm="8px">
-      <md-grid-tile ng-click="ctrl.playMarkizaArchiveItem(epizode)" ng-repeat="epizode in whatson" class="gray"
+      <md-grid-tile ng-click="ctrl.playMarkizaArchiveItem(epizode)" ng-repeat="epizode in whatson['markiza']" class="gray"
+                    md-rowspan="3" md-colspan="2" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
+        <md-grid-tile-footer>
+          <h3>{{epizode.title}}</h3>
+        </md-grid-tile-footer>
+      </md-grid-tile>
+
+      <md-grid-tile ng-click="ctrl.playJojArchiveItem(epizode)" ng-repeat="epizode in whatson['joj']" class="gray"
                     md-rowspan="3" md-colspan="2" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
         <md-grid-tile-footer>
           <h3>{{epizode.title}}</h3>

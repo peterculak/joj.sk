@@ -7,12 +7,21 @@ angular.module('joj.shared')
     service.fetchingEpizodes = false;
     service.fetchingStreams  = false;
 
+    service.getWhatsOn = function () {
+      var defered = $q.defer();
+      jsonpService.get('http://www.joj.sk/archiv.html').then(function (r) {
+        defered.resolve(MarkizaEpizodesExtractor.extractWhatsOn(r));
+      });
+      return defered.promise;
+    };
+
     service.getArchive = function () {
       var defered = $q.defer();
 
       jsonpService.get('http://www.joj.sk/archiv.html').then(function (r) {
         var archive = JojEpizodesExtractor.extractArchive(r);
-        defered.resolve(archive);
+        var whatson = JojEpizodesExtractor.extractWhatsOn(r);
+        defered.resolve({archive: archive, whatson: whatson});
       });
       return defered.promise;
     };

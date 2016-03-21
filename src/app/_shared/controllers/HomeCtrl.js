@@ -14,10 +14,7 @@ angular.module('joj.shared')
     ctrl.channel = '';
 
     $scope.archive = {};
-
-    MarkizaService.getWhatsOn().then(function(r){
-      $scope.whatson = r;
-    });
+    $scope.whatson = {};
 
     $scope.selectedIndex = 0;
     $scope.isMobile = false;
@@ -34,11 +31,13 @@ angular.module('joj.shared')
     ctrl.playing = null;
 
     JojService.getArchive().then(function(r){
-      $scope.archive['joj'] = r;
+      $scope.archive['joj'] = r.archive;
+      $scope.whatson['joj'] = r.whatson;
     });
 
     MarkizaService.getArchive().then(function(r){
-      $scope.archive['markiza'] = r;
+      $scope.archive['markiza'] = r.archive;
+      $scope.whatson['markiza'] = r.whatson;
     });
 
     $scope.archiveItem = {};
@@ -68,10 +67,12 @@ angular.module('joj.shared')
     };
 
     ctrl.reset = function () {
+      document.getElementById("html5video").pause();
       ctrl.epizodes = [];
       ctrl.ta3LiveStreamUrl = '';
       ctrl.videoSrc = '';
       ctrl.playing = '';
+
       $('#jojLiveStream').hide();
       if (dajtoVideo) {
         dajtoVideo.pause();

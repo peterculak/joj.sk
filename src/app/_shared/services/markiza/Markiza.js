@@ -20,7 +20,8 @@ angular.module('joj.shared')
 
       jsonpService.get('http://videoarchiv.markiza.sk/uvod').then(function (r) {
         var archive = MarkizaEpizodesExtractor.extractArchive(r);
-        defered.resolve(archive);
+        var whatson = MarkizaEpizodesExtractor.extractWhatsOn(r);
+        defered.resolve({archive: archive, whatson: whatson});
       });
       return defered.promise;
     };

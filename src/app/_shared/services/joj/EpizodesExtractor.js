@@ -21,9 +21,7 @@ angular.module('joj.shared')
       });
     };
 
-    service.extractEpizodes = function (data) {
-      var dom = extractHtmlDocument(data);
-      var ep = $('.episodeListing > .box-carousel', dom);
+    var extractEpizodes = function (ep) {
       if (ep.length) {
         var epizodes = $('li', ep);
       } else {
@@ -44,15 +42,31 @@ angular.module('joj.shared')
         } else {
           var actualTitle = title.html();
         }
-        if (date.html().indexOf('href') === -1) {
+        var image = $('img', epizode);
+        var type = $('p.type', epizode);
+
+        var valid = true;
+        if (date.length && date.html().indexOf('href') === -1) {
+          valid = false;
+        }
+
+        if (valid) {
           matches.push({
             date: date.html(),
             title: actualTitle,
-            url: a.attr('href')
+            type: type.length ? type : null,
+            url: a.attr('href'),
+            image: image.length ? image.attr('src') : null
           });
         }
       });
       return matches;
+    };
+
+    service.extractEpizodes = function (data) {
+      var dom = extractHtmlDocument(data);
+      var ep = $('.episodeListing > .box-carousel', dom);
+      return extractEpizodes(ep);
     };
 
     service.getVideoId = function (data) {
@@ -81,6 +95,12 @@ angular.module('joj.shared')
         });
       }
       return matches;
+    };
+
+    service.extractWhatsOn = function (data) {
+      var dom = extractHtmlDocument(data);
+      var ep = $('div.archivePopup div.col3SmallBox', dom);
+      return extractEpizodes(ep);
     };
 
     var extractHtmlDocument = function (data) {

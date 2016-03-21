@@ -32,6 +32,12 @@
   position: absolute;
 }
 
+.progress-player {
+  left: 50%;
+  top: 50%;
+  position: absolute;
+}
+
 .vlc-help {
   position: absolute;
   left: calc(50% - 230px);
@@ -70,11 +76,6 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar) .md-button:not(.md-raised), md
 video {
   width: 640px;
   height: 360px;
-}
-
-.progress-player {
-  top: 180px;
-  left: 320px;
 }
 
 #ta3frame {
