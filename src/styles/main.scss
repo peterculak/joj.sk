@@ -45,6 +45,14 @@
   margin: 0;
 }
 
+#mb_button--back {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 0;
+  margin: 0;
+}
+
 .md-dialog-content {
   a {
     color: rgb(255, 64, 129);
@@ -104,4 +112,10 @@ video {
 .menu {
   position: absolute;
   z-index: 1;
+}
+
+md-grid-tile {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
 }

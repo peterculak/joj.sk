@@ -7,6 +7,14 @@ angular.module('joj.shared')
     service.fetchingEpizodes = false;
     service.fetchingStreams  = false;
 
+    service.getWhatsOn = function () {
+      var defered = $q.defer();
+      jsonpService.get('http://videoarchiv.markiza.sk/uvod').then(function (r) {
+        defered.resolve(MarkizaEpizodesExtractor.extractWhatsOn(r));
+      });
+      return defered.promise;
+    };
+
     service.getArchive = function () {
       var defered = $q.defer();
 

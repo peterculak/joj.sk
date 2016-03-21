@@ -77,23 +77,12 @@
   </div>
 
   <md-content layout="column" flex class="md-padding">
-    <div class="vlc-help" ng-show="ctrl.vlcMissing">
-      <h1>Na prehratie videa je potrebný prehávač VLC</h1>
-      <p>
-        1. Stiahnite si najnovšiu verziu VLC Playera <br />
-        <a class="download" href="http://www.videolan.org/vlc/" target="_blank">
-          <img src="/images/vlc-navod-1.jpg">
-        </a>
-        <br />
-        2. Otvorte stiahnutý súbor a začnite inštaláciu VLC Playera. <br /><br />
-        3. V okne inštalácie “Voľba súčastí programu” je potrebné, aby boli zaškrtnuté všetky možnosti ... <br />
-        <img src="/images/vlc-navod-4.png"> <br /><br />
 
-        4. Po nainštalovaní môžete je treba znovu načítať stránku alebo zatvoriť a otvoriť prehliadač.
-      </p>
-    </div>
+    <md-button ng-show="ctrl.playing" ng-click="ctrl.reset()" id="mb_button--back" aria-label="Naspäť" class="md-fab md-primary" >
+      <md-icon> arrow_back </md-icon>
+    </md-button>
 
-      <div ng-show="!ctrl.vlcMissing" class="player-screen">
+      <div ng-show="!ctrl.vlcMissing && ctrl.playing" class="player-screen">
         <div id="vxgPlayerWrapper" class="vxgPlayerWrapper vxgHidden">
           <div ng-show="ctrl.isChrome()" class="vxgplayer"
                id="vxg_media_player"
@@ -126,30 +115,25 @@
           <source src="http://mf.srv.markiza.sk:1935/brick-01/_definst_/smil:cache/00/0007/000718/00071813.smil/manifest.m3u8" type='video/mp4' />
         </video>
 
-
-        <md-content layout-padding flex>
-          <div ng-show="isMobile && ctrl.channel === '' && !jojService.fetchingStreams && !jojService.fetchingEpizodes">
-            <h1>TV kanály</h1>
-            <p>Pre pozeranie televíznych kanálov je potrebné mať nainštalovanú aplikáciu: <br />
-              pre Android:<a href="https://play.google.com/store/apps/details?id=org.videolan.vlc&hl=sk" target="_blank">VLC pre android</a> <br/>
-              pre iPhone:<a href="https://itunes.apple.com/gb/app/vlc-for-mobile/id650377962" target="_blank">VLC pre iPhone</a>
-            </p>
-
-            <h1>Markíza / JOJ Archív</h1>
-            <p>
-              1. Kliknite na menu v ľavom hornom rohu a zvoľte reláciu z archívu<br /><br />
-
-              2. Zvoľte želanú epizódu zo zoznamu<br /><br />
-
-              3. Po načítaní videa kliknite tlačítko prehrávať
-            </p>
-          </div>
-        </md-content>
-
         <md-progress-circular ng-show="jojService.fetchingStreams" class="progress-player" md-mode="indeterminate"></md-progress-circular>
         <video ng-show="ctrl.playing === 'jojArchive' && !jojService.fetchingStreams && !jojService.fetchingEpizodes" ng-src="{{ctrl.videoFromArchiveUrl}}" controls></video>
 
       </div>
+
+
+    <md-grid-list ng-show="!ctrl.playing"
+        md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6"
+        md-row-height-gt-md="2:1" md-row-height="3:1"
+        md-gutter="12px" md-gutter-gt-sm="8px">
+      <md-grid-tile ng-click="ctrl.playMarkizaArchiveItem(epizode)" ng-repeat="epizode in whatson" class="gray"
+                    md-rowspan="3" md-colspan="2" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
+        <md-grid-tile-footer>
+          <h3>{{epizode.title}}</h3>
+        </md-grid-tile-footer>
+      </md-grid-tile>
+
+
+    </md-grid-list>
 
       <md-button ng-click="ctrl.showHelpDialog()" id="mb_button--help" aria-label="Napoveda" class="md-fab" >
         <md-icon> help </md-icon>

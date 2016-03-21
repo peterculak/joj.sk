@@ -15,6 +15,10 @@ angular.module('joj.shared')
 
     $scope.archive = {};
 
+    MarkizaService.getWhatsOn().then(function(r){
+      $scope.whatson = r;
+    });
+
     $scope.selectedIndex = 0;
     $scope.isMobile = false;
     if (mobileAndTabletcheck()) {
@@ -288,7 +292,7 @@ angular.module('joj.shared')
       $('#vxgPlayerWrapper').addClass('vxgHidden');
       $('#flashHlsVideoPlayer').addClass('vxgHidden');
       if (!mobileAndTabletcheck()) {
-        ctrl.jojLive();
+        //ctrl.jojLive();
       }
     }, 2000);
 

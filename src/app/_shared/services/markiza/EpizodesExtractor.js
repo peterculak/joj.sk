@@ -29,29 +29,7 @@ angular.module('joj.shared')
     service.extractEpizodes = function (data) {
       var dom = extractHtmlDocument(data);
       var ep = $('div.video-list', dom);
-      var epizodes = $('div.item', ep);
-
-      var matches = [];
-
-      epizodes.each(function(key, epizode){
-        var imageContainer = $('div.image', epizode);
-        var image = $('img', imageContainer);
-        var date = $('span.date', epizode);
-        var length = $('span.length', epizode);
-        var a = $('a', imageContainer);
-        var title = $('h2 a', epizode);
-
-        if (a) {
-          var data = {
-            date: date.html(),
-            title: title.html(),
-            url: a.attr('href'),
-            length: length.html()
-          };
-          matches.push(data);
-        }
-      });
-      return matches;
+      return extractEpizodes(ep);
     };
 
     service.getVideoId = function (data) {
@@ -67,6 +45,38 @@ angular.module('joj.shared')
      */
     service.extractStreamUrls = function (data) {
       return data.playlist[0].baseUrl + '/' + data.playlist[0].url.replace('f4m', 'm3u8');
+    };
+
+    service.extractWhatsOn = function (data) {
+      var dom = extractHtmlDocument(data);
+      var ep = $('div.slider-wrap', dom);
+      return extractEpizodes(ep);
+    };
+
+    var extractEpizodes = function (ep) {
+      var epizodes = $('div.item', ep);
+      var matches = [];
+
+      epizodes.each(function(key, epizode){
+        var imageContainer = $('div.image', epizode);
+        var image = $('img', imageContainer);
+        var date = $('span.date', epizode);
+        var length = $('span.length', epizode);
+        var a = $('a', imageContainer);
+        var title = $('h2 a', epizode);
+
+        if (a) {
+          var data = {
+            date: date ? date.html() : null,
+            title: title.html(),
+            url: a.attr('href'),
+            length: length.html(),
+            image: image.attr('src')
+          };
+          matches.push(data);
+        }
+      });
+      return matches;
     };
 
     var extractHtmlDocument = function (data) {
