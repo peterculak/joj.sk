@@ -83,7 +83,9 @@ angular.module('joj.shared')
         }
       } else {
         var vlc = document.getElementById('vlc');
-        vlc.playlist.stop();
+        if (vlc.playlist) {
+          vlc.playlist.stop();
+        }
       }
 
       $('#vxgPlayerWrapper').addClass('vxgHidden');
