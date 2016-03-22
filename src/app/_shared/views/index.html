@@ -67,6 +67,50 @@
                     <md-button title="{{epizode.title}} ({{epizode.date}})" ng-class="{'md-raised md-primary' : ctrl.epizode.title + ctrl.epizode.date === epizode.title + epizode.date }" flex ng-click="ctrl.playJojArchiveItem(epizode)">{{epizode.title}} ({{epizode.date}})</md-button>
                   </md-list-item>
                 </md-list>
+                <md-progress-linear ng-show="jojService.fetchingEpizodes || jojPlusService.fetchingEpizodes || wauService.fetchingEpizodes" md-mode="indeterminate"></md-progress-linear>
+              </div>
+            </md-content>
+          </md-tab>
+
+          <md-tab label="joj+ archív">
+            <md-content layout-padding>
+              <div layout="column">
+                <md-list ng-show="!showJojPlusEpizodes">
+                  <md-list-item ng-repeat="item in archive['jojplus']">
+                    <md-button flex ng-click="fetchJojPlusEpizodes(item)">{{item.title}}</md-button>
+                  </md-list-item>
+                </md-list>
+
+                <md-button ng-click="showJojPlusEpizodes = 0" ng-show="showJojPlusEpizodes" aria-label="Späť">
+                  <md-icon> arrow_back </md-icon>
+                </md-button>
+                <md-list ng-show="showJojPlusEpizodes">
+                  <md-list-item ng-repeat="epizode in archive['jojplus'].epizodes">
+                    <md-button title="{{epizode.title}} ({{epizode.date}})" ng-class="{'md-raised md-primary' : ctrl.epizode.title + ctrl.epizode.date === epizode.title + epizode.date }" flex ng-click="ctrl.playJojPlusArchiveItem(epizode)">{{epizode.title}} ({{epizode.date}})</md-button>
+                  </md-list-item>
+                </md-list>
+                <md-progress-linear ng-show="jojService.fetchingEpizodes" md-mode="indeterminate"></md-progress-linear>
+              </div>
+            </md-content>
+          </md-tab>
+
+          <md-tab label="wau archív">
+            <md-content layout-padding>
+              <div layout="column">
+                <md-list ng-show="!showWauEpizodes">
+                  <md-list-item ng-repeat="item in archive['wau']">
+                    <md-button flex ng-click="fetchWauEpizodes(item)">{{item.title}}</md-button>
+                  </md-list-item>
+                </md-list>
+
+                <md-button ng-click="showWauEpizodes = 0" ng-show="showWauEpizodes" aria-label="Späť">
+                  <md-icon> arrow_back </md-icon>
+                </md-button>
+                <md-list ng-show="showWauEpizodes">
+                  <md-list-item ng-repeat="epizode in archive['wau'].epizodes">
+                    <md-button title="{{epizode.title}} ({{epizode.date}})" ng-class="{'md-raised md-primary' : ctrl.epizode.title + ctrl.epizode.date === epizode.title + epizode.date }" flex ng-click="ctrl.playWauArchiveItem(epizode)">{{epizode.title}} ({{epizode.date}})</md-button>
+                  </md-list-item>
+                </md-list>
                 <md-progress-linear ng-show="jojService.fetchingEpizodes" md-mode="indeterminate"></md-progress-linear>
               </div>
             </md-content>
@@ -134,6 +178,22 @@
       </md-grid-tile>
 
       <md-grid-tile ng-click="ctrl.playJojArchiveItem(epizode)" ng-repeat="epizode in whatson['joj']" class="gray"
+                    md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
+        <md-icon class="play play--small"> play_circle_outline </md-icon>
+        <md-grid-tile-footer>
+          <h3>{{epizode.title}} - {{epizode.type}}</h3>
+        </md-grid-tile-footer>
+      </md-grid-tile>
+
+      <md-grid-tile ng-click="ctrl.playJojPlusArchiveItem(epizode)" ng-repeat="epizode in whatson['jojplus']" class="gray"
+                    md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
+        <md-icon class="play play--small"> play_circle_outline </md-icon>
+        <md-grid-tile-footer>
+          <h3>{{epizode.title}} - {{epizode.type}}</h3>
+        </md-grid-tile-footer>
+      </md-grid-tile>
+
+      <md-grid-tile ng-click="ctrl.playWauArchiveItem(epizode)" ng-repeat="epizode in whatson['wau']" class="gray"
                     md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
         <md-icon class="play play--small"> play_circle_outline </md-icon>
         <md-grid-tile-footer>

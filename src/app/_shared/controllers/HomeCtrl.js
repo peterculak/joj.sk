@@ -1,6 +1,6 @@
 angular.module('joj.shared')
 
-  .controller('HomeCtrl', function ($scope, JojService, MarkizaService, $sce, Player, Playlist, $timeout, VlcService, $mdSidenav, $mdMedia, $mdDialog) {
+  .controller('HomeCtrl', function ($scope, JojService, JojPlusService, WauService, MarkizaService, $sce, Player, Playlist, $timeout, VlcService, $mdSidenav, $mdMedia, $mdDialog) {
     'use strict';
 
     var ctrl = this;
@@ -27,12 +27,26 @@ angular.module('joj.shared')
 
     $scope.jojService = JojService;
     $scope.markizaService = MarkizaService;
+    $scope.wauService = WauService;
 
     ctrl.playing = null;
 
-    JojService.getArchive().then(function(r){
+    var joj = new JojService();
+    joj.getArchive().then(function(r){
       $scope.archive['joj'] = r.archive;
       $scope.whatson['joj'] = r.whatson;
+    });
+
+    var jojplus = new JojPlusService();
+    jojplus.getArchive().then(function(r){
+      $scope.archive['jojplus'] = r.archive;
+      $scope.whatson['jojplus'] = r.whatson;
+    });
+
+    var wau = new WauService();
+    wau.getArchive().then(function(r){
+      $scope.archive['wau'] = r.archive;
+      $scope.whatson['wau'] = r.whatson;
     });
 
     MarkizaService.getArchive().then(function(r){
@@ -45,9 +59,29 @@ angular.module('joj.shared')
     $scope.fetchJojEpizodes = function (archiveItem) {
       $scope.showJojEpizodes = true;
       $scope.archive['joj'].epizodes = [];
-      JojService.getEpizodesList(archiveItem.url).then(function (epizodes) {
+      joj.getEpizodesList(archiveItem.url).then(function (epizodes) {
         for (var i in epizodes) {
           $scope.archive['joj'].epizodes.push(epizodes[i]);
+        }
+      });
+    };
+
+    $scope.fetchJojPlusEpizodes = function (archiveItem) {
+      $scope.showJojPlusEpizodes = true;
+      $scope.archive['jojplus'].epizodes = [];
+      joj.getEpizodesList(archiveItem.url).then(function (epizodes) {
+        for (var i in epizodes) {
+          $scope.archive['jojplus'].epizodes.push(epizodes[i]);
+        }
+      });
+    };
+
+    $scope.fetchWauEpizodes = function (archiveItem) {
+      $scope.showWauEpizodes = true;
+      $scope.archive['wau'].epizodes = [];
+      wau.getEpizodesList(archiveItem.url).then(function (epizodes) {
+        for (var i in epizodes) {
+          $scope.archive['wau'].epizodes.push(epizodes[i]);
         }
       });
     };
@@ -106,7 +140,7 @@ angular.module('joj.shared')
       ctrl.reset();
       ctrl.playing = 'jojLiveStream';
       ctrl.channel = 'joj';
-      JojService.playLiveStream('jojLiveStream');
+      joj.playLiveStream('jojLiveStream');
       return false;
     };
 
@@ -114,7 +148,7 @@ angular.module('joj.shared')
       ctrl.reset();
       ctrl.playing = 'jojLiveStream';
       ctrl.channel = 'joj+';
-      JojService.playJojPlusLiveStream('jojLiveStream');
+      joj.playLiveStream('jojLiveStream');
       return false;
     };
 
@@ -122,7 +156,7 @@ angular.module('joj.shared')
       ctrl.reset();
       ctrl.playing = 'jojLiveStream';
       ctrl.channel = 'wau';
-      JojService.playWauLiveStream('jojLiveStream');
+      wau.playLiveStream('jojLiveStream');
     };
 
     ctrl.playJojArchiveItem = function (epizode) {
@@ -130,8 +164,34 @@ angular.module('joj.shared')
       ctrl.reset();
       ctrl.toggleLeft();
       ctrl.epizode = epizode;
-      JojService.getStreamUrls(epizode.url).then(function (streams) {
-        ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(JojService.findHighQualityStream(streams));
+      joj.getStreamUrls(epizode.url).then(function (streams) {
+        ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(joj.findHighQualityStream(streams));
+        ctrl.playing = 'jojArchive';
+        ctrl.channel = epizode.url;
+      });
+      return false;
+    };
+
+    ctrl.playJojPlusArchiveItem = function (epizode) {
+      ctrl.playing = 'jojArchive';
+      ctrl.reset();
+      ctrl.toggleLeft();
+      ctrl.epizode = epizode;
+      joj.getStreamUrls(epizode.url).then(function (streams) {
+        ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(joj.findHighQualityStream(streams));
+        ctrl.playing = 'jojArchive';
+        ctrl.channel = epizode.url;
+      });
+      return false;
+    };
+
+    ctrl.playWauArchiveItem = function (epizode) {
+      ctrl.playing = 'jojArchive';
+      ctrl.reset();
+      ctrl.toggleLeft();
+      ctrl.epizode = epizode;
+      wau.getStreamUrls(epizode.url).then(function (streams) {
+        ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(joj.findHighQualityStream(streams));
         ctrl.playing = 'jojArchive';
         ctrl.channel = epizode.url;
       });

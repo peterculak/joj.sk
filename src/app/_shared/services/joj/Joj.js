@@ -2,23 +2,26 @@ angular.module('joj.shared')
 
   .factory('JojService', function (jsonpService, JojEpizodesExtractor, $q, RestJoj) {
 
-    var service = {};
+    var service = function (){
 
-    service.fetchingEpizodes = false;
-    service.fetchingStreams  = false;
+    };
 
-    service.getWhatsOn = function () {
+    service.prototype.api = RestJoj.service('services/Video.php');
+    service.prototype.archiveUrl = 'http://www.joj.sk/archiv.html';
+    service.prototype.fetchingEpizodes = false;
+    service.prototype.fetchingStreams  = false;
+
+    service.prototype.getWhatsOn = function () {
       var defered = $q.defer();
-      jsonpService.get('http://www.joj.sk/archiv.html').then(function (r) {
+      jsonpService.get(service.archiveUrl).then(function (r) {
         defered.resolve(MarkizaEpizodesExtractor.extractWhatsOn(r));
       });
       return defered.promise;
     };
 
-    service.getArchive = function () {
+    service.prototype.getArchive = function () {
       var defered = $q.defer();
-
-      jsonpService.get('http://www.joj.sk/archiv.html').then(function (r) {
+      jsonpService.get(service.prototype.archiveUrl).then(function (r) {
         var archive = JojEpizodesExtractor.extractArchive(r);
         var whatson = JojEpizodesExtractor.extractWhatsOn(r);
         defered.resolve({archive: archive, whatson: whatson});
@@ -26,8 +29,7 @@ angular.module('joj.shared')
       return defered.promise;
     };
 
-
-    service.getEpizodesList = function (url) {
+    service.prototype.getEpizodesList = function (url) {
       var defered = $q.defer();
       service.fetchingEpizodes = true;
       jsonpService.get(url).then(function (r) {
@@ -38,7 +40,7 @@ angular.module('joj.shared')
       return defered.promise;
     };
 
-    service.getEpizodeIdFromUrl = function (url) {
+    service.prototype.getEpizodeIdFromUrl = function (url) {
       var defered = $q.defer();
       jsonpService.get(url).then(function (r) {
         var videoId = JojEpizodesExtractor.getVideoId(r);
@@ -47,13 +49,11 @@ angular.module('joj.shared')
       return defered.promise;
     };
 
-    var JojApi = RestJoj.service('services/Video.php');
-
-    service.getStreamUrls = function (url) {
+    service.prototype.getStreamUrls = function (url) {
       var defered = $q.defer();
       service.fetchingStreams = true;
-      service.getEpizodeIdFromUrl(url).then(function (videoId) {
-        JojApi.one().get({clip: videoId}).then(function(streamInfo){
+      service.prototype.getEpizodeIdFromUrl(url).then(function (videoId) {
+        service.prototype.api.one().get({clip: videoId}).then(function(streamInfo){
           defered.resolve(JojEpizodesExtractor.extractStreamUrls(streamInfo));
           service.fetchingStreams = false;
         });
@@ -61,7 +61,7 @@ angular.module('joj.shared')
       return defered.promise;
     };
 
-    service.findHighQualityStream = function (streams) {
+    service.prototype.findHighQualityStream = function (streams) {
       var q = [];
       for (var i in streams) {
         q[streams[i]['quality']] = streams[i];
@@ -81,7 +81,7 @@ angular.module('joj.shared')
       return streams[streams.length - 1]['url'];
     };
 
-    service.playLiveStream = function (divId) {
+    service.prototype.playLiveStream = function (divId) {
       var flashvars = {
         basePath: "http:\/\/live.joj.sk\/",
         pageId: 4,
@@ -95,36 +95,6 @@ angular.module('joj.shared')
         allowScriptAccess: "always"
       };
       var attributes = {};
-      swfobject.embedSWF("http:\/\/player.joj.sk\/JojLivePanel.5.4.swf", divId, "640", "360", "10", "", flashvars, params, attributes);
-    };
-
-    service.playJojPlusLiveStream = function (divId) {
-      var flashvars = {
-        basePath: "http:\/\/plus.joj.sk\/",
-        pageId: 54,
-        channel: 26,
-        playerURL: "http:\/\/player.joj.sk\/JojPlayer.5.7.swf",
-        ui: "uiPlay|uiFullScreen|uiLargePlay|uiVolume|uiQuality"
-      };
-      var attributes = {};
-      var params = {
-        allowFullScreen: "true"
-      };
-      swfobject.embedSWF("http:\/\/player.joj.sk\/JojLivePanel.5.4.swf", divId, "640", "360", "10", "", flashvars, params, attributes);
-    };
-
-    service.playWauLiveStream = function (divId) {
-      var flashvars = {
-        basePath: "http:\/\/wau.joj.sk\/",
-        pageId: 36655,
-        channel: 40,
-        playerURL: "http:\/\/player.joj.sk\/JojPlayer.5.7.swf",
-        ui: "uiPlay|uiFullScreen|uiLargePlay|uiVolume|uiQuality"
-      };
-      var attributes = {};
-      var params = {
-        allowFullScreen: "true"
-      };
       swfobject.embedSWF("http:\/\/player.joj.sk\/JojLivePanel.5.4.swf", divId, "640", "360", "10", "", flashvars, params, attributes);
     };
     
