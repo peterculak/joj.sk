@@ -14,7 +14,7 @@ angular.module('joj.shared')
     service.prototype.getWhatsOn = function () {
       var defered = $q.defer();
       jsonpService.get(service.archiveUrl).then(function (r) {
-        defered.resolve(MarkizaEpizodesExtractor.extractWhatsOn(r));
+        defered.resolve(JojEpizodesExtractor.extractWhatsOn(r));
       });
       return defered.promise;
     };
