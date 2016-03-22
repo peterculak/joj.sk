@@ -148,7 +148,7 @@ angular.module('joj.shared')
       ctrl.reset();
       ctrl.playing = 'jojLiveStream';
       ctrl.channel = 'joj+';
-      joj.playLiveStream('jojLiveStream');
+      jojplus.playLiveStream('jojLiveStream');
       return false;
     };
 
