@@ -49,8 +49,17 @@ angular.module('joj.shared')
 
     service.extractWhatsOn = function (data) {
       var dom = extractHtmlDocument(data);
-      var ep = $('div.slider-wrap', dom);
-      return extractEpizodes(ep);
+      var sliderEpizodes = [];
+
+      var ep = $('div.video-list', dom);
+      ep.each(function (key, videoGroup) {
+        var epizodes = extractEpizodes(videoGroup);
+        for (var i in epizodes) {
+          sliderEpizodes.push(epizodes[i]);
+        }
+      });
+
+      return sliderEpizodes;
     };
 
     var extractEpizodes = function (ep) {
