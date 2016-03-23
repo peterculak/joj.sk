@@ -12,6 +12,7 @@ angular.module('joj.shared')
     ctrl.videoSrc = '';
     ctrl.isPlaying = false;
     ctrl.channel = '';
+    ctrl.loading = true;
 
     $scope.archive = {};
     $scope.whatson = {};
@@ -37,6 +38,7 @@ angular.module('joj.shared')
     MarkizaService.getArchive().then(function(r){
       $scope.archive['markiza'] = r.archive;
       $scope.whatson['markiza'] = r.whatson;
+      ctrl.loading = false;
 
       joj.getArchive().then(function(r){
         $scope.archive['joj'] = r.archive;

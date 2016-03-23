@@ -163,7 +163,7 @@
 
       </div>
 
-    <md-progress-circular ng-show="jojService.fetchingStreams || markizaService.fetchingStreams" class="progress-player" md-mode="indeterminate"></md-progress-circular>
+    <md-progress-circular ng-show="ctrl.loading || jojService.fetchingStreams || markizaService.fetchingStreams" class="progress-player" md-mode="indeterminate"></md-progress-circular>
 
 
     <md-grid-list ng-show="!ctrl.playing && !jojService.fetchingStreams && !markizaService.fetchingStreams"
