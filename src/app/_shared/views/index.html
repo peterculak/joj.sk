@@ -165,11 +165,12 @@
 
     <md-progress-circular ng-show="jojService.fetchingStreams || markizaService.fetchingStreams" class="progress-player" md-mode="indeterminate"></md-progress-circular>
 
+
     <md-grid-list ng-show="!ctrl.playing && !jojService.fetchingStreams && !markizaService.fetchingStreams"
         md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6"
         md-row-height-gt-md="2:1" md-row-height="3:1"
         md-gutter="12px" md-gutter-gt-sm="8px">
-      <md-grid-tile ng-click="ctrl.playMarkizaArchiveItem(epizode)" ng-repeat="epizode in whatson['markiza']" class="gray"
+      <md-grid-tile ng-click="ctrl.playMarkizaArchiveItem(epizode)" ng-repeat="epizode in whatson['markiza']" class="gray repeated-item"
                     md-rowspan="2" md-rowspan-gt-md="3" md-colspan="1" md-colspan-gt-md="2" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
           <md-icon layout="row" class="play"> play_circle_outline </md-icon>
           <md-grid-tile-footer>
@@ -177,7 +178,7 @@
           </md-grid-tile-footer>
       </md-grid-tile>
 
-      <md-grid-tile ng-click="ctrl.playJojArchiveItem(epizode)" ng-repeat="epizode in whatson['joj']" class="gray"
+      <md-grid-tile ng-click="ctrl.playJojArchiveItem(epizode)" ng-repeat="epizode in whatson['joj']" class="gray repeated-item"
                     md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
         <md-icon class="play play--small"> play_circle_outline </md-icon>
         <md-grid-tile-footer>
@@ -185,7 +186,7 @@
         </md-grid-tile-footer>
       </md-grid-tile>
 
-      <md-grid-tile ng-click="ctrl.playJojPlusArchiveItem(epizode)" ng-repeat="epizode in whatson['jojplus']" class="gray"
+      <md-grid-tile ng-click="ctrl.playJojPlusArchiveItem(epizode)" ng-repeat="epizode in whatson['jojplus']" class="gray repeated-item"
                     md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
         <md-icon class="play play--small"> play_circle_outline </md-icon>
         <md-grid-tile-footer>
@@ -193,7 +194,7 @@
         </md-grid-tile-footer>
       </md-grid-tile>
 
-      <md-grid-tile ng-click="ctrl.playWauArchiveItem(epizode)" ng-repeat="epizode in whatson['wau']" class="gray"
+      <md-grid-tile ng-click="ctrl.playWauArchiveItem(epizode)" ng-repeat="epizode in whatson['wau']" class="gray repeated-item"
                     md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
         <md-icon class="play play--small"> play_circle_outline </md-icon>
         <md-grid-tile-footer>

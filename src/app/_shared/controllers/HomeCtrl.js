@@ -32,26 +32,26 @@ angular.module('joj.shared')
     ctrl.playing = null;
 
     var joj = new JojService();
-    joj.getArchive().then(function(r){
-      $scope.archive['joj'] = r.archive;
-      $scope.whatson['joj'] = r.whatson;
-    });
-
     var jojplus = new JojPlusService();
-    jojplus.getArchive().then(function(r){
-      $scope.archive['jojplus'] = r.archive;
-      $scope.whatson['jojplus'] = r.whatson;
-    });
-
     var wau = new WauService();
-    wau.getArchive().then(function(r){
-      $scope.archive['wau'] = r.archive;
-      $scope.whatson['wau'] = r.whatson;
-    });
-
     MarkizaService.getArchive().then(function(r){
       $scope.archive['markiza'] = r.archive;
       $scope.whatson['markiza'] = r.whatson;
+
+      joj.getArchive().then(function(r){
+        $scope.archive['joj'] = r.archive;
+        $scope.whatson['joj'] = r.whatson;
+
+        jojplus.getArchive().then(function(r){
+          $scope.archive['jojplus'] = r.archive;
+          $scope.whatson['jojplus'] = r.whatson;
+
+          wau.getArchive().then(function(r){
+            $scope.archive['wau'] = r.archive;
+            $scope.whatson['wau'] = r.whatson;
+          });
+        });
+      });
     });
 
     $scope.archiveItem = {};

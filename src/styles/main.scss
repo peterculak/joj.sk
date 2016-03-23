@@ -150,3 +150,76 @@ md-icon {
     }
   }
 }
+
+.repeated-item {
+
+  -webkit-transition: opacity 1s, -webkit-transform 1s cubic-bezier(0.2,1,0.3,1);
+  transition: opacity 1s, transform 1s cubic-bezier(0.2,1,0.3,1);
+
+  /*
+  We're using CSS transitions for when
+  the enter and move events are triggered
+  for the element that has the .repeated-item
+  class
+  */
+  &.ng-enter, &.ng-move {
+    opacity: 0;
+    -webkit-transform: translate3d(0,140px,0);
+    transform: translate3d(0,140px,0);
+  }
+
+  /*
+   The ng-enter-active and ng-move-active
+   are where the transition destination properties
+   are set so that the animation knows what to
+   animate.
+  */
+  &.ng-enter.ng-enter-active, &.ng-move.ng-move-active {
+    opacity: 1;
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+  }
+
+  /*
+    We're using CSS keyframe animations for when
+    the leave event is triggered for the element
+    that has the .repeated-item class
+  */
+  &.ng-leave {
+    -webkit-animation:0.5s my_animation;
+    -moz-animation:0.5s my_animation;
+    -o-animation:0.5s my_animation;
+    animation:0.5s my_animation;
+  }
+
+  &.ng-enter-stagger {
+    transition-delay: 0.05s;
+    animation-delay: 0.05s;
+    transition-duration: 0s;
+  }
+}
+
+
+
+@keyframes my_animation {
+  from { opacity:1; }
+  to { opacity:0; }
+}
+/*
+  Unfortunately each browser vendor requires
+  its own definition of keyframe animation code...
+*/
+@-webkit-keyframes my_animation {
+  from { opacity:1; }
+  to { opacity:0; }
+}
+
+@-moz-keyframes my_animation {
+  from { opacity:1; }
+  to { opacity:0; }
+}
+
+@-o-keyframes my_animation {
+  from { opacity:1; }
+  to { opacity:0; }
+}
