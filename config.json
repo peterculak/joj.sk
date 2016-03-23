@@ -1,6 +1,7 @@
 {
   "development": {
     "name": "development",
+    "fbAppId": "438346129704805",
     "ga": {
       "url": "streamtv.sk",
       "uid": "UA-74974547-1",

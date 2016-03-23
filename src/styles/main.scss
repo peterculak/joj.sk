@@ -51,6 +51,14 @@
   margin: 0;
 }
 
+#mb_button--share {
+  position: fixed;
+  bottom: 94px;
+  right: 20px;
+  padding: 0;
+  margin: 0;
+}
+
 #mb_button--back {
   position: fixed;
   top: 20px;
@@ -108,6 +116,10 @@ video {
     width: 320px;
     height: 160px;
   }
+  #mb_button--share {
+    bottom: 20px;
+  }
+
 }
 
 .menu {

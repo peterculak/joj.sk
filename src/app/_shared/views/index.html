@@ -121,9 +121,16 @@
   </div>
 
   <md-content layout="column" flex class="md-padding">
+    <md-button ng-click="share()" id="mb_button--share" aria-label="Zdieľať" class="md-fab" >
+      <md-icon> share </md-icon>
+    </md-button>
 
     <md-button ng-show="ctrl.playing" ng-click="ctrl.reset()" id="mb_button--back" aria-label="Naspäť" class="md-fab md-primary" >
       <md-icon> arrow_back </md-icon>
+    </md-button>
+
+    <md-button ng-show="!isMobile" ng-click="ctrl.showHelpDialog()" id="mb_button--help" aria-label="Napoveda" class="md-fab" >
+      <md-icon> help </md-icon>
     </md-button>
 
       <div ng-show="!ctrl.vlcMissing && ctrl.playing" class="player-screen">
@@ -163,51 +170,47 @@
 
       </div>
 
-    <md-progress-circular ng-show="ctrl.loading || jojService.fetchingStreams || markizaService.fetchingStreams" class="progress-player" md-mode="indeterminate"></md-progress-circular>
+       <md-progress-circular ng-show="ctrl.loading || jojService.fetchingStreams || markizaService.fetchingStreams" class="progress-player" md-mode="indeterminate"></md-progress-circular>
 
 
-    <md-grid-list ng-show="!ctrl.playing && !jojService.fetchingStreams && !markizaService.fetchingStreams"
-        md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6"
-        md-row-height-gt-md="2:1" md-row-height="3:1"
-        md-gutter="12px" md-gutter-gt-sm="8px">
-      <md-grid-tile ng-click="ctrl.playMarkizaArchiveItem(epizode)" ng-repeat="epizode in whatson['markiza']" class="gray repeated-item"
-                    md-rowspan="2" md-rowspan-gt-md="3" md-colspan="1" md-colspan-gt-md="2" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
-          <md-icon layout="row" class="play"> play_circle_outline </md-icon>
+      <md-grid-list ng-show="!ctrl.playing && !jojService.fetchingStreams && !markizaService.fetchingStreams"
+          md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6"
+          md-row-height-gt-md="2:1" md-row-height="3:1"
+          md-gutter="12px" md-gutter-gt-sm="8px">
+        <md-grid-tile ng-click="ctrl.playMarkizaArchiveItem(epizode)" ng-repeat="epizode in whatson['markiza']" class="gray repeated-item"
+                      md-rowspan="2" md-rowspan-gt-md="3" md-colspan="1" md-colspan-gt-md="2" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
+            <md-icon layout="row" class="play"> play_circle_outline </md-icon>
+            <md-grid-tile-footer>
+              <h3>{{epizode.title}}</h3>
+            </md-grid-tile-footer>
+        </md-grid-tile>
+
+        <md-grid-tile ng-click="ctrl.playJojArchiveItem(epizode)" ng-repeat="epizode in whatson['joj']" class="gray repeated-item"
+                      md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
+          <md-icon class="play play--small"> play_circle_outline </md-icon>
           <md-grid-tile-footer>
-            <h3>{{epizode.title}}</h3>
+            <h3>{{epizode.title}} - {{epizode.type}}</h3>
           </md-grid-tile-footer>
-      </md-grid-tile>
+        </md-grid-tile>
 
-      <md-grid-tile ng-click="ctrl.playJojArchiveItem(epizode)" ng-repeat="epizode in whatson['joj']" class="gray repeated-item"
-                    md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
-        <md-icon class="play play--small"> play_circle_outline </md-icon>
-        <md-grid-tile-footer>
-          <h3>{{epizode.title}} - {{epizode.type}}</h3>
-        </md-grid-tile-footer>
-      </md-grid-tile>
+        <md-grid-tile ng-click="ctrl.playJojPlusArchiveItem(epizode)" ng-repeat="epizode in whatson['jojplus']" class="gray repeated-item"
+                      md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
+          <md-icon class="play play--small"> play_circle_outline </md-icon>
+          <md-grid-tile-footer>
+            <h3>{{epizode.title}} - {{epizode.type}}</h3>
+          </md-grid-tile-footer>
+        </md-grid-tile>
 
-      <md-grid-tile ng-click="ctrl.playJojPlusArchiveItem(epizode)" ng-repeat="epizode in whatson['jojplus']" class="gray repeated-item"
-                    md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
-        <md-icon class="play play--small"> play_circle_outline </md-icon>
-        <md-grid-tile-footer>
-          <h3>{{epizode.title}} - {{epizode.type}}</h3>
-        </md-grid-tile-footer>
-      </md-grid-tile>
-
-      <md-grid-tile ng-click="ctrl.playWauArchiveItem(epizode)" ng-repeat="epizode in whatson['wau']" class="gray repeated-item"
-                    md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
-        <md-icon class="play play--small"> play_circle_outline </md-icon>
-        <md-grid-tile-footer>
-          <h3>{{epizode.title}} - {{epizode.type}}</h3>
-        </md-grid-tile-footer>
-      </md-grid-tile>
+        <md-grid-tile ng-click="ctrl.playWauArchiveItem(epizode)" ng-repeat="epizode in whatson['wau']" class="gray repeated-item"
+                      md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
+          <md-icon class="play play--small"> play_circle_outline </md-icon>
+          <md-grid-tile-footer>
+            <h3>{{epizode.title}} - {{epizode.type}}</h3>
+          </md-grid-tile-footer>
+        </md-grid-tile>
 
 
-    </md-grid-list>
-
-      <md-button ng-click="ctrl.showHelpDialog()" id="mb_button--help" aria-label="Napoveda" class="md-fab" >
-        <md-icon> help </md-icon>
-      </md-button>
+      </md-grid-list>
     </md-content>
 </md-content>
 

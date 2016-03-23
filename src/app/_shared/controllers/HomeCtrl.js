@@ -1,6 +1,6 @@
 angular.module('joj.shared')
 
-  .controller('HomeCtrl', function ($scope, JojService, JojPlusService, WauService, MarkizaService, $sce, Player, Playlist, $timeout, VlcService, $mdSidenav, $mdMedia, $mdDialog) {
+  .controller('HomeCtrl', function ($scope, JojService, JojPlusService, WauService, MarkizaService, $sce, Player, Playlist, $timeout, VlcService, $mdSidenav, $mdMedia, $mdDialog, facebookService) {
     'use strict';
 
     var ctrl = this;
@@ -96,6 +96,14 @@ angular.module('joj.shared')
           $scope.archive['markiza'].epizodes.push(epizodes[i]);
         }
       });
+    };
+
+    $scope.share = function () {
+      var sharedObject = {
+        method: 'share',
+        href: 'http://streamtv.sk/'
+      };
+      facebookService.share(sharedObject);
     };
 
     ctrl.toggleLeft = function () {
