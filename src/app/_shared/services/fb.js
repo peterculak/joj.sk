@@ -14,6 +14,12 @@ angular.module('joj.shared')
             function(response) {
               if (response && !response.error_code) {
                 shareDeffered.resolve(response);
+                ga('send', {
+                  hitType: 'event',
+                  eventCategory: 'Share',
+                  eventAction: 'facebook',
+                  eventLabel: 'Shared on facebook'
+                });
               } else {
                 shareDeffered.reject(response);
               }
