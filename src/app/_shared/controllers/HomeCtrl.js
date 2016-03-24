@@ -264,14 +264,14 @@ angular.module('joj.shared')
           $('#flashHlsVideoPlayer').removeClass('vxgHidden');
           $timeout(function () {
             loadStream('flashHlsVideoPlayer', stream);
-            ga('send', {
-              hitType: 'event',
-              eventCategory: 'Play',
-              eventAction: 'Markiza',
-              eventLabel: epizode.url
-            });
           }, 1000);
         }
+        ga('send', {
+          hitType: 'event',
+          eventCategory: 'Play',
+          eventAction: 'Markiza',
+          eventLabel: epizode.url
+        });
       });
       return false;
     };
