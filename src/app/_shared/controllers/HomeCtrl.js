@@ -349,7 +349,7 @@ angular.module('joj.shared')
             ga('send', {
               hitType: 'event',
               eventCategory: 'Play',
-              eventAction: name,
+              eventAction: window.atob(name),
               eventLabel: 'live'
             });
             break;
