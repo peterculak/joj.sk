@@ -18,7 +18,7 @@ angular.module('joj.shared')
                   hitType: 'event',
                   eventCategory: 'Share',
                   eventAction: 'facebook',
-                  eventLabel: 'Shared on facebook'
+                  eventLabel: 'http://streamtv.sk'
                 });
               } else {
                 shareDeffered.reject(response);
