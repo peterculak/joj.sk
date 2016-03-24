@@ -1,6 +1,6 @@
 angular.module('joj.shared')
 
-  .controller('HomeCtrl', function ($scope, JojService, JojPlusService, WauService, MarkizaService, $sce, Player, Playlist, $timeout, VlcService, $mdSidenav, $mdMedia, $mdDialog, facebookService) {
+  .controller('HomeCtrl', function ($rootScope, $scope, JojService, JojPlusService, WauService, MarkizaService, $sce, Player, Playlist, $timeout, VlcService, $mdSidenav, $mdMedia, $mdDialog, facebookService) {
     'use strict';
 
     var ctrl = this;
@@ -143,6 +143,12 @@ angular.module('joj.shared')
       ctrl.playing = 'ta3';
       ctrl.channel = 'ta3';
       ctrl.ta3LiveStreamUrl = $sce.trustAsResourceUrl('http://www.ta3.com/live.html?embed=1');
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'Play',
+        eventAction: 'TA3',
+        eventLabel: 'http://www.ta3.com/live.html?embed=1'
+      });
       return false;
     };
 
@@ -151,6 +157,12 @@ angular.module('joj.shared')
       ctrl.playing = 'jojLiveStream';
       ctrl.channel = 'joj';
       joj.playLiveStream('jojLiveStream');
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'Play',
+        eventAction: 'JOJ',
+        eventLabel: 'live'
+      });
       return false;
     };
 
@@ -159,6 +171,12 @@ angular.module('joj.shared')
       ctrl.playing = 'jojLiveStream';
       ctrl.channel = 'joj+';
       jojplus.playLiveStream('jojLiveStream');
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'Play',
+        eventAction: 'JOJ+',
+        eventLabel: 'live'
+      });
       return false;
     };
 
@@ -167,6 +185,12 @@ angular.module('joj.shared')
       ctrl.playing = 'jojLiveStream';
       ctrl.channel = 'wau';
       wau.playLiveStream('jojLiveStream');
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'Play',
+        eventAction: 'WAU',
+        eventLabel: 'live'
+      });
     };
 
     ctrl.playJojArchiveItem = function (epizode) {
@@ -178,6 +202,12 @@ angular.module('joj.shared')
         ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(joj.findHighQualityStream(streams));
         ctrl.playing = 'jojArchive';
         ctrl.channel = epizode.url;
+        ga('send', {
+          hitType: 'event',
+          eventCategory: 'Play',
+          eventAction: 'JOJ',
+          eventLabel: epizode.url
+        });
       });
       return false;
     };
@@ -191,6 +221,12 @@ angular.module('joj.shared')
         ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(joj.findHighQualityStream(streams));
         ctrl.playing = 'jojArchive';
         ctrl.channel = epizode.url;
+        ga('send', {
+          hitType: 'event',
+          eventCategory: 'Play',
+          eventAction: 'JOJ+',
+          eventLabel: epizode.url
+        });
       });
       return false;
     };
@@ -204,6 +240,12 @@ angular.module('joj.shared')
         ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(joj.findHighQualityStream(streams));
         ctrl.playing = 'jojArchive';
         ctrl.channel = epizode.url;
+        ga('send', {
+          hitType: 'event',
+          eventCategory: 'Play',
+          eventAction: 'WAU',
+          eventLabel: epizode.url
+        });
       });
       return false;
     };
@@ -222,6 +264,12 @@ angular.module('joj.shared')
           $('#flashHlsVideoPlayer').removeClass('vxgHidden');
           $timeout(function () {
             loadStream('flashHlsVideoPlayer', stream);
+            ga('send', {
+              hitType: 'event',
+              eventCategory: 'Play',
+              eventAction: 'Markiza',
+              eventLabel: epizode.url
+            });
           }, 1000);
         }
       });
@@ -298,6 +346,12 @@ angular.module('joj.shared')
             ctrl.playing = 'vgx';
             playVxg(window.atob(Playlist.vgx[i].u));
             ctrl.channel = Playlist.vgx[i].u;
+            ga('send', {
+              hitType: 'event',
+              eventCategory: 'Play',
+              eventAction: name,
+              eventLabel: 'live'
+            });
             break;
           }
         }
