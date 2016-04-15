@@ -126,10 +126,7 @@ angular.module('joj.shared')
           vxgPlayer.stop();
         }
       } else {
-        var vlc = document.getElementById('vlc');
-        if (vlc.playlist) {
-          vlc.playlist.stop();
-        }
+        document.getElementById('vxgPlayerWrapper__embed').innerHTML = '';
       }
 
       $('#vxgPlayerWrapper').addClass('vxgHidden');
@@ -328,11 +325,7 @@ angular.module('joj.shared')
 
     if (ctrl.isChrome()) {
       var vxgPlayer = vxgplayer('vxg_media_player');
-    } else {
-      var vxgPlayer = document.getElementById("vlc");
     }
-
-    ctrl.vxgPlayerUrl = '';
     var dajtoVideo;
 
     ctrl.playVgx = function (name) {
@@ -386,8 +379,8 @@ angular.module('joj.shared')
             $('.vxgplayer-loader').addClass('hidden');
           }, 3000);
         } else {
-          var vlc = document.getElementById('vlc');
-          vlc.playlist.playItem( vlc.playlist.add(url) );
+          var vlc = '<embed width="640" height="360" ng-show="!ctrl.isChrome()" type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2" id="vlc" loop="yes" autoplay="yes" target="' + url + '"></embed>';
+          document.getElementById("vxgPlayerWrapper__embed").innerHTML = vlc;
         }
       }
     };
