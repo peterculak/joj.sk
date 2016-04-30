@@ -206,7 +206,7 @@ gulp.task('index:build', function() {
 
     // Uglify Modernizr
     .pipe(modernizr)
-    .pipe(g.uglify())
+    //.pipe(g.uglify())
     .pipe(modernizr.restore())
 
     // Uglify vendors
@@ -216,13 +216,13 @@ gulp.task('index:build', function() {
 
     // Uglify libs
     .pipe(libsJs)
-    .pipe(g.uglify())
+    //.pipe(g.uglify())
     .pipe(libsJs.restore())
 
     // ng-annotate & Uglify app
     .pipe(appJs)
     .pipe(g.ngAnnotate())
-    .pipe(g.uglify())
+    //.pipe(g.uglify())
       .on('error', function(err) { console.warn(err.message) })
     .pipe(appJs.restore())
 
@@ -244,7 +244,7 @@ gulp.task('images', function() {
 gulp.task('build', function() {
   return runSequence(
     'constants',
-    ['index', 'templates', 'styles'],
+    ['index', 'styles'],
     'index:build',
     'clean:build',
     'images'
