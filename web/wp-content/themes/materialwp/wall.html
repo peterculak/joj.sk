@@ -36,11 +36,7 @@
     <div ng-show="ctrl.playing === 'jojLive'" id="jojLiveStream"></div>
     <div ng-show="ctrl.playing === 'ctLiveStream'" id="ctLiveStream"></div>
 
-    <video id="flashHlsVideoPlayer" class="video-js vjs-default-skin" controls preload="none" width="640" height="360"
-           poster="http://video-js.zencoder.com/oceans-clip.png"
-           data-setup='{"techOrder": ["flash"]}'>
-      <source src="http://mf.srv.markiza.sk:1935/brick-01/_definst_/smil:cache/00/0007/000718/00071813.smil/manifest.m3u8" type='video/mp4' />
-    </video>
+    <div id="flashHlsVideoPlayer"></div>
 
     <video id="html5video" ng-show="ctrl.playing === 'jojArchive' && !jojService.fetchingStreams && !jojService.fetchingEpizodes" ng-src="{{ctrl.videoFromArchiveUrl}}" controls></video>
 

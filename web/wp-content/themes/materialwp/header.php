@@ -1,12 +1,4 @@
-<?php
-/**
- * The header for our theme.
- *
- * Displays all of the <head> section and everything up till <div id="content">
- *
- * @package materialwp
- */
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <html <?php language_attributes(); ?> ng-app="joj">
 <head>
 <meta charset="<?php bloginfo( 'charset' ); ?>">
@@ -14,14 +6,19 @@
 <link rel="profile" href="http://gmpg.org/xfn/11">
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 
+
 <base href="/">
+<meta name="description" content="Slovenské a České Televízne prenosy online, TV JOJ Archív, Live športové prenosy, Zadarmo, Pre mobil. TV Markíza live, TV JOJ live, DAJTO live, DOMA live, STV1 live, STV2 live, PRIMA live, PRIMA COOL Live, NOVA live, ČT1 live, ČT2 live" />
+<meta name="keywords" content="Slovenské a České Televízne prenosy online, TV JOJ Archív, Live športové prenosy, Zadarmo, Pre mobil. TV Markíza live, TV JOJ live, DAJTO live, DOMA live, STV1 live, STV2 live, PRIMA live, PRIMA COOL Live, NOVA live, ČT1 live, ČT2 live"/>
+<meta property="og:description" content="Slovenské a České Televízne prenosy online, TV JOJ Archív, Live športové prenosy, Zadarmo, Pre mobil. TV Markíza live, TV JOJ live, DAJTO live, DOMA live, STV1 live, STV2 live, PRIMA live, PRIMA COOL Live, NOVA live, ČT1 live, ČT2 live" />
+<meta property="og:image" content="http://streamtv.sk/images/logo-large.jpg" />
 <link rel="shortcut icon" href="/images/logo.svg">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
 
 
 	<script src="scripts/vxgplayer-1.7.41.min.js"></script>
-	<script src="scripts/video.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js" type="text/javascript"></script>
 
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
@@ -40,12 +37,9 @@
 	<link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/streamtv.css" type="text/css" media="screen" />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
 	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js" type="text/javascript"></script>
 
-	<script>
-		videojs.options.flash.swf = "scripts/video-js.swf";
-	</script>
-	<script src="scripts/app-ecb4b8e7.js"></script>
+
+	<script src="scripts/app-5b5462d2.js"></script>
 
 </head>
 
@@ -174,33 +168,13 @@
 		  <div class="container">
 		    <!-- Brand and toggle get grouped for better mobile display -->
 		    <div class="navbar-header" >
-<!--		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">-->
-<!--		        <span class="sr-only">Toggle navigation</span>-->
-<!--		        <span class="icon-bar"></span>-->
-<!--		        <span class="icon-bar"></span>-->
-<!--		        <span class="icon-bar"></span>-->
-<!--		      </button>-->
 
 				<md-button ng-click="toggleLeft()" class="md-primary md-fab">
 					<md-icon>menu</md-icon>
 				</md-button>
 
-				<a target="_parent" class="navbar-brand" rel="home" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php bloginfo( 'name' ); ?></a>
+				<a target="_parent" class="navbar-brand" rel="home" href="<?php echo esc_url( home_url( '/' ) ); ?>">StreamTV</a>
     		</div>
-
-<!--    			<div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">-->
-<!--				 --><?php
-//		            wp_nav_menu( array(
-//		                'theme_location'    => 'primary',
-//		                'depth'             => 2,
-//		                'container'         => false,
-//		                'menu_class'        => 'nav navbar-nav navbar-left',
-//		                'fallback_cb'       => 'wp_bootstrap_navwalker::fallback',
-//		                'walker'            => new wp_bootstrap_navwalker())
-//		            );
-//	        	?>
-<!---->
-<!--        		</div> <!-- .navbar-collapse -->
 
         	</div><!-- /.container -->
 		</nav><!-- .navbar .navbar-default -->

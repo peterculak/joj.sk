@@ -146,6 +146,7 @@ angular.module('joj.shared')
       ctrl.playing = 'ta3';
       ctrl.channel = 'ta3';
       ctrl.ta3LiveStreamUrl = $sce.trustAsResourceUrl('http://www.ta3.com/live.html?embed=1');
+      $mdSidenav('left').close();
       //ga('send', {
       //  hitType: 'event',
       //  eventCategory: 'Play',
@@ -160,6 +161,7 @@ angular.module('joj.shared')
       ctrl.playing = 'jojLiveStream';
       ctrl.channel = 'joj';
       joj.playLiveStream('jojLiveStream');
+      $mdSidenav('left').close();
       //ga('send', {
       //  hitType: 'event',
       //  eventCategory: 'Play',
@@ -174,6 +176,7 @@ angular.module('joj.shared')
       ctrl.playing = 'jojLiveStream';
       ctrl.channel = 'joj+';
       jojplus.playLiveStream('jojLiveStream');
+      $mdSidenav('left').close();
       //ga('send', {
       //  hitType: 'event',
       //  eventCategory: 'Play',
@@ -188,6 +191,7 @@ angular.module('joj.shared')
       ctrl.playing = 'jojLiveStream';
       ctrl.channel = 'wau';
       wau.playLiveStream('jojLiveStream');
+      $mdSidenav('left').close();
       //ga('send', {
       //  hitType: 'event',
       //  eventCategory: 'Play',
@@ -199,7 +203,7 @@ angular.module('joj.shared')
     ctrl.playJojArchiveItem = function (epizode) {
       ctrl.playing = 'jojArchive';
       ctrl.reset();
-      ctrl.toggleLeft();
+      $mdSidenav('left').close();
       ctrl.epizode = epizode;
       joj.getStreamUrls(epizode.url).then(function (streams) {
         ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(joj.findHighQualityStream(streams));
@@ -218,7 +222,7 @@ angular.module('joj.shared')
     ctrl.playJojPlusArchiveItem = function (epizode) {
       ctrl.playing = 'jojArchive';
       ctrl.reset();
-      ctrl.toggleLeft();
+      $mdSidenav('left').close();
       ctrl.epizode = epizode;
       joj.getStreamUrls(epizode.url).then(function (streams) {
         ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(joj.findHighQualityStream(streams));
@@ -237,7 +241,7 @@ angular.module('joj.shared')
     ctrl.playWauArchiveItem = function (epizode) {
       ctrl.playing = 'jojArchive';
       ctrl.reset();
-      ctrl.toggleLeft();
+      $mdSidenav('left').close();
       ctrl.epizode = epizode;
       wau.getStreamUrls(epizode.url).then(function (streams) {
         ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(joj.findHighQualityStream(streams));
@@ -256,7 +260,7 @@ angular.module('joj.shared')
     ctrl.playMarkizaArchiveItem = function (epizode) {
       ctrl.playing = 'jojArchive';
       ctrl.reset();
-      ctrl.toggleLeft();
+      $mdSidenav('left').close();
       ctrl.epizode = epizode;
       MarkizaService.getStreamUrls(epizode.url).then(function (stream) {
         ctrl.playing = 'flashHlsVideo';
@@ -322,6 +326,7 @@ angular.module('joj.shared')
       ctrl.playing = 'dajtoStream';
       $timeout(function () {
         loadStream('dajto', url);
+        $mdSidenav('left').close();
       });
     };
 
@@ -355,6 +360,7 @@ angular.module('joj.shared')
           }
         }
       }
+      $mdSidenav('left').close();
     };
 
     ctrl.base64decode = function (name) {
@@ -423,10 +429,50 @@ angular.module('joj.shared')
     }, 2000);
 
     var loadStream = function (videoId, url) {
-      dajtoVideo = _V_(videoId);
-      dajtoVideo.src(url);
-      dajtoVideo.on('loadstart',function(){
-        dajtoVideo.play();
-      });
+      var parameters = {
+        src: url,
+        autoPlay: "true",
+        verbose: true,
+        controlBarAutoHide: "true",
+        controlBarPosition: "bottom",
+        //poster: "images/poster.png",
+        javascriptCallbackFunction: "jsbridge",
+        plugin_hls: "scripts/flashlsOSMF.swf",
+        hls_minbufferlength: -1,
+        hls_maxbufferlength: 30,
+        hls_lowbufferlength: 3,
+        hls_seekmode: "KEYFRAME",
+        hls_startfromlevel: -1,
+        hls_seekfromlevel: -1,
+        hls_live_flushurlcache: false,
+        hls_info: true,
+        hls_debug: false,
+        hls_debug2: false,
+        hls_warn: true,
+        hls_error: true,
+        hls_fragmentloadmaxretry : -1,
+        hls_manifestloadmaxretry : -1,
+        hls_capleveltostage : false,
+        hls_maxlevelcappingmode : "downscale"
+      };
+
+      // Embed the player SWF:
+      swfobject.embedSWF(
+        "scripts/StrobeMediaPlayback.swf"
+        , "flashHlsVideoPlayer"
+        , 640
+        , 480
+        , "10.1.0"
+        , "expressInstall.swf"
+        , parameters
+        , {
+          allowFullScreen: "true",
+          wmode: "direct"
+        }
+        , {
+          name: "flashHlsVideoPlayer"
+        }
+      );
+
     };
   });
