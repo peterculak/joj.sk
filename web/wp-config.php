@@ -20,13 +20,13 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME', 'joj');
+define('DB_NAME', 'streamtv');
 
 /** MySQL database username */
-define('DB_USER', 'joj');
+define('DB_USER', 'streamtv');
 
 /** MySQL database password */
-define('DB_PASSWORD', 'joj');
+define('DB_PASSWORD', 'streamtv60899047');
 
 /** MySQL hostname */
 define('DB_HOST', 'localhost');
