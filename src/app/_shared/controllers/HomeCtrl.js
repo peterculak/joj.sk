@@ -1,6 +1,6 @@
 angular.module('joj.shared')
 
-  .controller('HomeCtrl', function ($rootScope, $scope, JojService, JojPlusService, WauService, MarkizaService, $sce, Player, Playlist, $timeout, VlcService, $mdSidenav, $mdMedia, $mdDialog, facebookService) {
+  .controller('HomeCtrl', function ($rootScope, $scope, $state, JojService, JojPlusService, WauService, MarkizaService, $sce, Player, Playlist, $timeout, VlcService, $mdSidenav, $mdMedia, $mdDialog, facebookService) {
     'use strict';
 
     var ctrl = this;
@@ -19,6 +19,12 @@ angular.module('joj.shared')
 
     $scope.selectedIndex = 0;
     $scope.isMobile = false;
+
+    $scope.showWhatsOn = false;
+    if (window.location.pathname === '/' && window.location.search === '') {
+      $scope.showWhatsOn = true;
+    }
+
     if (mobileAndTabletcheck()) {
       $scope.selectedIndex = 1;
       $scope.isMobile = mobileAndTabletcheck();

@@ -1,0 +1,89 @@
+
+  <md-button ng-click="share()" id="mb_button--share" aria-label="Zdieľať" class="md-fab" >
+    <md-icon> share </md-icon>
+  </md-button>
+
+  <md-button ng-show="ctrl.playing" ng-click="ctrl.reset()" id="mb_button--back" aria-label="Naspäť" class="md-fab md-primary" >
+    <md-icon> arrow_back </md-icon>
+  </md-button>
+
+  <md-button ng-show="!isMobile" ng-click="ctrl.showHelpDialog()" id="mb_button--help" aria-label="Napoveda" class="md-fab" >
+    <md-icon> help </md-icon>
+  </md-button>
+
+  <div ng-show="!ctrl.vlcMissing && ctrl.playing" class="player-screen">
+    <div id="vxgPlayerWrapper" class="vxgPlayerWrapper vxgHidden">
+      <div ng-show="ctrl.isChrome()" class="vxgplayer"
+           id="vxg_media_player"
+           width="640"
+           height="360"
+           url="{{ctrl.vxgPlayerUrl}}"
+           nmf-src="bower_components/vxgplayer/pnacl/Release/media_player.nmf"
+           nmf-path="media_player.nmf"
+           autohide="2"
+           volume="0.7"
+           avsync
+           controls
+           mute
+           aspect-ratio
+           aspect-ratio-mode="1"
+           auto-reconnect>
+      </div>
+      <div id="vxgPlayerWrapper__embed" ng-show="!ctrl.isChrome()"></div>
+    </div>
+
+    <iframe id="ta3frame" ng-show="ctrl.playing === 'ta3'" ng-src="{{ctrl.ta3LiveStreamUrl}}" frameborder="0" scrolling="no"></iframe>
+    <div ng-show="ctrl.playing === 'jojLive'" id="jojLiveStream"></div>
+    <div ng-show="ctrl.playing === 'ctLiveStream'" id="ctLiveStream"></div>
+
+    <video id="flashHlsVideoPlayer" class="video-js vjs-default-skin" controls preload="none" width="640" height="360"
+           poster="http://video-js.zencoder.com/oceans-clip.png"
+           data-setup='{"techOrder": ["flash"]}'>
+      <source src="http://mf.srv.markiza.sk:1935/brick-01/_definst_/smil:cache/00/0007/000718/00071813.smil/manifest.m3u8" type='video/mp4' />
+    </video>
+
+    <video id="html5video" ng-show="ctrl.playing === 'jojArchive' && !jojService.fetchingStreams && !jojService.fetchingEpizodes" ng-src="{{ctrl.videoFromArchiveUrl}}" controls></video>
+
+  </div>
+
+  <md-progress-circular ng-show="ctrl.loading || jojService.fetchingStreams || markizaService.fetchingStreams" class="progress-player" md-mode="indeterminate"></md-progress-circular>
+
+
+  <md-grid-list ng-show="showWhatsOn && !ctrl.playing && !jojService.fetchingStreams && !markizaService.fetchingStreams"
+                md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6"
+                md-row-height-gt-md="2:1" md-row-height="3:1"
+                md-gutter="4px">
+    <md-grid-tile ng-click="ctrl.playMarkizaArchiveItem(epizode)" ng-repeat="epizode in whatson['markiza']" class="gray repeated-item"
+                  md-rowspan="2" md-rowspan-gt-md="3" md-colspan="1" md-colspan-gt-md="2" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
+      <md-icon layout="row" class="play"> play_circle_outline </md-icon>
+      <md-grid-tile-footer>
+        <h3>{{epizode.title}}</h3>
+      </md-grid-tile-footer>
+    </md-grid-tile>
+
+    <md-grid-tile ng-click="ctrl.playJojArchiveItem(epizode)" ng-repeat="epizode in whatson['joj']" class="gray repeated-item"
+                  md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
+      <md-icon class="play play--small"> play_circle_outline </md-icon>
+      <md-grid-tile-footer>
+        <h3>{{epizode.title}} - {{epizode.type}}</h3>
+      </md-grid-tile-footer>
+    </md-grid-tile>
+
+    <md-grid-tile ng-click="ctrl.playJojPlusArchiveItem(epizode)" ng-repeat="epizode in whatson['jojplus']" class="gray repeated-item"
+                  md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
+      <md-icon class="play play--small"> play_circle_outline </md-icon>
+      <md-grid-tile-footer>
+        <h3>{{epizode.title}} - {{epizode.type}}</h3>
+      </md-grid-tile-footer>
+    </md-grid-tile>
+
+    <md-grid-tile ng-click="ctrl.playWauArchiveItem(epizode)" ng-repeat="epizode in whatson['wau']" class="gray repeated-item"
+                  md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-style="{'background-image':'url({{epizode.image}})'}">
+      <md-icon class="play play--small"> play_circle_outline </md-icon>
+      <md-grid-tile-footer>
+        <h3>{{epizode.title}} - {{epizode.type}}</h3>
+      </md-grid-tile-footer>
+    </md-grid-tile>
+
+
+  </md-grid-list>

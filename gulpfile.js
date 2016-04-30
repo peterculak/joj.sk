@@ -169,7 +169,7 @@ gulp.task('clean:build', function(cb) {
     dist.scripts + '/app.js',
     dist.scripts + '/lib.js',
     dist.scripts + '/modernizr.js',
-    dist.scripts + '/vendor.js',
+    //dist.scripts + '/vendor.js',
     dist.styles + '/app.css',
     dist.styles + '/main.css',
     dist.styles + '/vendor.css',
@@ -210,9 +210,9 @@ gulp.task('index:build', function() {
     .pipe(modernizr.restore())
 
     // Uglify vendors
-    .pipe(vendorJs)
-    .pipe(g.uglify())
-    .pipe(vendorJs.restore())
+    //.pipe(vendorJs)
+    //.pipe(g.uglify())
+    //.pipe(vendorJs.restore())
 
     // Uglify libs
     .pipe(libsJs)

@@ -1,0 +1,7 @@
+.navbar-brand {
+    float: none;
+}
+
+.site-content {
+    min-height: 74vh;
+}
