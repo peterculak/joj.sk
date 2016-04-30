@@ -4,7 +4,7 @@ angular.module('joj', [
   //'angulartics.google.analytics',
   'ngMaterial',
   'ui.router',
-  'joj.templates',
+  //'joj.templates',
   'joj.shared'
 ])
 
