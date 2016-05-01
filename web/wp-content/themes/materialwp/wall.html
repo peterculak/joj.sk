@@ -7,10 +7,6 @@
     <md-icon> arrow_back </md-icon>
   </md-button>
 
-  <md-button ng-show="!isMobile" ng-click="ctrl.showHelpDialog()" id="mb_button--help" aria-label="Napoveda" class="md-fab" >
-    <md-icon> help </md-icon>
-  </md-button>
-
   <div ng-show="!ctrl.vlcMissing && ctrl.playing" class="player-screen">
     <div id="vxgPlayerWrapper" class="vxgPlayerWrapper vxgHidden">
       <div ng-show="ctrl.isChrome()" class="vxgplayer"

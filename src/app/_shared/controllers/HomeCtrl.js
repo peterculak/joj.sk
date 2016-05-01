@@ -123,6 +123,8 @@ angular.module('joj.shared')
       ctrl.videoSrc = '';
       ctrl.playing = '';
 
+      $('#flashHlsVideoPlayer').replaceWith('<div id="flashHlsVideoPlayer"></div>');
+
       $('#jojLiveStream').hide();
       if (dajtoVideo) {
         dajtoVideo.pause();
@@ -434,7 +436,7 @@ angular.module('joj.shared')
         controlBarAutoHide: "true",
         controlBarPosition: "bottom",
         //poster: "images/poster.png",
-        javascriptCallbackFunction: "jsbridge",
+        //javascriptCallbackFunction: "flashlsCallback",
         plugin_hls: "scripts/flashlsOSMF.swf",
         hls_minbufferlength: -1,
         hls_maxbufferlength: 30,
@@ -451,7 +453,7 @@ angular.module('joj.shared')
         hls_fragmentloadmaxretry : -1,
         hls_manifestloadmaxretry : -1,
         hls_capleveltostage : false,
-        hls_maxlevelcappingmode : "downscale"
+        hls_maxlevelcappingmode : "downscale",
       };
 
       // Embed the player SWF:
@@ -459,7 +461,7 @@ angular.module('joj.shared')
         "scripts/StrobeMediaPlayback.swf"
         , "flashHlsVideoPlayer"
         , 640
-        , 480
+        , 360
         , "10.1.0"
         , "expressInstall.swf"
         , parameters

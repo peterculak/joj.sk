@@ -17,8 +17,8 @@
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
 
 
-	<script src="scripts/vxgplayer-1.7.41.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js" type="text/javascript"></script>
+<script src="scripts/vxgplayer-1.7.41.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js" type="text/javascript"></script>
 
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
@@ -27,22 +27,21 @@
 
 <!-- Angular Material Library -->
 <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/restangular/1.4.0/restangular.min.js"></script>
-	<script type="text/javascript" src="//cdn.jsdelivr.net/lodash/2.1.0/lodash.compat.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angulartics-google-analytics/0.1.4/angulartics-google-analytics.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angulartics/1.0.3/angulartics.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/restangular/1.4.0/restangular.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/lodash/2.1.0/lodash.compat.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angulartics-google-analytics/0.1.4/angulartics-google-analytics.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angulartics/1.0.3/angulartics.min.js"></script>
 
 
 <?php wp_head(); ?>
 
-	<link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/themeOverrides.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/streamtv.css" type="text/css" media="screen" />
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
-	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/themeOverrides.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/streamtv.css" type="text/css" media="screen" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 
-
-	<script src="scripts/app-d901ed7e.js"></script>
+<script src="scripts/app-a6744d43.js"></script>
 
 </head>
 

@@ -28,13 +28,13 @@
 
 .player-screen {
   left: calc(50% - 320px);
-  top: calc(50% - 180px);
-  position: absolute;
+  top: auto;
+  position: relative;
 }
 
 .progress-player {
   left: 50%;
-  top: 50%;
+  top: 180px;
   position: absolute;
 }
 
@@ -43,17 +43,9 @@
   left: calc(50% - 230px);
 }
 
-#mb_button--help {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 0;
-  margin: 0;
-}
-
 #mb_button--share {
   position: fixed;
-  bottom: 94px;
+  bottom: 10px;
   right: 20px;
   padding: 0;
   margin: 0;
@@ -61,7 +53,7 @@
 
 #mb_button--back {
   position: fixed;
-  top: 20px;
+  top: 6px;
   right: 20px;
   padding: 0;
   margin: 0;
@@ -114,7 +106,6 @@ video {
   }
 
   .progress-player {
-    top: 180px;
     left: 160px;
   }
 
