@@ -24,7 +24,7 @@ var src             = {toString: function() { return 'src' }};
 src.app             = {toString: function() { return src + '/app' }};
 src.app.shared      = {toString: function() { return src.app + '/_shared' }};
 src.app.files       = src.app + '/**/*.js';
-src.app.templates   = src.app + '/**/*.html';
+src.app.templates   = src.app + '/_shared/directives/**/*.html';
 src.index           = src + '/index.html';
 src.styles          = {toString: function() { return src + '/styles' }};
 src.styles.files    = [src.styles + '/**/[!_]*.scss' , src.styles + 'vendor/*.css'];
@@ -244,7 +244,7 @@ gulp.task('images', function() {
 gulp.task('build', function() {
   return runSequence(
     'constants',
-    ['index', 'styles'],
+    ['index', 'templates', 'styles'],
     'index:build',
     'clean:build',
     'images'

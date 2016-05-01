@@ -1,0 +1,29 @@
+<div ng-show="Player.playing" class="player-screen">
+  <div id="vxgPlayerWrapper" class="vxgPlayerWrapper vxgHidden">
+    <div ng-show="isChrome()" class="vxgplayer"
+         id="vxg_media_player"
+         width="640"
+         height="360"
+         url="{{vxgPlayerUrl}}"
+         nmf-src="bower_components/vxgplayer/pnacl/Release/media_player.nmf"
+         nmf-path="media_player.nmf"
+         autohide="2"
+         volume="0.7"
+         avsync
+         controls
+         mute
+         aspect-ratio
+         aspect-ratio-mode="1"
+         auto-reconnect>
+    </div>
+    <div id="vxgPlayerWrapper__embed" ng-show="!isChrome()"></div>
+  </div>
+
+  <iframe id="ta3frame" ng-show="Player.playing === 'ta3'" ng-src="{{Player.ta3LiveStreamUrl}}" frameborder="0" scrolling="no"></iframe>
+  <div ng-show="Player.playing === 'jojLiveStream'" id="jojLiveStream"></div>
+
+  <div id="flashHlsVideoPlayer"></div>
+
+  <video id="html5video" controls ng-show="Player.playing === 'jojArchive' && !JojService.fetchingStreams && !JojService.fetchingEpizodes" ng-src="{{Player.videoFromArchiveUrl}}"></video>
+
+</div>

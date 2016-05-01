@@ -3,45 +3,14 @@
     <md-icon> share </md-icon>
   </md-button>
 
-  <md-button ng-show="ctrl.playing" ng-click="ctrl.reset()" id="mb_button--back" aria-label="Naspäť" class="md-fab md-primary" >
+  <md-button ng-show="player.playing" ng-click="player.reset()" id="mb_button--back" aria-label="Naspäť" class="md-fab md-primary" >
     <md-icon> arrow_back </md-icon>
   </md-button>
-
-  <div ng-show="!ctrl.vlcMissing && ctrl.playing" class="player-screen">
-    <div id="vxgPlayerWrapper" class="vxgPlayerWrapper vxgHidden">
-      <div ng-show="ctrl.isChrome()" class="vxgplayer"
-           id="vxg_media_player"
-           width="640"
-           height="360"
-           url="{{ctrl.vxgPlayerUrl}}"
-           nmf-src="bower_components/vxgplayer/pnacl/Release/media_player.nmf"
-           nmf-path="media_player.nmf"
-           autohide="2"
-           volume="0.7"
-           avsync
-           controls
-           mute
-           aspect-ratio
-           aspect-ratio-mode="1"
-           auto-reconnect>
-      </div>
-      <div id="vxgPlayerWrapper__embed" ng-show="!ctrl.isChrome()"></div>
-    </div>
-
-    <iframe id="ta3frame" ng-show="ctrl.playing === 'ta3'" ng-src="{{ctrl.ta3LiveStreamUrl}}" frameborder="0" scrolling="no"></iframe>
-    <div ng-show="ctrl.playing === 'jojLive'" id="jojLiveStream"></div>
-    <div ng-show="ctrl.playing === 'ctLiveStream'" id="ctLiveStream"></div>
-
-    <div id="flashHlsVideoPlayer"></div>
-
-    <video id="html5video" ng-show="ctrl.playing === 'jojArchive' && !jojService.fetchingStreams && !jojService.fetchingEpizodes" ng-src="{{ctrl.videoFromArchiveUrl}}" controls></video>
-
-  </div>
 
   <md-progress-circular ng-show="ctrl.loading || jojService.fetchingStreams || markizaService.fetchingStreams" class="progress-player" md-mode="indeterminate"></md-progress-circular>
 
 
-  <md-grid-list ng-show="showWhatsOn && !ctrl.playing && !jojService.fetchingStreams && !markizaService.fetchingStreams"
+  <md-grid-list ng-show="showWhatsOn && !player.playing && !jojService.fetchingStreams && !markizaService.fetchingStreams"
                 md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6"
                 md-row-height-gt-md="2:1" md-row-height="3:1"
                 md-gutter="4px">

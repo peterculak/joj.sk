@@ -61,6 +61,15 @@ angular.module('joj.shared')
       return defered.promise;
     };
 
+    service.prototype.getStreamUrlsFromId = function (videoId) {
+      var defered = $q.defer();
+      service.prototype.api.one().get({clip: videoId}).then(function(streamInfo){
+        defered.resolve(JojEpizodesExtractor.extractStreamUrls(streamInfo));
+        service.fetchingStreams = false;
+      });
+      return defered.promise;
+    };
+
     service.prototype.findHighQualityStream = function (streams) {
       var q = [];
       for (var i in streams) {

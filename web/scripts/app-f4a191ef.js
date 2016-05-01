@@ -4,7 +4,7 @@ angular.module('joj', [
   'angulartics.google.analytics',
   'ngMaterial',
   'ui.router',
-  //'joj.templates',
+  'joj.templates',
   'joj.shared'
 ])
 
@@ -131,8 +131,7 @@ angular.module('joj.shared')
     ctrl.epizodes = [];
     ctrl.videoSrc = '';
     ctrl.isPlaying = false;
-    ctrl.channel = '';
-    ctrl.loading = true;
+    ctrl.loading = false;
 
     $scope.archive = {};
     $scope.whatson = {};
@@ -155,8 +154,7 @@ angular.module('joj.shared')
     $scope.jojService = JojService;
     $scope.markizaService = MarkizaService;
     $scope.wauService = WauService;
-
-    ctrl.playing = null;
+    $scope.player = Player;
 
     var joj = new JojService();
     var jojplus = new JojPlusService();
@@ -236,38 +234,10 @@ angular.module('joj.shared')
       $mdSidenav('left').toggle();
     };
 
-    ctrl.reset = function () {
-      document.getElementById("html5video").pause();
-      ctrl.epizodes = [];
-      ctrl.ta3LiveStreamUrl = '';
-      ctrl.videoSrc = '';
-      ctrl.playing = '';
-
-      $('#flashHlsVideoPlayer').replaceWith('<div id="flashHlsVideoPlayer"></div>');
-
-      $('#jojLiveStream').hide();
-      if (dajtoVideo) {
-        dajtoVideo.pause();
-      }
-      if (ctrl.isChrome()) {
-        if (vxgPlayer && vxgPlayer.isPlaying()) {
-          vxgPlayer.stop();
-        }
-      } else {
-        document.getElementById('vxgPlayerWrapper__embed').innerHTML = '';
-      }
-
-      $('#vxgPlayerWrapper').addClass('vxgHidden');
-      $('.vxgplayer-loader').removeClass('hidden');
-      $('#flashHlsVideoPlayer').addClass('vxgHidden');
-      ctrl.channel = '';
-    };
-
     ctrl.ta3Live = function () {
-      ctrl.reset();
-      ctrl.playing = 'ta3';
-      ctrl.channel = 'ta3';
-      ctrl.ta3LiveStreamUrl = $sce.trustAsResourceUrl('http://www.ta3.com/live.html?embed=1');
+      Player.reset();
+      Player.playing = 'ta3';
+      Player.ta3LiveStreamUrl = $sce.trustAsResourceUrl('http://www.ta3.com/live.html?embed=1');
       $mdSidenav('left').close();
       ga('send', {
         hitType: 'event',
@@ -279,9 +249,8 @@ angular.module('joj.shared')
     };
 
     ctrl.jojLive = function () {
-      ctrl.reset();
-      ctrl.playing = 'jojLiveStream';
-      ctrl.channel = 'joj';
+      Player.reset();
+      Player.playing = 'jojLiveStream';
       joj.playLiveStream('jojLiveStream');
       $mdSidenav('left').close();
       ga('send', {
@@ -294,9 +263,8 @@ angular.module('joj.shared')
     };
 
     ctrl.playJojPlusLive = function () {
-      ctrl.reset();
-      ctrl.playing = 'jojLiveStream';
-      ctrl.channel = 'joj+';
+      Player.reset();
+      Player.playing = 'jojLiveStream';
       jojplus.playLiveStream('jojLiveStream');
       $mdSidenav('left').close();
       ga('send', {
@@ -309,9 +277,8 @@ angular.module('joj.shared')
     };
 
     ctrl.playWauLive = function () {
-      ctrl.reset();
-      ctrl.playing = 'jojLiveStream';
-      ctrl.channel = 'wau';
+      Player.reset();
+      Player.playing = 'jojLiveStream';
       wau.playLiveStream('jojLiveStream');
       $mdSidenav('left').close();
       ga('send', {
@@ -323,33 +290,19 @@ angular.module('joj.shared')
     };
 
     ctrl.playJojArchiveItem = function (epizode) {
-      ctrl.playing = 'jojArchive';
-      ctrl.reset();
       $mdSidenav('left').close();
-      ctrl.epizode = epizode;
-      joj.getStreamUrls(epizode.url).then(function (streams) {
-        ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(joj.findHighQualityStream(streams));
-        ctrl.playing = 'jojArchive';
-        ctrl.channel = epizode.url;
-        ga('send', {
-          hitType: 'event',
-          eventCategory: 'Play',
-          eventAction: 'JOJ',
-          eventLabel: epizode.url
-        });
-      });
+      Player.playJojArchiveItem(epizode);
       return false;
     };
 
     ctrl.playJojPlusArchiveItem = function (epizode) {
-      ctrl.playing = 'jojArchive';
-      ctrl.reset();
+      Player.playing = 'jojArchive';
+      Player.reset();
       $mdSidenav('left').close();
-      ctrl.epizode = epizode;
+      Player.epizode = epizode;
       joj.getStreamUrls(epizode.url).then(function (streams) {
-        ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(joj.findHighQualityStream(streams));
-        ctrl.playing = 'jojArchive';
-        ctrl.channel = epizode.url;
+        Player.videoFromArchiveUrl = $sce.trustAsResourceUrl(joj.findHighQualityStream(streams));
+        Player.playing = 'jojArchive';
         ga('send', {
           hitType: 'event',
           eventCategory: 'Play',
@@ -361,14 +314,13 @@ angular.module('joj.shared')
     };
 
     ctrl.playWauArchiveItem = function (epizode) {
-      ctrl.playing = 'jojArchive';
-      ctrl.reset();
+      Player.playing = 'jojArchive';
+      Player.reset();
       $mdSidenav('left').close();
-      ctrl.epizode = epizode;
+      Player.epizode = epizode;
       wau.getStreamUrls(epizode.url).then(function (streams) {
-        ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(joj.findHighQualityStream(streams));
-        ctrl.playing = 'jojArchive';
-        ctrl.channel = epizode.url;
+        Player.videoFromArchiveUrl = $sce.trustAsResourceUrl(joj.findHighQualityStream(streams));
+        Player.playing = 'jojArchive';
         ga('send', {
           hitType: 'event',
           eventCategory: 'Play',
@@ -380,96 +332,27 @@ angular.module('joj.shared')
     };
 
     ctrl.playMarkizaArchiveItem = function (epizode) {
-      ctrl.playing = 'jojArchive';
-      ctrl.reset();
+      ctrl.playing = 'markizaArchiveItem';
       $mdSidenav('left').close();
-      ctrl.epizode = epizode;
-      MarkizaService.getStreamUrls(epizode.url).then(function (stream) {
-        ctrl.playing = 'flashHlsVideo';
-        ctrl.channel = epizode.url;
-        if (mobileAndTabletcheck()) {
-          window.open(stream);
-        } else {
-          $('#flashHlsVideoPlayer').removeClass('vxgHidden');
-          loadStream('flashHlsVideoPlayer', stream);
-        }
-        ga('send', {
-          hitType: 'event',
-          eventCategory: 'Play',
-          eventAction: 'Markiza',
-          eventLabel: epizode.url
-        });
-      });
+      var autoplay = true;
+      Player.playMarkizaArchiveItem(epizode, autoplay);
       return false;
-    };
-
-    ctrl.playCT1 = function () {
-      ctrl.reset();
-      Player.play('jojLiveStream', [{
-        title: 'CT1',
-        file: 'http://80.188.78.181/atip/4274100aea8199011d868b4768c56d8e/1457456592116/5115a74bb6df54748296b572ea23baa9/102-tv-pc/1504.m3u8?time=1457456633556'
-      }]);
-    };
-
-    ctrl.playCT2 = function () {
-      ctrl.reset();
-      Player.play('jojLiveStream', [{
-        title: 'CT2',
-        file: 'http://80.188.78.148/atip/8225ff0f13d0e0a92fcde1e5d61f1da1/1457461766384/sess/0b2f74ff8c467b1972e6f4ddeeccbb9b/61924494877123753/1504.k.m3u8'
-      }]);
-    };
-
-    ctrl.playCT24 = function () {
-      ctrl.reset();
-      ctrl.playing = 'ct24';
-      $timeout(function () {
-        ctrl.streamUrl = $sce.trustAsResourceUrl('http://80.188.65.18:80/cdn/uri/get/?token=0aa18f2b7f711c93a7155e6c77801138f2bcf63c&contentType=live&expiry=1457492400&id=2402&playerType=flash&quality=web&region=1&skipIpAddressCheck=false&userId=d93d2980-7d0e-4e30-9877-cda8b6f45d71');
-        player = videojs('streamPlaying');
-        player.play();
-      });
-    };
-
-    ctrl.playDajto = function () {
-      playM3U8('http://cdn.srv.markiza.sk/plive/dajto.smil/manifest.m3u8');
-    };
-
-    ctrl.playSTV2 = function () {
-      playM3U8('http://e15.stv.livebox.sk/stv-tv/_definst_/stv2-1.smil/playlist.m3u8?auth=b64:X2FueV98MTQ1NzczMjMxMHw4N2RlZTEyY2U2MDY1YjMzMGI5YWVhNjllOGIzYjA4ZWVhMzkxZjQ0');
-    };
-
-    ctrl.playSTV1 = function () {
-      playM3U8('http://e22.stv.livebox.sk/stv-tv/_definst_/stv1-2.smil/playlist.m3u8?auth=b64:X2FueV98MTQ1NzczMjU2MXxhMTk0Zjg3OWFlYWIxZWM5ODk3MGFiMTA4NmY0M2ZlMDAyYTQxYjQy');
-    };
-
-    var playM3U8 = function (url) {
-      ctrl.reset();
-      ctrl.playing = 'dajtoStream';
-      $timeout(function () {
-        loadStream('dajto', url);
-        $mdSidenav('left').close();
-      });
     };
 
     ctrl.isChrome = function () {
       return navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
     };
 
-    if (ctrl.isChrome()) {
-      var vxgPlayer = vxgplayer('vxg_media_player');
-    }
-    var dajtoVideo;
-
     ctrl.playVgx = function (name) {
       if (!ctrl.isChrome() && !VlcService.isInstalled()) {
-        ctrl.vlcMissing = true;
+        Player.vlcMissing = true;
       } else {
-        ctrl.vlcMissing = false;
+        Player.vlcMissing = false;
         for (var i in Playlist.vgx) {
           if (Playlist.vgx[i].n === name) {
-            ctrl.reset();
-            ctrl.playing = 'vgx';
-            playVxg(window.atob(Playlist.vgx[i].u));
-            ctrl.channel = Playlist.vgx[i].u;
+            Player.reset();
+            Player.playing = 'vgx';
+            Player.playVxg(window.atob(Playlist.vgx[i].u));
             ga('send', {
               hitType: 'event',
               eventCategory: 'Play',
@@ -487,17 +370,43 @@ angular.module('joj.shared')
       return window.atob(name);
     };
 
-    var openInVlc = function (url) {
-      window.open('vlc://' + url);
+    $timeout(function(){
+      $('#vxgPlayerWrapper').addClass('vxgHidden');
+      $('#flashHlsVideoPlayer').addClass('vxgHidden');
+      if (!mobileAndTabletcheck()) {
+        //ctrl.jojLive();
+      }
+    }, 2000);
+  }]);
+
+angular.module('joj.shared')
+
+  .factory('Player', ["$sce", "MarkizaService", "JojService", function ($sce, MarkizaService, JojService) {
+
+    var service = {};
+    var joj = new JojService();
+
+    service.videoFromArchiveUrl = null;
+    service.playing = null;
+    service.channel = null;
+    service.ta3LiveStreamUrl = null;
+    service.epizodes = [];
+
+    service.isChrome = function isChrome() {
+      return navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
     };
 
-    var playVxg = function (url) {
+    if (service.isChrome()) {
+      var vxgPlayer = vxgplayer('vxg_media_player');
+    }
+
+    service.playVxg = function (url) {
       if (mobileAndTabletcheck()) {
         openInVlc(url);
       } else {
         $('#vxgPlayerWrapper').removeClass('vxgHidden');
 
-        if (ctrl.isChrome()) {
+        if (service.isChrome()) {
 
           $timeout(function () {
             vxgPlayer.src(url);
@@ -517,42 +426,112 @@ angular.module('joj.shared')
       }
     };
 
-    ctrl.showHelpDialog = function () {
-      $mdDialog.show();
-    };
+    service.reset = function () {
+      document.getElementById("html5video").pause();
+      service.epizodes = [];
+      service.videoSrc = '';
+      service.ta3LiveStreamUrl = '';
+      service.playing = '';
 
-    ctrl.showHelpDialog = function(ev) {
-      var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
-      $mdDialog.show({
-        controller: DialogController,
-        templateUrl: 'app/_shared/views/help.tmpl.html',
-        parent: angular.element(document.body),
-        targetEvent: ev,
-        clickOutsideToClose: true,
-        fullscreen: useFullScreen
-      })
-    };
+      $('#flashHlsVideoPlayer').replaceWith('<div id="flashHlsVideoPlayer"></div>');
 
-    function DialogController($scope, $mdDialog) {
-      $scope.hide = function() {
-        $mdDialog.hide();
-      };
-      $scope.isMobile = mobileAndTabletcheck();
-    }
-    DialogController.$inject = ["$scope", "$mdDialog"];
+      $('#jojLiveStream').hide();
 
-    $timeout(function(){
-      $('#vxgPlayerWrapper').addClass('vxgHidden');
-      $('#flashHlsVideoPlayer').addClass('vxgHidden');
-      if (!mobileAndTabletcheck()) {
-        //ctrl.jojLive();
+      if (service.isChrome()) {
+        if (vxgPlayer && vxgPlayer.isPlaying()) {
+          vxgPlayer.stop();
+        }
+      } else {
+        document.getElementById('vxgPlayerWrapper__embed').innerHTML = '';
       }
-    }, 2000);
 
-    var loadStream = function (videoId, url) {
+      $('#vxgPlayerWrapper').addClass('vxgHidden');
+      $('.vxgplayer-loader').removeClass('hidden');
+      $('#flashHlsVideoPlayer').addClass('vxgHidden');
+    };
+
+    service.playMarkizaArchiveItem = function (epizode, autoplay) {
+      service.playing = 'markizaArchive';
+      service.reset();
+      service.epizode = epizode;
+      MarkizaService.getStreamUrls(epizode.url).then(function (stream) {
+        service.playing = 'flashHlsVideo';
+        if (mobileAndTabletcheck()) {
+          window.open(stream);
+        } else {
+          $('#flashHlsVideoPlayer').removeClass('vxgHidden');
+          loadStream('flashHlsVideoPlayer', stream, autoplay);
+        }
+        ga('send', {
+          hitType: 'event',
+          eventCategory: 'Play',
+          eventAction: 'Markiza',
+          eventLabel: epizode.url
+        });
+      });
+    };
+
+    service.playMarkizaVideoId = function (id, autoplay) {
+      service.playing = 'markizaArchive';
+      service.reset();
+      MarkizaService.getStreamUrlsFromId(id).then(function (stream) {
+        service.playing = 'flashHlsVideo';
+        if (mobileAndTabletcheck()) {
+          window.open(stream);
+        } else {
+          $('#flashHlsVideoPlayer').removeClass('vxgHidden');
+          loadStream('flashHlsVideoPlayer', stream, autoplay);
+        }
+        ga('send', {
+          hitType: 'event',
+          eventCategory: 'Play',
+          eventAction: 'Markiza',
+          eventLabel: id
+        });
+      });
+    };
+
+    service.playJojArchiveItem = function (epizode) {
+      service.playing = 'jojArchive';
+      service.reset();
+      service.epizode = epizode;
+      joj.getStreamUrls(epizode.url).then(function (streams) {
+        service.videoFromArchiveUrl = $sce.trustAsResourceUrl(joj.findHighQualityStream(streams));
+        service.playing = 'jojArchive';
+
+        ga('send', {
+          hitType: 'event',
+          eventCategory: 'Play',
+          eventAction: 'JOJ',
+          eventLabel: epizode.url
+        });
+      });
+    };
+
+    service.playJojArchiveVideoId = function (id, autoplay) {
+      service.playing = 'jojArchive';
+      service.reset();
+      joj.getStreamUrlsFromId(id).then(function (streams) {
+        service.videoFromArchiveUrl = $sce.trustAsResourceUrl(joj.findHighQualityStream(streams));
+        service.playing = 'jojArchive';
+
+        ga('send', {
+          hitType: 'event',
+          eventCategory: 'Play',
+          eventAction: 'JOJ',
+          eventLabel: id
+        });
+      });
+    };
+
+    var openInVlc = function (url) {
+      window.open('vlc://' + url);
+    };
+
+    var loadStream = function (videoId, url, autoplay) {
       var parameters = {
         src: url,
-        autoPlay: "true",
+        autoPlay: autoplay,
         verbose: true,
         controlBarAutoHide: "true",
         controlBarPosition: "bottom",
@@ -597,37 +576,9 @@ angular.module('joj.shared')
       );
 
     };
-  }]);
-
-angular.module('joj.shared')
-
-  .factory('Player', function () {
-
-    var service = {};
-
-    service.play = function (divId, playlist) {
-      /** Initialize player **/
-      jwplayer.key = "Wr5xvp4jvHH2wMDslR9TbuVH1yKuxwDTFL3SRDLKW3kyYTROjTiYPQ==";
-      jwplayer(divId).setup({
-        autostart: true,
-        controls: true,
-        displaytitle: false,
-        flashplayer: "https://ssl.p.jwpcdn.com/player/v/7.3.4/jwplayer.flash.swf",
-        height: 360,
-        ph: 1,
-        pid: "attSQxsH",
-        playlist: playlist,
-        plugins: {"https://assets-jpcust.jwpsrv.com/player/6/6124956/ping.js": {"pixel": "https://content.jwplatform.com/ping.gif"}},
-        primary: "html5",
-        repeat: false,
-        stagevideo: false,
-        stretching: "uniform",
-        width: 480
-      });
-    };
 
     return service;
-  });
+  }]);
 angular.module('joj.shared')
 
   .factory('Playlist', function () {
@@ -749,6 +700,39 @@ angular.module('joj.shared')
     };
 
     return service;
+  }]);
+
+angular.module('joj.shared')
+
+  .directive('video', ["Player", "JojService", function(Player, JojService) {
+    'use strict';
+
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'app/player/player.html',
+      scope: {
+        video: '='
+      },
+      link: function(scope, el) {
+        scope.isChrome = function isChrome() {
+          return Player.isChrome();
+        };
+        scope.Player = Player;
+        scope.JojService = JojService;
+
+        scope.Player = Player;
+        scope.JojService = JojService;
+
+        if (scope.video && scope.video.id) {
+          if (scope.video.service === 'markiza') {
+            Player.playMarkizaVideoId(scope.video.id, scope.video.autoplay);
+          } else if (scope.video.service === 'joj') {
+            Player.playJojArchiveVideoId(scope.video.id, scope.video.autoplay);
+          }
+        }
+      }
+    };
   }]);
 
 angular.module('joj.shared')
@@ -928,6 +912,15 @@ angular.module('joj.shared')
           defered.resolve(JojEpizodesExtractor.extractStreamUrls(streamInfo));
           service.fetchingStreams = false;
         });
+      });
+      return defered.promise;
+    };
+
+    service.prototype.getStreamUrlsFromId = function (videoId) {
+      var defered = $q.defer();
+      service.prototype.api.one().get({clip: videoId}).then(function(streamInfo){
+        defered.resolve(JojEpizodesExtractor.extractStreamUrls(streamInfo));
+        service.fetchingStreams = false;
       });
       return defered.promise;
     };
@@ -1246,9 +1239,13 @@ angular.module('joj.shared')
     var MarkizaApi = RestMarkiza.service('json/video.json');
 
     service.getStreamUrls = function (url) {
+      var videoId = service.getEpizodeIdFromUrl(url);
+      return service.getStreamUrlsFromId(videoId);
+    };
+
+    service.getStreamUrlsFromId = function (videoId) {
       var defered = $q.defer();
       service.fetchingStreams = true;
-      var videoId = service.getEpizodeIdFromUrl(url);
       MarkizaApi.one().get({id: videoId}).then(function(streamInfo){
         defered.resolve(MarkizaEpizodesExtractor.extractStreamUrls(streamInfo));
         service.fetchingStreams = false;
@@ -1273,3 +1270,5 @@ angular.module('joj.shared')
 
 }]);
 
+
+angular.module("joj.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("app/player/player.html","<div ng-show=\"Player.playing\" class=\"player-screen\">\n  <div id=\"vxgPlayerWrapper\" class=\"vxgPlayerWrapper vxgHidden\">\n    <div ng-show=\"isChrome()\" class=\"vxgplayer\"\n         id=\"vxg_media_player\"\n         width=\"640\"\n         height=\"360\"\n         url=\"{{vxgPlayerUrl}}\"\n         nmf-src=\"bower_components/vxgplayer/pnacl/Release/media_player.nmf\"\n         nmf-path=\"media_player.nmf\"\n         autohide=\"2\"\n         volume=\"0.7\"\n         avsync\n         controls\n         mute\n         aspect-ratio\n         aspect-ratio-mode=\"1\"\n         auto-reconnect>\n    </div>\n    <div id=\"vxgPlayerWrapper__embed\" ng-show=\"!isChrome()\"></div>\n  </div>\n\n  <iframe id=\"ta3frame\" ng-show=\"Player.playing === \'ta3\'\" ng-src=\"{{Player.ta3LiveStreamUrl}}\" frameborder=\"0\" scrolling=\"no\"></iframe>\n  <div ng-show=\"Player.playing === \'jojLiveStream\'\" id=\"jojLiveStream\"></div>\n\n  <div id=\"flashHlsVideoPlayer\"></div>\n\n  <video id=\"html5video\" controls ng-show=\"Player.playing === \'jojArchive\' && !JojService.fetchingStreams && !JojService.fetchingEpizodes\" ng-src=\"{{Player.videoFromArchiveUrl}}\"></video>\n\n</div>");}]);

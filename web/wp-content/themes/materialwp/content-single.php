@@ -6,8 +6,6 @@
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-	<?php require_once('wall.html'); ?>
-
 	<div class="card">
 		<div class="entry-img">
 			<?php if ( has_post_thumbnail() ) : ?>

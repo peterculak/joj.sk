@@ -18,7 +18,8 @@ get_header(); ?>
 
 		<div id="primary" class="col-md-8 col-lg-8">
 			<main id="main" class="site-main" role="main">
-				<?php require_once('wall.html'); ?>
+				<div video></div>
+				<?php require_once('wall.php'); ?>
 			</main><!-- #main -->
 		</div><!-- #primary -->
 

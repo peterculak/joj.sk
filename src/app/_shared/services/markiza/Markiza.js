@@ -46,9 +46,13 @@ angular.module('joj.shared')
     var MarkizaApi = RestMarkiza.service('json/video.json');
 
     service.getStreamUrls = function (url) {
+      var videoId = service.getEpizodeIdFromUrl(url);
+      return service.getStreamUrlsFromId(videoId);
+    };
+
+    service.getStreamUrlsFromId = function (videoId) {
       var defered = $q.defer();
       service.fetchingStreams = true;
-      var videoId = service.getEpizodeIdFromUrl(url);
       MarkizaApi.one().get({id: videoId}).then(function(streamInfo){
         defered.resolve(MarkizaEpizodesExtractor.extractStreamUrls(streamInfo));
         service.fetchingStreams = false;
