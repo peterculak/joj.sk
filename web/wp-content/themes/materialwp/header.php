@@ -30,6 +30,9 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/restangular/1.4.0/restangular.min.js"></script>
 	<script type="text/javascript" src="//cdn.jsdelivr.net/lodash/2.1.0/lodash.compat.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angulartics-google-analytics/0.1.4/angulartics-google-analytics.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angulartics/1.0.3/angulartics.min.js"></script>
+
 
 <?php wp_head(); ?>
 
@@ -39,7 +42,7 @@
 	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 
 
-	<script src="scripts/app-5b5462d2.js"></script>
+	<script src="scripts/app-d901ed7e.js"></script>
 
 </head>
 

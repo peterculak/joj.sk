@@ -147,12 +147,12 @@ angular.module('joj.shared')
       ctrl.channel = 'ta3';
       ctrl.ta3LiveStreamUrl = $sce.trustAsResourceUrl('http://www.ta3.com/live.html?embed=1');
       $mdSidenav('left').close();
-      //ga('send', {
-      //  hitType: 'event',
-      //  eventCategory: 'Play',
-      //  eventAction: 'TA3',
-      //  eventLabel: 'http://www.ta3.com/live.html?embed=1'
-      //});
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'Play',
+        eventAction: 'TA3',
+        eventLabel: 'live'
+      });
       return false;
     };
 
@@ -162,12 +162,12 @@ angular.module('joj.shared')
       ctrl.channel = 'joj';
       joj.playLiveStream('jojLiveStream');
       $mdSidenav('left').close();
-      //ga('send', {
-      //  hitType: 'event',
-      //  eventCategory: 'Play',
-      //  eventAction: 'JOJ',
-      //  eventLabel: 'live'
-      //});
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'Play',
+        eventAction: 'JOJ',
+        eventLabel: 'live'
+      });
       return false;
     };
 
@@ -177,12 +177,12 @@ angular.module('joj.shared')
       ctrl.channel = 'joj+';
       jojplus.playLiveStream('jojLiveStream');
       $mdSidenav('left').close();
-      //ga('send', {
-      //  hitType: 'event',
-      //  eventCategory: 'Play',
-      //  eventAction: 'JOJ+',
-      //  eventLabel: 'live'
-      //});
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'Play',
+        eventAction: 'JOJ+',
+        eventLabel: 'live'
+      });
       return false;
     };
 
@@ -192,12 +192,12 @@ angular.module('joj.shared')
       ctrl.channel = 'wau';
       wau.playLiveStream('jojLiveStream');
       $mdSidenav('left').close();
-      //ga('send', {
-      //  hitType: 'event',
-      //  eventCategory: 'Play',
-      //  eventAction: 'WAU',
-      //  eventLabel: 'live'
-      //});
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'Play',
+        eventAction: 'WAU',
+        eventLabel: 'live'
+      });
     };
 
     ctrl.playJojArchiveItem = function (epizode) {
@@ -209,12 +209,12 @@ angular.module('joj.shared')
         ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(joj.findHighQualityStream(streams));
         ctrl.playing = 'jojArchive';
         ctrl.channel = epizode.url;
-        //ga('send', {
-        //  hitType: 'event',
-        //  eventCategory: 'Play',
-        //  eventAction: 'JOJ',
-        //  eventLabel: epizode.url
-        //});
+        ga('send', {
+          hitType: 'event',
+          eventCategory: 'Play',
+          eventAction: 'JOJ',
+          eventLabel: epizode.url
+        });
       });
       return false;
     };
@@ -247,12 +247,12 @@ angular.module('joj.shared')
         ctrl.videoFromArchiveUrl = $sce.trustAsResourceUrl(joj.findHighQualityStream(streams));
         ctrl.playing = 'jojArchive';
         ctrl.channel = epizode.url;
-        //ga('send', {
-        //  hitType: 'event',
-        //  eventCategory: 'Play',
-        //  eventAction: 'WAU',
-        //  eventLabel: epizode.url
-        //});
+        ga('send', {
+          hitType: 'event',
+          eventCategory: 'Play',
+          eventAction: 'WAU',
+          eventLabel: epizode.url
+        });
       });
       return false;
     };
@@ -269,16 +269,14 @@ angular.module('joj.shared')
           window.open(stream);
         } else {
           $('#flashHlsVideoPlayer').removeClass('vxgHidden');
-          $timeout(function () {
-            loadStream('flashHlsVideoPlayer', stream);
-          }, 1000);
+          loadStream('flashHlsVideoPlayer', stream);
         }
-        //ga('send', {
-        //  hitType: 'event',
-        //  eventCategory: 'Play',
-        //  eventAction: 'Markiza',
-        //  eventLabel: epizode.url
-        //});
+        ga('send', {
+          hitType: 'event',
+          eventCategory: 'Play',
+          eventAction: 'Markiza',
+          eventLabel: epizode.url
+        });
       });
       return false;
     };
@@ -350,12 +348,12 @@ angular.module('joj.shared')
             ctrl.playing = 'vgx';
             playVxg(window.atob(Playlist.vgx[i].u));
             ctrl.channel = Playlist.vgx[i].u;
-            //ga('send', {
-            //  hitType: 'event',
-            //  eventCategory: 'Play',
-            //  eventAction: window.atob(name),
-            //  eventLabel: 'live'
-            //});
+            ga('send', {
+              hitType: 'event',
+              eventCategory: 'Play',
+              eventAction: window.atob(name),
+              eventLabel: 'live'
+            });
             break;
           }
         }

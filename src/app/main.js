@@ -1,7 +1,7 @@
 angular.module('joj', [
   'restangular',
-  //'angulartics',
-  //'angulartics.google.analytics',
+  'angulartics',
+  'angulartics.google.analytics',
   'ngMaterial',
   'ui.router',
   //'joj.templates',
