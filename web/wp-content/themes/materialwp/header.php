@@ -41,7 +41,7 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 
-<script src="scripts/app-a6744d43.js"></script>
+<script src="scripts/app-247d7c99.js"></script>
 
 </head>
 
@@ -171,7 +171,7 @@
 		    <!-- Brand and toggle get grouped for better mobile display -->
 		    <div class="navbar-header" >
 
-				<md-button ng-click="toggleLeft()" class="md-primary md-fab">
+				<md-button ng-click="toggleLeft()" class="md-icon-button">
 					<md-icon>menu</md-icon>
 				</md-button>
 

@@ -1,5 +1,6 @@
 .navbar-brand {
     float: none;
+    top: 3px;
 }
 
 .site-content {

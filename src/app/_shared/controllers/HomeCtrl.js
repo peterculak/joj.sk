@@ -467,7 +467,8 @@ angular.module('joj.shared')
         , parameters
         , {
           allowFullScreen: "true",
-          wmode: "direct"
+          wmode: "direct",
+          bgcolor: "#000000"
         }
         , {
           name: "flashHlsVideoPlayer"

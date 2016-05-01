@@ -119,6 +119,12 @@ video {
 
 }
 
+.navbar-header {
+  md-icon {
+    color: rgba(255, 255, 255, 0.74);
+  }
+}
+
 .menu {
   position: absolute;
   z-index: 1;
