@@ -252,9 +252,5 @@ angular.module('joj.shared')
 
     $timeout(function(){
       $('#vxgPlayerWrapper').addClass('vxgHidden');
-      $('#flashHlsVideoPlayer').addClass('vxgHidden');
-      if (!mobileAndTabletcheck()) {
-        //ctrl.jojLive();
-      }
     }, 2000);
   });
