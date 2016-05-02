@@ -8,10 +8,6 @@
 
 
 <base href="/">
-<meta name="description" content="Slovenské a České Televízne prenosy online, TV JOJ Archív, Live športové prenosy, Zadarmo, Pre mobil. TV Markíza live, TV JOJ live, DAJTO live, DOMA live, STV1 live, STV2 live, PRIMA live, PRIMA COOL Live, NOVA live, ČT1 live, ČT2 live" />
-<meta name="keywords" content="Slovenské a České Televízne prenosy online, TV JOJ Archív, Live športové prenosy, Zadarmo, Pre mobil. TV Markíza live, TV JOJ live, DAJTO live, DOMA live, STV1 live, STV2 live, PRIMA live, PRIMA COOL Live, NOVA live, ČT1 live, ČT2 live"/>
-<meta property="og:description" content="Slovenské a České Televízne prenosy online, TV JOJ Archív, Live športové prenosy, Zadarmo, Pre mobil. TV Markíza live, TV JOJ live, DAJTO live, DOMA live, STV1 live, STV2 live, PRIMA live, PRIMA COOL Live, NOVA live, ČT1 live, ČT2 live" />
-<meta property="og:image" content="http://streamtv.sk/images/logo-large.jpg" />
 <link rel="shortcut icon" href="/images/logo.svg">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
