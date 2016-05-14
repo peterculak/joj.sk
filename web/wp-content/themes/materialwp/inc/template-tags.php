@@ -40,6 +40,8 @@ if ( ! function_exists( 'materialwp_post_nav' ) ) :
  * Display navigation to next/previous post when applicable.
  */
 function materialwp_post_nav() {
+	return; //disabling nav on posts
+	
 	// Don't print empty markup if there's nowhere to navigate.
 	$previous = ( is_attachment() ) ? get_post( get_post()->post_parent ) : get_adjacent_post( false, '', true );
 	$next     = get_adjacent_post( false, '', false );
