@@ -1129,7 +1129,7 @@ angular.module('joj.shared')
      * @returns {Array}
      */
     service.extractStreamUrls = function (data) {
-      return data.playlist[0].baseUrl + '/' + data.playlist[0].url.replace('f4m', 'm3u8');
+      return data.playlist[0].baseUrl.replace(':1935','') + '/' + data.playlist[0].url.replace('f4m', 'm3u8');
     };
 
     service.extractWhatsOn = function (data) {
