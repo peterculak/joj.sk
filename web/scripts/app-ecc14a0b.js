@@ -336,7 +336,7 @@ angular.module('joj.shared')
 
 angular.module('joj.shared')
 
-  .factory('Player', ["$sce", "MarkizaService", "JojService", function ($sce, MarkizaService, JojService) {
+  .factory('Player', ["$sce", "$timeout", "MarkizaService", "JojService", function ($sce, $timeout, MarkizaService, JojService) {
 
     var service = {};
     var joj = new JojService();
