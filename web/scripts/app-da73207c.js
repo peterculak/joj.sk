@@ -248,47 +248,6 @@ angular.module('joj.shared')
       return false;
     };
 
-    ctrl.jojLive = function () {
-      Player.reset();
-      Player.playing = 'jojLiveStream';
-      joj.playLiveStream('jojLiveStream');
-      $mdSidenav('left').close();
-      ga('send', {
-        hitType: 'event',
-        eventCategory: 'Play',
-        eventAction: 'JOJ',
-        eventLabel: 'live'
-      });
-      return false;
-    };
-
-    ctrl.playJojPlusLive = function () {
-      Player.reset();
-      Player.playing = 'jojLiveStream';
-      jojplus.playLiveStream('jojLiveStream');
-      $mdSidenav('left').close();
-      ga('send', {
-        hitType: 'event',
-        eventCategory: 'Play',
-        eventAction: 'JOJ+',
-        eventLabel: 'live'
-      });
-      return false;
-    };
-
-    ctrl.playWauLive = function () {
-      Player.reset();
-      Player.playing = 'jojLiveStream';
-      wau.playLiveStream('jojLiveStream');
-      $mdSidenav('left').close();
-      ga('send', {
-        hitType: 'event',
-        eventCategory: 'Play',
-        eventAction: 'WAU',
-        eventLabel: 'live'
-      });
-    };
-
     ctrl.playJojArchiveItem = function (epizode) {
       $mdSidenav('left').close();
       Player.playJojArchiveItem(epizode);
@@ -581,7 +540,7 @@ angular.module('joj.shared')
 
     var service = {};
 
-    service.vgx = [{"n":"am9qQ2luZW1h","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA1N19wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"RklMTUJPWA==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAxOF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"RGlnaVNwb3J0Mw==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAyNl9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"bm92YVNwb3J0MQ==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAyOF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"RXVyb3Nwb3J0Mg==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAxNF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"Q1Qx","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAzMV9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"Q1Qy","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAzMl9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"Q1QyNA==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAzM19wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"RGlzY292ZXJ5","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAzNF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"QW5pbWFsUGxhbmV0","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAzNl9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"Ti9B","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA0MF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"U3BlY3RydW0=","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA1NF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"U3BlY3RydW1Ib21l","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA1Nl9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"RW5nbGlzaENsdWI=","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAyMF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"QVhO","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA0Nl9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"TUVHQU1BWA==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA0OV9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"SmltSmFt","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA1MF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"YW1j","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA1Ml9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"Tm9l","u":"aHR0cDovLzIxMi43OS45Ni4xMzQ6ODAxNw=="},{"n":"UmV0cm8=","u":"aHR0cDovLzIxMi43OS45Ni4xMzQ6ODAxOA=="},{"n":"MSBDbGFzc2lj","u":"aHR0cDovLzIxMi43OS45Ni4xMzQ6ODAyNA=="},{"n":"U2t5IFNwb3J0cyAx","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0djIxXzZ2aHVkbHE4"},{"n":"U2t5IFNwb3J0cyAy","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0djIyX2o1cDFtdGVk"},{"n":"U2t5IFNwb3J0cyAz","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0djIzXzVweDNudGZz"},{"n":"U2t5IFNwb3J0cyA0","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0djI0X2Y4NHJkbWtr"},{"n":"U2t5IFNwb3J0cyA1","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0djI1X3d0MjUwc3Nr"},{"n":"QlQgU3BvcnQgRXVyb3Bl","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0dmJ0ZXVfNW1zZ2o0NHg="},{"n":"QlQgU3BvcnRzIDE=","u":"aHR0cDovL2JpdC5seS8yMEpZOFlM"},{"n":"QlQgU3BvcnRzIDI=","u":"aHR0cDovL2JpdC5seS8xUlRxZ1la"}];
+    service.vgx = [{"n":"Sk9K","u":"aHR0cDovL24yMS5qb2ouc2svaGxzL2pvai03MjAubTN1OA=="},{"n":"Sk9KKw==","u":"aHR0cDovL24yMS5qb2ouc2svaGxzL2pvanBsdXMtNTQwLm0zdTg="},{"n":"V0FV","u":"aHR0cDovL24yMS5qb2ouc2svaGxzL3dhdS01NDAubTN1OA=="},{"n":"am9qQ2luZW1h","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA1N19wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"RklMTUJPWA==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAxOF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"RGlnaVNwb3J0Mw==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAyNl9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"bm92YVNwb3J0MQ==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAyOF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"RXVyb3Nwb3J0Mg==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAxNF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"Q1Qx","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAzMV9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"Q1Qy","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAzMl9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"Q1QyNA==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAzM19wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"RGlzY292ZXJ5","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAzNF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"QW5pbWFsUGxhbmV0","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAzNl9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"Ti9B","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA0MF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"U3BlY3RydW0=","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA1NF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"U3BlY3RydW1Ib21l","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA1Nl9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"RW5nbGlzaENsdWI=","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAyMF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"QVhO","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA0Nl9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"TUVHQU1BWA==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA0OV9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"SmltSmFt","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA1MF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"YW1j","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA1Ml9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"Tm9l","u":"aHR0cDovLzIxMi43OS45Ni4xMzQ6ODAxNw=="},{"n":"UmV0cm8=","u":"aHR0cDovLzIxMi43OS45Ni4xMzQ6ODAxOA=="},{"n":"MSBDbGFzc2lj","u":"aHR0cDovLzIxMi43OS45Ni4xMzQ6ODAyNA=="},{"n":"U2t5IFNwb3J0cyAx","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0djIxXzZ2aHVkbHE4"},{"n":"U2t5IFNwb3J0cyAy","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0djIyX2o1cDFtdGVk"},{"n":"U2t5IFNwb3J0cyAz","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0djIzXzVweDNudGZz"},{"n":"U2t5IFNwb3J0cyA0","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0djI0X2Y4NHJkbWtr"},{"n":"U2t5IFNwb3J0cyA1","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0djI1X3d0MjUwc3Nr"},{"n":"QlQgU3BvcnQgRXVyb3Bl","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0dmJ0ZXVfNW1zZ2o0NHg="},{"n":"QlQgU3BvcnRzIDE=","u":"aHR0cDovL2JpdC5seS8yMEpZOFlM"},{"n":"QlQgU3BvcnRzIDI=","u":"aHR0cDovL2JpdC5seS8xUlRxZ1la"}];
 
     return service;
   });
@@ -1264,4 +1223,4 @@ angular.module('joj.shared')
 }]);
 
 
-angular.module("joj.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("app/player/player.html","<div ng-show=\"Player.playing\" class=\"player-screen\">\n  <div id=\"vxgPlayerWrapper\" class=\"vxgPlayerWrapper vxgHidden\">\n    <div ng-show=\"isChrome()\" class=\"vxgplayer\"\n         id=\"vxg_media_player\"\n         width=\"640\"\n         height=\"360\"\n         url=\"{{vxgPlayerUrl}}\"\n         nmf-src=\"bower_components/vxgplayer/pnacl/Release/media_player.nmf\"\n         nmf-path=\"media_player.nmf\"\n         autohide=\"2\"\n         volume=\"0.7\"\n         avsync\n         controls\n         mute\n         aspect-ratio\n         aspect-ratio-mode=\"1\"\n         auto-reconnect>\n    </div>\n    <div id=\"vxgPlayerWrapper__embed\" ng-show=\"!isChrome()\"></div>\n  </div>\n\n  <iframe id=\"ta3frame\" ng-show=\"Player.playing === \'ta3\'\" ng-src=\"{{Player.ta3LiveStreamUrl}}\" frameborder=\"0\" scrolling=\"no\"></iframe>\n  <div ng-show=\"Player.playing === \'jojLiveStream\'\" id=\"jojLiveStream\"></div>\n\n  <div id=\"flashHlsVideoPlayer\"></div>\n\n  <video id=\"html5video\" controls ng-show=\"Player.playing === \'jojArchive\' && !JojService.fetchingStreams && !JojService.fetchingEpizodes\" ng-src=\"{{Player.videoFromArchiveUrl}}\"></video>\n\n</div>");}]);
+angular.module("joj.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("app/player/player.html","<div ng-show=\"Player.playing\" class=\"player-screen\">\n  <div id=\"vxgPlayerWrapper\" class=\"vxgPlayerWrapper vxgHidden\">\n    <div ng-show=\"isChrome()\" class=\"vxgplayer\"\n         id=\"vxg_media_player\"\n         width=\"640\"\n         height=\"360\"\n         url=\"{{vxgPlayerUrl}}\"\n         nmf-src=\"bower_components/vxgplayer/pnacl/Release/media_player.nmf\"\n         nmf-path=\"media_player.nmf\"\n         autohide=\"2\"\n         volume=\"0.7\"\n         avsync\n         controls\n         mute\n         aspect-ratio\n         aspect-ratio-mode=\"1\"\n         auto-reconnect>\n    </div>\n    <div id=\"vxgPlayerWrapper__embed\" ng-show=\"!isChrome()\"></div>\n  </div>\n\n  <iframe id=\"ta3frame\" ng-show=\"Player.playing === \'ta3\'\" ng-src=\"{{Player.ta3LiveStreamUrl}}\" frameborder=\"0\" scrolling=\"no\"></iframe>\n\n  <div id=\"flashHlsVideoPlayer\"></div>\n  <video id=\"html5video\" controls ng-show=\"Player.playing === \'jojArchive\' && !JojService.fetchingStreams && !JojService.fetchingEpizodes\" ng-src=\"{{Player.videoFromArchiveUrl}}\"></video>\n\n</div>");}]);

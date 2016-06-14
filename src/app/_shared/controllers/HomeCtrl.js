@@ -128,47 +128,6 @@ angular.module('joj.shared')
       return false;
     };
 
-    ctrl.jojLive = function () {
-      Player.reset();
-      Player.playing = 'jojLiveStream';
-      joj.playLiveStream('jojLiveStream');
-      $mdSidenav('left').close();
-      ga('send', {
-        hitType: 'event',
-        eventCategory: 'Play',
-        eventAction: 'JOJ',
-        eventLabel: 'live'
-      });
-      return false;
-    };
-
-    ctrl.playJojPlusLive = function () {
-      Player.reset();
-      Player.playing = 'jojLiveStream';
-      jojplus.playLiveStream('jojLiveStream');
-      $mdSidenav('left').close();
-      ga('send', {
-        hitType: 'event',
-        eventCategory: 'Play',
-        eventAction: 'JOJ+',
-        eventLabel: 'live'
-      });
-      return false;
-    };
-
-    ctrl.playWauLive = function () {
-      Player.reset();
-      Player.playing = 'jojLiveStream';
-      wau.playLiveStream('jojLiveStream');
-      $mdSidenav('left').close();
-      ga('send', {
-        hitType: 'event',
-        eventCategory: 'Play',
-        eventAction: 'WAU',
-        eventLabel: 'live'
-      });
-    };
-
     ctrl.playJojArchiveItem = function (epizode) {
       $mdSidenav('left').close();
       Player.playJojArchiveItem(epizode);

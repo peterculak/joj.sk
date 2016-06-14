@@ -1,0 +1,65 @@
+#EXTM3U
+#EXTINF:-1,JOJ
+http://n21.joj.sk/hls/joj-720.m3u8
+#EXTINF:-1,JOJ+
+http://n21.joj.sk/hls/jojplus-540.m3u8
+#EXTINF:-1,WAU
+http://n21.joj.sk/hls/wau-540.m3u8
+#EXTINF:-1,jojCinema
+http://213.81.153.241/live001/channel057_p5.stream/DVR.m3u8
+#EXTINF:-1,FILMBOX
+http://213.81.153.241/live001/channel018_p5.stream/DVR.m3u8
+#EXTINF:-1,DigiSport3
+http://213.81.153.241/live001/channel026_p5.stream/DVR.m3u8
+#EXTINF:-1,novaSport1
+http://213.81.153.241/live001/channel028_p5.stream/DVR.m3u8
+#‎EXTINF‬:-1,Eurosport2
+http://213.81.153.241/live001/channel014_p5.stream/DVR.m3u8
+#EXTINF:-1,CT1
+http://213.81.153.241/live001/channel031_p5.stream/DVR.m3u8
+#EXTINF:-1,CT2
+http://213.81.153.241/live001/channel032_p5.stream/DVR.m3u8
+#EXTINF:-1,CT24
+http://213.81.153.241/live001/channel033_p5.stream/DVR.m3u8
+#EXTINF:-1,Discovery
+http://213.81.153.241/live001/channel034_p5.stream/DVR.m3u8
+#EXTINF:-1,AnimalPlanet
+http://213.81.153.241/live001/channel036_p5.stream/DVR.m3u8
+#EXTINF:-1,N/A
+http://213.81.153.241/live001/channel040_p5.stream/DVR.m3u8
+#EXTINF:-1,Spectrum
+http://213.81.153.241/live001/channel054_p5.stream/DVR.m3u8
+#EXTINF:-1,SpectrumHome
+http://213.81.153.241/live001/channel056_p5.stream/DVR.m3u8
+#EXTINF:-1,EnglishClub
+http://213.81.153.241/live001/channel020_p5.stream/DVR.m3u8
+#EXTINF:-1,AXN
+http://213.81.153.241/live001/channel046_p5.stream/DVR.m3u8
+#EXTINF:-1,MEGAMAX
+http://213.81.153.241/live001/channel049_p5.stream/DVR.m3u8
+#EXTINF:-1,JimJam
+http://213.81.153.241/live001/channel050_p5.stream/DVR.m3u8
+#EXTINF:-1,amc
+http://213.81.153.241/live001/channel052_p5.stream/DVR.m3u8
+#EXTINF:0,Noe
+http://212.79.96.134:8017
+#EXTINF:0,Retro
+http://212.79.96.134:8018
+#EXTINF:0,1 Classic
+http://212.79.96.134:8024
+#EXTINF:0,Sky Sports 1
+rtmp://lb.miplayer.net:1935/goLive/_definst_/ibrodtv21_6vhudlq8
+#EXTINF:0,Sky Sports 2
+rtmp://lb.miplayer.net:1935/goLive/_definst_/ibrodtv22_j5p1mted
+#EXTINF:0,Sky Sports 3
+rtmp://lb.miplayer.net:1935/goLive/_definst_/ibrodtv23_5px3ntfs
+#EXTINF:0,Sky Sports 4
+rtmp://lb.miplayer.net:1935/goLive/_definst_/ibrodtv24_f84rdmkk
+#EXTINF:0,Sky Sports 5
+rtmp://lb.miplayer.net:1935/goLive/_definst_/ibrodtv25_wt250ssk
+#EXTINF:0,BT Sport Europe
+rtmp://lb.miplayer.net:1935/goLive/_definst_/ibrodtvbteu_5msgj44x
+#EXTINF:0,BT Sports 1
+http://bit.ly/20JY8YL
+#EXTINF:0,BT Sports 2
+http://bit.ly/1RTqgYZ

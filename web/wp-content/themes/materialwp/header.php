@@ -37,7 +37,7 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 
-<script src="scripts/app-8e5557c6.js"></script>
+<script src="scripts/app-da73207c.js"></script>
 
 </head>
 
@@ -53,9 +53,6 @@
 					<div layout="column">
 						<md-list>
 							<md-list-item><md-button ng-class="{'md-raised md-primary' : ctrl.channel === 'ta' }" flex ng-click="ctrl.ta3Live()">TA3</md-button> </md-list-item>
-							<md-list-item><md-button ng-class="{'md-raised md-primary' : ctrl.channel === 'joj' }" flex ng-click="ctrl.jojLive()">JOJ</md-button> </md-list-item>
-							<md-list-item><md-button ng-class="{'md-raised md-primary' : ctrl.channel === 'joj+' }" flex ng-click="ctrl.playJojPlusLive()">JOJ+</md-button> </md-list-item>
-							<md-list-item><md-button ng-class="{'md-raised md-primary' : ctrl.channel === 'wau' }" flex ng-click="ctrl.playWauLive()">WAU</md-button> </md-list-item>
 							<md-list-item ng-repeat="playlistItem in ctrl.playlist.vgx">
 								<md-button ng-class="{'md-raised md-primary' : ctrl.channel === playlistItem.u }" flex ng-click="ctrl.playVgx(playlistItem.n)">{{ctrl.base64decode(playlistItem.n)}}</md-button>
 							</md-list-item>
