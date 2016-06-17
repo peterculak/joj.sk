@@ -15,6 +15,7 @@ angular.module('joj.shared')
         scope.Player = Player;
         scope.JojService = JojService;
         scope.MarkizaService = MarkizaService;
+        scope.loading = false;
 
         scope.items = [];
 
@@ -26,13 +27,17 @@ angular.module('joj.shared')
 
         if (scope.epizodes.url) {
           if (scope.epizodes.url.indexOf('markiza.sk') > -1) {
+            scope.loading = true;
             MarkizaService.getEpizodesList(scope.epizodes.url).then(function(r){
               scope.items = r;
+              scope.loading = false;
             });
           } else if (scope.epizodes.url.indexOf('joj.sk')) {
+            scope.loading = true;
             var joj = new JojService();
             joj.getEpizodesList(scope.epizodes.url).then(function(r){
               scope.items = r;
+              scope.loading = false;
             });
           }
         }

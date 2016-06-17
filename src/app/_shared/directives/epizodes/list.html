@@ -2,5 +2,6 @@
   <ul>
     <h2 ng-show="epizodes.title" ng-bind="epizodes.title"></h2>
     <li ng-repeat="epizode in items | limitTo: epizodes.limit"><a href="#" ng-click="playItem(epizode)">{{epizode.title}} ({{epizode.date}})</a></li>
+    <md-progress-circular ng-show="loading" md-mode="indeterminate"></md-progress-circular>
   </ul>
 </div>

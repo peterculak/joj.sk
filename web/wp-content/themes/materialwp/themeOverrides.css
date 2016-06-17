@@ -6,3 +6,8 @@
 .site-content {
     min-height: 74vh;
 }
+
+.widget-area md-progress-circular {
+    left: 50%;
+    transform: translateX(-50%);
+}
