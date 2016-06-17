@@ -11,3 +11,7 @@
     left: 50%;
     transform: translateX(-50%);
 }
+
+.textwidget {
+    padding: 0!important;
+}
