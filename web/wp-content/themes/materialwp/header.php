@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
 
 
-<script src="scripts/vxgplayer-1.7.41.min.js"></script>
+<script src="/scripts/vxgplayer-1.7.41.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js" type="text/javascript"></script>
 
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
@@ -38,7 +38,7 @@
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 
 <!--<script src="scripts/app-ecc14a0b.js"></script>-->
-<?php require_once('../../../app.html'); ?>
+<?php require_once(__DIR__ . '/../../../app.html'); ?>
 
 </head>
 

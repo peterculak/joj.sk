@@ -188,7 +188,7 @@ gulp.task('index:build', function() {
   var vendorJs = g.filter('scripts/vendor.js');
   var libsJs = g.filter('scripts/lib.js');
   var appJs = g.filter('scripts/app.js');
-  var index = g.filter('index.html');
+  var index = g.filter('app.html');
 
   return gulp.src(dist.index)
     // load assets into Gulp stream
