@@ -58,7 +58,8 @@ angular.module('joj.shared')
             title: actualTitle,
             type: type.length ? type.html() : null,
             url: a.attr('href'),
-            image: image.length ? image.attr('src') : null
+            image: image.length ? image.attr('src') : null,
+            service: 'joj'
           });
         }
       });

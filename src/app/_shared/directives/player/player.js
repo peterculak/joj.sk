@@ -17,9 +17,6 @@ angular.module('joj.shared')
         scope.Player = Player;
         scope.JojService = JojService;
 
-        scope.Player = Player;
-        scope.JojService = JojService;
-
         if (scope.video && scope.video.id) {
           if (scope.video.service === 'markiza') {
             Player.playMarkizaVideoId(scope.video.id, scope.video.autoplay);

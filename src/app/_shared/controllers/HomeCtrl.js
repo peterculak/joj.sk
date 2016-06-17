@@ -110,6 +110,14 @@ angular.module('joj.shared')
       facebookService.share(sharedObject);
     };
 
+    $scope.playItem = function (item) {
+      if (item.service === 'markiza') {
+        ctrl.playMarkizaArchiveItem(item);
+      } else if (item.service === 'joj') {
+        ctrl.playJojArchiveItem(item);
+      }
+    };
+
     ctrl.toggleLeft = function () {
       $mdSidenav('left').toggle();
     };

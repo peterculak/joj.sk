@@ -80,7 +80,8 @@ angular.module('joj.shared')
             title: title.html(),
             url: a.attr('href'),
             length: length.html(),
-            image: image.attr('src')
+            image: image.attr('src'),
+            service: 'markiza'
           };
           matches.push(data);
         }
