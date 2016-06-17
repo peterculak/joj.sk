@@ -37,7 +37,8 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 
-<script src="scripts/app-ecc14a0b.js"></script>
+<!--<script src="scripts/app-ecc14a0b.js"></script>-->
+<?php require_once('../../../app.html'); ?>
 
 </head>
 

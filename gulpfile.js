@@ -25,17 +25,17 @@ src.app             = {toString: function() { return src + '/app' }};
 src.app.shared      = {toString: function() { return src.app + '/_shared' }};
 src.app.files       = src.app + '/**/*.js';
 src.app.templates   = src.app + '/_shared/directives/**/*.html';
-src.index           = src + '/index.html';
+src.index           = src + '/app.html';
 src.styles          = {toString: function() { return src + '/styles' }};
 src.styles.files    = [src.styles + '/**/[!_]*.scss' , src.styles + 'vendor/*.css'];
 src.styles.includes = src.styles + '/**/_*.scss';
 src.styles.fonts    = {toString: function() { return src.styles + '/fonts' }};
 src.styles.fonts.files = src.styles.fonts + '/**/*.*';
 
-var dist            = {toString: function() { return 'dist' }};
+var dist            = {toString: function() { return 'web' }};
 dist.app            = {toString:function() { return dist + '/app' }};
 dist.app.templates  = dist.app + '/templates.js';
-dist.index          = dist + '/index.html';
+dist.index          = dist + '/app.html';
 dist.scripts        = {toString:function() { return dist + '/scripts' }};
 dist.styles         = {toString:function() { return dist + '/styles' }};
 dist.styles.files   = dist.styles + '/**/*.css';
@@ -48,7 +48,7 @@ dist.images.files   = dist.images + '/**/*';
 
 gulp.task('clean', function(cb) {
   return del([
-    dist + '/*'
+    dist + '/scripts/dist/*'
   ], cb);
 });
 
@@ -243,6 +243,7 @@ gulp.task('images', function() {
 
 gulp.task('build', function() {
   return runSequence(
+    'clean',
     'constants',
     ['index', 'templates', 'styles'],
     'index:build',
