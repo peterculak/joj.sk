@@ -115,7 +115,7 @@ angular.module('joj.shared')
       service.reset();
       service.playing = 'jojLiveStream';
       if (mobileAndTabletcheck()) {
-        openInVlc('http://n21.joj.sk/hls/joj-720.m3u8');
+        window.open('http://n21.joj.sk/hls/joj-720.m3u8');
       } else {
         joj.playLiveStream('jojLiveStream');
       }
@@ -125,7 +125,7 @@ angular.module('joj.shared')
       service.reset();
       service.playing = 'jojLiveStream';
       if (mobileAndTabletcheck()) {
-        openInVlc('http://n21.joj.sk/hls/jojplus-540.m3u8');
+        window.open('http://n21.joj.sk/hls/jojplus-540.m3u8');
       } else {
         jojplus.playLiveStream('jojLiveStream');
       }
@@ -135,7 +135,7 @@ angular.module('joj.shared')
       service.reset();
       service.playing = 'jojLiveStream';
       if (mobileAndTabletcheck()) {
-        openInVlc('http://n21.joj.sk/hls/wau-540.m3u8');
+        window.open('http://n21.joj.sk/hls/wau-540.m3u8');
       } else {
         wau.playLiveStream('jojLiveStream');
       }
