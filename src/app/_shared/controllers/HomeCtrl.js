@@ -192,7 +192,7 @@ angular.module('joj.shared')
     ctrl.playFlashHlsStream = function (name) {
       var url = findPlaylistUrl(name);
       ctrl.channel = name;
-      Player.playFlashHlsStream(url, true);
+      Player.playFlashHlsStream(url, true, true);
     };
 
     ctrl.jojLive = function () {

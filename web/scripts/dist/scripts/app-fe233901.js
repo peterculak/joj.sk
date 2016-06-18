@@ -312,7 +312,7 @@ angular.module('joj.shared')
     ctrl.playFlashHlsStream = function (name) {
       var url = findPlaylistUrl(name);
       ctrl.channel = name;
-      Player.playFlashHlsStream(url, true);
+      Player.playFlashHlsStream(url, true, true);
     };
 
     ctrl.jojLive = function () {
@@ -406,11 +406,15 @@ angular.module('joj.shared')
       service.ta3LiveStreamUrl = $sce.trustAsResourceUrl('http://www.ta3.com/live.html?embed=1');
     };
 
-    service.playFlashHlsStream = function (url, autoplay) {
+    service.playFlashHlsStream = function (url, autoplay, forceVLC) {
       service.reset();
       service.playing = 'flashHlsVideo';
       if (mobileAndTabletcheck()) {
-        window.open(url);
+        if (forceVLC) {
+          openInVlc(url);
+        } else {
+          window.open(url);
+        }
       } else {
         $('#flashHlsVideoPlayer').removeClass('vxgHidden');
         loadStream('flashHlsVideoPlayer', url, autoplay);
