@@ -485,19 +485,31 @@ angular.module('joj.shared')
     service.playJOJLiveStream = function () {
       service.reset();
       service.playing = 'jojLiveStream';
-      joj.playLiveStream('jojLiveStream');
+      if (mobileAndTabletcheck()) {
+        openInVlc('http://n21.joj.sk/hls/joj-720.m3u8');
+      } else {
+        joj.playLiveStream('jojLiveStream');
+      }
     };
 
     service.playJOJPlusLiveStream = function () {
       service.reset();
       service.playing = 'jojLiveStream';
-      jojplus.playLiveStream('jojLiveStream');
+      if (mobileAndTabletcheck()) {
+        openInVlc('http://n21.joj.sk/hls/jojplus-540.m3u8');
+      } else {
+        jojplus.playLiveStream('jojLiveStream');
+      }
     };
 
     service.playWAULiveStream = function () {
       service.reset();
       service.playing = 'jojLiveStream';
-      wau.playLiveStream('jojLiveStream');
+      if (mobileAndTabletcheck()) {
+        openInVlc('http://n21.joj.sk/hls/wau-540.m3u8');
+      } else {
+        wau.playLiveStream('jojLiveStream');
+      }
     };
 
     var openInVlc = function (url) {
@@ -673,83 +685,6 @@ angular.module('joj.shared')
     };
 
     return service;
-  });
-
-angular.module('joj.shared')
-
-  .directive('epizodes', function(Player, JojService, MarkizaService, $timeout) {
-    'use strict';
-
-    return {
-      restrict: 'A',
-      replace: true,
-      templateUrl: 'app/epizodes/list.html',
-      controller: 'HomeCtrl',
-      scope: {
-        epizodes: '='
-      },
-      link: function(scope, el) {
-        scope.Player = Player;
-        scope.JojService = JojService;
-        scope.MarkizaService = MarkizaService;
-        scope.loading = false;
-
-        scope.items = [];
-
-        if (scope.epizodes.limit === undefined) {
-          $timeout(function(){
-            scope.epizodes.limit = 10;
-          });
-        }
-
-        if (scope.epizodes.url) {
-          if (scope.epizodes.url.indexOf('markiza.sk') > -1) {
-            scope.loading = true;
-            MarkizaService.getEpizodesList(scope.epizodes.url).then(function(r){
-              scope.items = r;
-              scope.loading = false;
-            });
-          } else if (scope.epizodes.url.indexOf('joj.sk')) {
-            scope.loading = true;
-            var joj = new JojService();
-            joj.getEpizodesList(scope.epizodes.url).then(function(r){
-              scope.items = r;
-              scope.loading = false;
-            });
-          }
-        }
-      }
-    };
-  });
-
-angular.module('joj.shared')
-
-  .directive('video', function(Player, JojService) {
-    'use strict';
-
-    return {
-      restrict: 'A',
-      replace: true,
-      templateUrl: 'app/player/player.html',
-      scope: {
-        video: '='
-      },
-      link: function(scope, el) {
-        scope.isChrome = function isChrome() {
-          return Player.isChrome();
-        };
-        scope.Player = Player;
-        scope.JojService = JojService;
-
-        if (scope.video && scope.video.id) {
-          if (scope.video.service === 'markiza') {
-            Player.playMarkizaVideoId(scope.video.id, scope.video.autoplay);
-          } else if (scope.video.service === 'joj') {
-            Player.playJojArchiveVideoId(scope.video.id, scope.video.autoplay);
-          }
-        }
-      }
-    };
   });
 
 angular.module('joj.shared')
@@ -1289,6 +1224,83 @@ angular.module('joj.shared')
 
 }]);
 
+
+angular.module('joj.shared')
+
+  .directive('epizodes', function(Player, JojService, MarkizaService, $timeout) {
+    'use strict';
+
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'app/epizodes/list.html',
+      controller: 'HomeCtrl',
+      scope: {
+        epizodes: '='
+      },
+      link: function(scope, el) {
+        scope.Player = Player;
+        scope.JojService = JojService;
+        scope.MarkizaService = MarkizaService;
+        scope.loading = false;
+
+        scope.items = [];
+
+        if (scope.epizodes.limit === undefined) {
+          $timeout(function(){
+            scope.epizodes.limit = 10;
+          });
+        }
+
+        if (scope.epizodes.url) {
+          if (scope.epizodes.url.indexOf('markiza.sk') > -1) {
+            scope.loading = true;
+            MarkizaService.getEpizodesList(scope.epizodes.url).then(function(r){
+              scope.items = r;
+              scope.loading = false;
+            });
+          } else if (scope.epizodes.url.indexOf('joj.sk')) {
+            scope.loading = true;
+            var joj = new JojService();
+            joj.getEpizodesList(scope.epizodes.url).then(function(r){
+              scope.items = r;
+              scope.loading = false;
+            });
+          }
+        }
+      }
+    };
+  });
+
+angular.module('joj.shared')
+
+  .directive('video', function(Player, JojService) {
+    'use strict';
+
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'app/player/player.html',
+      scope: {
+        video: '='
+      },
+      link: function(scope, el) {
+        scope.isChrome = function isChrome() {
+          return Player.isChrome();
+        };
+        scope.Player = Player;
+        scope.JojService = JojService;
+
+        if (scope.video && scope.video.id) {
+          if (scope.video.service === 'markiza') {
+            Player.playMarkizaVideoId(scope.video.id, scope.video.autoplay);
+          } else if (scope.video.service === 'joj') {
+            Player.playJojArchiveVideoId(scope.video.id, scope.video.autoplay);
+          }
+        }
+      }
+    };
+  });
 
 angular.module("joj.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("app/epizodes/list.html","<div class=\"widget-area\">\n  <ul>\n    <h2 ng-show=\"epizodes.title\" ng-bind=\"epizodes.title\"></h2>\n    <li ng-repeat=\"epizode in items | limitTo: epizodes.limit\"><a href=\"#\" ng-click=\"playItem(epizode)\">{{epizode.title}} ({{epizode.date}})</a></li>\n    <md-progress-circular ng-show=\"loading\" md-mode=\"indeterminate\"></md-progress-circular>\n  </ul>\n</div>");
 $templateCache.put("app/player/player.html","<div class=\"player-screen\">\n\n  <iframe id=\"ta3frame\" ng-show=\"Player.playing === \'ta3\'\" ng-src=\"{{Player.ta3LiveStreamUrl}}\" frameborder=\"0\" scrolling=\"no\"></iframe>\n  <div ng-show=\"Player.playing === \'jojLiveStream\'\" id=\"jojLiveStream\"></div>\n  <div id=\"flashHlsVideoPlayer\"></div>\n  <video id=\"html5video\" controls ng-show=\"Player.playing === \'jojArchive\' && !JojService.fetchingStreams && !JojService.fetchingEpizodes\" ng-src=\"{{Player.videoFromArchiveUrl}}\"></video>\n\n</div>");}]);

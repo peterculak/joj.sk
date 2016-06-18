@@ -114,19 +114,31 @@ angular.module('joj.shared')
     service.playJOJLiveStream = function () {
       service.reset();
       service.playing = 'jojLiveStream';
-      joj.playLiveStream('jojLiveStream');
+      if (mobileAndTabletcheck()) {
+        openInVlc('http://n21.joj.sk/hls/joj-720.m3u8');
+      } else {
+        joj.playLiveStream('jojLiveStream');
+      }
     };
 
     service.playJOJPlusLiveStream = function () {
       service.reset();
       service.playing = 'jojLiveStream';
-      jojplus.playLiveStream('jojLiveStream');
+      if (mobileAndTabletcheck()) {
+        openInVlc('http://n21.joj.sk/hls/jojplus-540.m3u8');
+      } else {
+        jojplus.playLiveStream('jojLiveStream');
+      }
     };
 
     service.playWAULiveStream = function () {
       service.reset();
       service.playing = 'jojLiveStream';
-      wau.playLiveStream('jojLiveStream');
+      if (mobileAndTabletcheck()) {
+        openInVlc('http://n21.joj.sk/hls/wau-540.m3u8');
+      } else {
+        wau.playLiveStream('jojLiveStream');
+      }
     };
 
     var openInVlc = function (url) {
