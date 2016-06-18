@@ -145,7 +145,6 @@ angular.module('joj.shared')
     }
 
     if (mobileAndTabletcheck()) {
-      $scope.selectedIndex = 1;
       $scope.isMobile = mobileAndTabletcheck();
       $scope.showMarkizaEpizodes = 0;
       $scope.showJojEpizodes = 0;
