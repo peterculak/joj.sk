@@ -243,9 +243,8 @@ angular.module('joj.shared')
     };
 
     ctrl.ta3Live = function () {
-      Player.reset();
-      Player.playing = 'ta3';
-      Player.ta3LiveStreamUrl = $sce.trustAsResourceUrl('http://www.ta3.com/live.html?embed=1');
+      ctrl.channel = 'ta3';
+      Player.playTA3Live();
       $mdSidenav('left').close();
       ga('send', {
         hitType: 'event',
@@ -310,27 +309,56 @@ angular.module('joj.shared')
       return navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
     };
 
-    ctrl.playVgx = function (name) {
-      if (!ctrl.isChrome() && !VlcService.isInstalled()) {
-        Player.vlcMissing = true;
-      } else {
-        Player.vlcMissing = false;
-        for (var i in Playlist.vgx) {
-          if (Playlist.vgx[i].n === name) {
-            Player.reset();
-            Player.playing = 'vgx';
-            Player.playVxg(window.atob(Playlist.vgx[i].u));
-            ga('send', {
-              hitType: 'event',
-              eventCategory: 'Play',
-              eventAction: window.atob(name),
-              eventLabel: 'live'
-            });
-            break;
-          }
+    ctrl.playFlashHlsStream = function (name) {
+      var url = findPlaylistUrl(name);
+      ctrl.channel = name;
+      Player.playFlashHlsStream(url, true);
+    };
+
+    ctrl.jojLive = function () {
+      ctrl.channel = 'joj';
+      Player.playJOJLiveStream();
+      $mdSidenav('left').close();
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'Play',
+        eventAction: 'JOJ',
+        eventLabel: 'live'
+      });
+      return false;
+    };
+
+    ctrl.playJojPlusLive = function () {
+      ctrl.channel = 'joj+';
+      Player.playJOJPlusLiveStream();
+      $mdSidenav('left').close();
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'Play',
+        eventAction: 'JOJ+',
+        eventLabel: 'live'
+      });
+      return false;
+    };
+
+    ctrl.playWauLive = function () {
+      ctrl.channel = 'wau';
+      Player.playWAULiveStream();
+      $mdSidenav('left').close();
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'Play',
+        eventAction: 'WAU',
+        eventLabel: 'live'
+      });
+    };
+
+    var findPlaylistUrl = function (name) {
+      for (var i in Playlist.vgx) {
+        if (Playlist.vgx[i].n === name) {
+          return window.atob(Playlist.vgx[i].u);
         }
       }
-      $mdSidenav('left').close();
     };
 
     ctrl.base64decode = function (name) {
@@ -338,16 +366,18 @@ angular.module('joj.shared')
     };
 
     $timeout(function(){
-      $('#vxgPlayerWrapper').addClass('vxgHidden');
+      //$('#vxgPlayerWrapper').addClass('vxgHidden');
     }, 2000);
   });
 
 angular.module('joj.shared')
 
-  .factory('Player', function ($sce, $timeout, MarkizaService, JojService) {
+  .factory('Player', function ($sce, $timeout, MarkizaService, JojService, JojPlusService, WauService) {
 
     var service = {};
     var joj = new JojService();
+    var jojplus = new JojPlusService();
+    var wau = new WauService();
 
     service.videoFromArchiveUrl = null;
     service.playing = null;
@@ -359,72 +389,40 @@ angular.module('joj.shared')
       return navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
     };
 
-    if (service.isChrome()) {
-      var vxgPlayer = vxgplayer('vxg_media_player');
-    }
-
-    service.playVxg = function (url) {
-      if (mobileAndTabletcheck()) {
-        openInVlc(url);
-      } else {
-        $('#vxgPlayerWrapper').removeClass('vxgHidden');
-
-        if (service.isChrome()) {
-
-          $timeout(function () {
-            vxgPlayer.src(url);
-          }, 1000);
-
-          $timeout(function () {
-            vxgPlayer.play();
-          }, 2000);
-
-          $timeout(function () {
-            $('.vxgplayer-loader').addClass('hidden');
-          }, 3000);
-        } else {
-          var vlc = '<embed width="640" height="360" ng-show="!ctrl.isChrome()" type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2" id="vlc" loop="yes" autoplay="yes" target="' + url + '"></embed>';
-          document.getElementById("vxgPlayerWrapper__embed").innerHTML = vlc;
-        }
-      }
-    };
-
     service.reset = function () {
       document.getElementById("html5video").pause();
       service.epizodes = [];
       service.videoSrc = '';
-      service.ta3LiveStreamUrl = '';
       service.playing = '';
-
+      service.ta3LiveStreamUrl = $sce.trustAsResourceUrl('');
       $('#flashHlsVideoPlayer').replaceWith('<div id="flashHlsVideoPlayer"></div>');
-
       $('#jojLiveStream').hide();
-
-      if (service.isChrome()) {
-        if (vxgPlayer && vxgPlayer.isPlaying()) {
-          vxgPlayer.stop();
-        }
-      } else {
-        document.getElementById('vxgPlayerWrapper__embed').innerHTML = '';
-      }
-
-      $('#vxgPlayerWrapper').addClass('vxgHidden');
-      $('.vxgplayer-loader').removeClass('hidden');
       $('#flashHlsVideoPlayer').addClass('vxgHidden');
     };
 
-    service.playMarkizaArchiveItem = function (epizode, autoplay) {
-      service.playing = 'markizaArchive';
+    service.playTA3Live = function () {
       service.reset();
+      service.playing = 'ta3';
+      service.ta3LiveStreamUrl = $sce.trustAsResourceUrl('http://www.ta3.com/live.html?embed=1');
+    };
+
+    service.playFlashHlsStream = function (url, autoplay) {
+      service.reset();
+      service.playing = 'flashHlsVideo';
+      if (mobileAndTabletcheck()) {
+        window.open(url);
+      } else {
+        $('#flashHlsVideoPlayer').removeClass('vxgHidden');
+        loadStream('flashHlsVideoPlayer', url, autoplay);
+      }
+    };
+
+    service.playMarkizaArchiveItem = function (epizode, autoplay) {
+      service.reset();
+      service.playing = 'markizaArchive';
       service.epizode = epizode;
-      MarkizaService.getStreamUrls(epizode.url).then(function (stream) {
-        service.playing = 'flashHlsVideo';
-        if (mobileAndTabletcheck()) {
-          window.open(stream);
-        } else {
-          $('#flashHlsVideoPlayer').removeClass('vxgHidden');
-          loadStream('flashHlsVideoPlayer', stream, autoplay);
-        }
+      MarkizaService.getStreamUrls(epizode.url).then(function (streamableUrl) {
+        service.playFlashHlsStream(streamableUrl, autoplay);
         ga('send', {
           hitType: 'event',
           eventCategory: 'Play',
@@ -435,16 +433,10 @@ angular.module('joj.shared')
     };
 
     service.playMarkizaVideoId = function (id, autoplay) {
-      service.playing = 'markizaArchive';
       service.reset();
-      MarkizaService.getStreamUrlsFromId(id).then(function (stream) {
-        service.playing = 'flashHlsVideo';
-        if (mobileAndTabletcheck()) {
-          window.open(stream);
-        } else {
-          $('#flashHlsVideoPlayer').removeClass('vxgHidden');
-          loadStream('flashHlsVideoPlayer', stream, autoplay);
-        }
+      service.playing = 'markizaArchive';
+      MarkizaService.getStreamUrlsFromId(id).then(function (streamableUrl) {
+        service.playFlashHlsStream(streamableUrl, autoplay);
         ga('send', {
           hitType: 'event',
           eventCategory: 'Play',
@@ -455,8 +447,8 @@ angular.module('joj.shared')
     };
 
     service.playJojArchiveItem = function (epizode) {
-      service.playing = 'jojArchive';
       service.reset();
+      service.playing = 'jojArchive';
       service.epizode = epizode;
       joj.getStreamUrls(epizode.url).then(function (streams) {
         service.videoFromArchiveUrl = $sce.trustAsResourceUrl(joj.findHighQualityStream(streams));
@@ -472,8 +464,8 @@ angular.module('joj.shared')
     };
 
     service.playJojArchiveVideoId = function (id, autoplay) {
-      service.playing = 'jojArchive';
       service.reset();
+      service.playing = 'jojArchive';
       joj.getStreamUrlsFromId(id).then(function (streams) {
         service.videoFromArchiveUrl = $sce.trustAsResourceUrl(joj.findHighQualityStream(streams));
         service.playing = 'jojArchive';
@@ -485,6 +477,24 @@ angular.module('joj.shared')
           eventLabel: id
         });
       });
+    };
+
+    service.playJOJLiveStream = function () {
+      service.reset();
+      service.playing = 'jojLiveStream';
+      joj.playLiveStream('jojLiveStream');
+    };
+
+    service.playJOJPlusLiveStream = function () {
+      service.reset();
+      service.playing = 'jojLiveStream';
+      jojplus.playLiveStream('jojLiveStream');
+    };
+
+    service.playWAULiveStream = function () {
+      service.reset();
+      service.playing = 'jojLiveStream';
+      wau.playLiveStream('jojLiveStream');
     };
 
     var openInVlc = function (url) {
@@ -516,7 +526,7 @@ angular.module('joj.shared')
         hls_fragmentloadmaxretry : -1,
         hls_manifestloadmaxretry : -1,
         hls_capleveltostage : false,
-        hls_maxlevelcappingmode : "downscale",
+        hls_maxlevelcappingmode : "downscale"
       };
 
       // Embed the player SWF:
@@ -548,7 +558,7 @@ angular.module('joj.shared')
 
     var service = {};
 
-    service.vgx = [{"n":"Sk9K","u":"aHR0cDovL24yMS5qb2ouc2svaGxzL2pvai03MjAubTN1OA=="},{"n":"Sk9KKw==","u":"aHR0cDovL24yMS5qb2ouc2svaGxzL2pvanBsdXMtNTQwLm0zdTg="},{"n":"V0FV","u":"aHR0cDovL24yMS5qb2ouc2svaGxzL3dhdS01NDAubTN1OA=="},{"n":"am9qQ2luZW1h","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA1N19wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"RklMTUJPWA==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAxOF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"RGlnaVNwb3J0Mw==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAyNl9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"bm92YVNwb3J0MQ==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAyOF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"RXVyb3Nwb3J0Mg==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAxNF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"Q1Qx","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAzMV9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"Q1Qy","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAzMl9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"Q1QyNA==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAzM19wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"RGlzY292ZXJ5","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAzNF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"QW5pbWFsUGxhbmV0","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAzNl9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"Ti9B","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA0MF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"U3BlY3RydW0=","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA1NF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"U3BlY3RydW1Ib21l","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA1Nl9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"RW5nbGlzaENsdWI=","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAyMF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"QVhO","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA0Nl9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"TUVHQU1BWA==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA0OV9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"SmltSmFt","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA1MF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"YW1j","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA1Ml9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"Tm9l","u":"aHR0cDovLzIxMi43OS45Ni4xMzQ6ODAxNw=="},{"n":"UmV0cm8=","u":"aHR0cDovLzIxMi43OS45Ni4xMzQ6ODAxOA=="},{"n":"MSBDbGFzc2lj","u":"aHR0cDovLzIxMi43OS45Ni4xMzQ6ODAyNA=="},{"n":"U2t5IFNwb3J0cyAx","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0djIxXzZ2aHVkbHE4"},{"n":"U2t5IFNwb3J0cyAy","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0djIyX2o1cDFtdGVk"},{"n":"U2t5IFNwb3J0cyAz","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0djIzXzVweDNudGZz"},{"n":"U2t5IFNwb3J0cyA0","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0djI0X2Y4NHJkbWtr"},{"n":"U2t5IFNwb3J0cyA1","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0djI1X3d0MjUwc3Nr"},{"n":"QlQgU3BvcnQgRXVyb3Bl","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0dmJ0ZXVfNW1zZ2o0NHg="},{"n":"QlQgU3BvcnRzIDE=","u":"aHR0cDovL2JpdC5seS8yMEpZOFlM"},{"n":"QlQgU3BvcnRzIDI=","u":"aHR0cDovL2JpdC5seS8xUlRxZ1la"}];
+    service.vgx = [{"n":"am9qQ2luZW1h","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA1N19wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"RklMTUJPWA==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAxOF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"RGlnaVNwb3J0Mw==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAyNl9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"bm92YVNwb3J0MQ==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAyOF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"RXVyb3Nwb3J0Mg==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAxNF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"Q1Qx","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAzMV9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"Q1Qy","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAzMl9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"Q1QyNA==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAzM19wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"RGlzY292ZXJ5","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAzNF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"QW5pbWFsUGxhbmV0","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAzNl9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"Ti9B","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA0MF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"U3BlY3RydW0=","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA1NF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"U3BlY3RydW1Ib21l","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA1Nl9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"RW5nbGlzaENsdWI=","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDAyMF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"QVhO","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA0Nl9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"TUVHQU1BWA==","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA0OV9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"SmltSmFt","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA1MF9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"YW1j","u":"aHR0cDovLzIxMy44MS4xNTMuMjQxL2xpdmUwMDEvY2hhbm5lbDA1Ml9wNS5zdHJlYW0vRFZSLm0zdTg="},{"n":"Tm9l","u":"aHR0cDovLzIxMi43OS45Ni4xMzQ6ODAxNw=="},{"n":"UmV0cm8=","u":"aHR0cDovLzIxMi43OS45Ni4xMzQ6ODAxOA=="},{"n":"MSBDbGFzc2lj","u":"aHR0cDovLzIxMi43OS45Ni4xMzQ6ODAyNA=="},{"n":"U2t5IFNwb3J0cyAx","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0djIxXzZ2aHVkbHE4"},{"n":"U2t5IFNwb3J0cyAy","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0djIyX2o1cDFtdGVk"},{"n":"U2t5IFNwb3J0cyAz","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0djIzXzVweDNudGZz"},{"n":"U2t5IFNwb3J0cyA0","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0djI0X2Y4NHJkbWtr"},{"n":"U2t5IFNwb3J0cyA1","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0djI1X3d0MjUwc3Nr"},{"n":"QlQgU3BvcnQgRXVyb3Bl","u":"cnRtcDovL2xiLm1pcGxheWVyLm5ldDoxOTM1L2dvTGl2ZS9fZGVmaW5zdF8vaWJyb2R0dmJ0ZXVfNW1zZ2o0NHg="},{"n":"QlQgU3BvcnRzIDE=","u":"aHR0cDovL2JpdC5seS8yMEpZOFlM"},{"n":"QlQgU3BvcnRzIDI=","u":"aHR0cDovL2JpdC5seS8xUlRxZ1la"}];
 
     return service;
   });
@@ -664,36 +674,6 @@ angular.module('joj.shared')
 
 angular.module('joj.shared')
 
-  .directive('video', function(Player, JojService) {
-    'use strict';
-
-    return {
-      restrict: 'A',
-      replace: true,
-      templateUrl: 'app/player/player.html',
-      scope: {
-        video: '='
-      },
-      link: function(scope, el) {
-        scope.isChrome = function isChrome() {
-          return Player.isChrome();
-        };
-        scope.Player = Player;
-        scope.JojService = JojService;
-
-        if (scope.video && scope.video.id) {
-          if (scope.video.service === 'markiza') {
-            Player.playMarkizaVideoId(scope.video.id, scope.video.autoplay);
-          } else if (scope.video.service === 'joj') {
-            Player.playJojArchiveVideoId(scope.video.id, scope.video.autoplay);
-          }
-        }
-      }
-    };
-  });
-
-angular.module('joj.shared')
-
   .directive('epizodes', function(Player, JojService, MarkizaService, $timeout) {
     'use strict';
 
@@ -733,6 +713,36 @@ angular.module('joj.shared')
               scope.items = r;
               scope.loading = false;
             });
+          }
+        }
+      }
+    };
+  });
+
+angular.module('joj.shared')
+
+  .directive('video', function(Player, JojService) {
+    'use strict';
+
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'app/player/player.html',
+      scope: {
+        video: '='
+      },
+      link: function(scope, el) {
+        scope.isChrome = function isChrome() {
+          return Player.isChrome();
+        };
+        scope.Player = Player;
+        scope.JojService = JojService;
+
+        if (scope.video && scope.video.id) {
+          if (scope.video.service === 'markiza') {
+            Player.playMarkizaVideoId(scope.video.id, scope.video.autoplay);
+          } else if (scope.video.service === 'joj') {
+            Player.playJojArchiveVideoId(scope.video.id, scope.video.autoplay);
           }
         }
       }
@@ -1278,4 +1288,4 @@ angular.module('joj.shared')
 
 
 angular.module("joj.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("app/epizodes/list.html","<div class=\"widget-area\">\n  <ul>\n    <h2 ng-show=\"epizodes.title\" ng-bind=\"epizodes.title\"></h2>\n    <li ng-repeat=\"epizode in items | limitTo: epizodes.limit\"><a href=\"#\" ng-click=\"playItem(epizode)\">{{epizode.title}} ({{epizode.date}})</a></li>\n    <md-progress-circular ng-show=\"loading\" md-mode=\"indeterminate\"></md-progress-circular>\n  </ul>\n</div>");
-$templateCache.put("app/player/player.html","<div ng-show=\"Player.playing\" class=\"player-screen\">\n  <div id=\"vxgPlayerWrapper\" class=\"vxgPlayerWrapper vxgHidden\">\n    <div ng-show=\"isChrome()\" class=\"vxgplayer\"\n         id=\"vxg_media_player\"\n         width=\"640\"\n         height=\"360\"\n         url=\"{{vxgPlayerUrl}}\"\n         nmf-src=\"bower_components/vxgplayer/pnacl/Release/media_player.nmf\"\n         nmf-path=\"media_player.nmf\"\n         autohide=\"2\"\n         volume=\"0.7\"\n         avsync\n         controls\n         mute\n         aspect-ratio\n         aspect-ratio-mode=\"1\"\n         auto-reconnect>\n    </div>\n    <div id=\"vxgPlayerWrapper__embed\" ng-show=\"!isChrome()\"></div>\n  </div>\n\n  <iframe id=\"ta3frame\" ng-show=\"Player.playing === \'ta3\'\" ng-src=\"{{Player.ta3LiveStreamUrl}}\" frameborder=\"0\" scrolling=\"no\"></iframe>\n\n  <div id=\"flashHlsVideoPlayer\"></div>\n  <video id=\"html5video\" controls ng-show=\"Player.playing === \'jojArchive\' && !JojService.fetchingStreams && !JojService.fetchingEpizodes\" ng-src=\"{{Player.videoFromArchiveUrl}}\"></video>\n\n</div>");}]);
+$templateCache.put("app/player/player.html","<div class=\"player-screen\">\n\n  <iframe id=\"ta3frame\" ng-show=\"Player.playing === \'ta3\'\" ng-src=\"{{Player.ta3LiveStreamUrl}}\" frameborder=\"0\" scrolling=\"no\"></iframe>\n  <div ng-show=\"Player.playing === \'jojLiveStream\'\" id=\"jojLiveStream\"></div>\n  <div id=\"flashHlsVideoPlayer\"></div>\n  <video id=\"html5video\" controls ng-show=\"Player.playing === \'jojArchive\' && !JojService.fetchingStreams && !JojService.fetchingEpizodes\" ng-src=\"{{Player.videoFromArchiveUrl}}\"></video>\n\n</div>");}]);

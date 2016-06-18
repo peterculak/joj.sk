@@ -1,10 +1,4 @@
 #EXTM3U
-#EXTINF:-1,JOJ
-http://n21.joj.sk/hls/joj-720.m3u8
-#EXTINF:-1,JOJ+
-http://n21.joj.sk/hls/jojplus-540.m3u8
-#EXTINF:-1,WAU
-http://n21.joj.sk/hls/wau-540.m3u8
 #EXTINF:-1,jojCinema
 http://213.81.153.241/live001/channel057_p5.stream/DVR.m3u8
 #EXTINF:-1,FILMBOX

@@ -123,9 +123,8 @@ angular.module('joj.shared')
     };
 
     ctrl.ta3Live = function () {
-      Player.reset();
-      Player.playing = 'ta3';
-      Player.ta3LiveStreamUrl = $sce.trustAsResourceUrl('http://www.ta3.com/live.html?embed=1');
+      ctrl.channel = 'ta3';
+      Player.playTA3Live();
       $mdSidenav('left').close();
       ga('send', {
         hitType: 'event',
@@ -190,27 +189,56 @@ angular.module('joj.shared')
       return navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
     };
 
-    ctrl.playVgx = function (name) {
-      if (!ctrl.isChrome() && !VlcService.isInstalled()) {
-        Player.vlcMissing = true;
-      } else {
-        Player.vlcMissing = false;
-        for (var i in Playlist.vgx) {
-          if (Playlist.vgx[i].n === name) {
-            Player.reset();
-            Player.playing = 'vgx';
-            Player.playVxg(window.atob(Playlist.vgx[i].u));
-            ga('send', {
-              hitType: 'event',
-              eventCategory: 'Play',
-              eventAction: window.atob(name),
-              eventLabel: 'live'
-            });
-            break;
-          }
+    ctrl.playFlashHlsStream = function (name) {
+      var url = findPlaylistUrl(name);
+      ctrl.channel = name;
+      Player.playFlashHlsStream(url, true);
+    };
+
+    ctrl.jojLive = function () {
+      ctrl.channel = 'joj';
+      Player.playJOJLiveStream();
+      $mdSidenav('left').close();
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'Play',
+        eventAction: 'JOJ',
+        eventLabel: 'live'
+      });
+      return false;
+    };
+
+    ctrl.playJojPlusLive = function () {
+      ctrl.channel = 'joj+';
+      Player.playJOJPlusLiveStream();
+      $mdSidenav('left').close();
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'Play',
+        eventAction: 'JOJ+',
+        eventLabel: 'live'
+      });
+      return false;
+    };
+
+    ctrl.playWauLive = function () {
+      ctrl.channel = 'wau';
+      Player.playWAULiveStream();
+      $mdSidenav('left').close();
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'Play',
+        eventAction: 'WAU',
+        eventLabel: 'live'
+      });
+    };
+
+    var findPlaylistUrl = function (name) {
+      for (var i in Playlist.vgx) {
+        if (Playlist.vgx[i].n === name) {
+          return window.atob(Playlist.vgx[i].u);
         }
       }
-      $mdSidenav('left').close();
     };
 
     ctrl.base64decode = function (name) {
@@ -218,6 +246,6 @@ angular.module('joj.shared')
     };
 
     $timeout(function(){
-      $('#vxgPlayerWrapper').addClass('vxgHidden');
+      //$('#vxgPlayerWrapper').addClass('vxgHidden');
     }, 2000);
   });

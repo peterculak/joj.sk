@@ -63,9 +63,13 @@
 				<md-content layout-padding>
 					<div layout="column">
 						<md-list>
-							<md-list-item><md-button ng-class="{'md-raised md-primary' : ctrl.channel === 'ta' }" flex ng-click="ctrl.ta3Live()">TA3</md-button> </md-list-item>
+							<md-list-item><md-button ng-class="{'md-raised md-primary' : ctrl.channel === 'ta3' }" flex ng-click="ctrl.ta3Live()">TA3</md-button> </md-list-item>
+							<md-list-item><md-button ng-class="{'md-raised md-primary' : ctrl.channel === 'joj' }" flex ng-click="ctrl.jojLive()">JOJ</md-button></md-list-item>
+							<md-list-item><md-button ng-class="{'md-raised md-primary' : ctrl.channel === 'joj+' }" flex ng-click="ctrl.playJojPlusLive()">JOJ+</md-button></md-list-item>
+							<md-list-item><md-button ng-class="{'md-raised md-primary' : ctrl.channel === 'wau' }" flex ng-click="ctrl.playWauLive()">WAU</md-button></md-list-item>
+
 							<md-list-item ng-repeat="playlistItem in ctrl.playlist.vgx">
-								<md-button ng-class="{'md-raised md-primary' : ctrl.channel === playlistItem.u }" flex ng-click="ctrl.playVgx(playlistItem.n)">{{ctrl.base64decode(playlistItem.n)}}</md-button>
+								<md-button ng-class="{'md-raised md-primary' : ctrl.channel === playlistItem.n }" flex ng-click="ctrl.playFlashHlsStream(playlistItem.n)">{{ctrl.base64decode(playlistItem.n)}}</md-button>
 							</md-list-item>
 						</md-list>
 					</div>

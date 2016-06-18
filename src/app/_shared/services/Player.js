@@ -1,9 +1,11 @@
 angular.module('joj.shared')
 
-  .factory('Player', function ($sce, $timeout, MarkizaService, JojService) {
+  .factory('Player', function ($sce, $timeout, MarkizaService, JojService, JojPlusService, WauService) {
 
     var service = {};
     var joj = new JojService();
+    var jojplus = new JojPlusService();
+    var wau = new WauService();
 
     service.videoFromArchiveUrl = null;
     service.playing = null;
@@ -15,72 +17,40 @@ angular.module('joj.shared')
       return navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
     };
 
-    if (service.isChrome()) {
-      var vxgPlayer = vxgplayer('vxg_media_player');
-    }
-
-    service.playVxg = function (url) {
-      if (mobileAndTabletcheck()) {
-        openInVlc(url);
-      } else {
-        $('#vxgPlayerWrapper').removeClass('vxgHidden');
-
-        if (service.isChrome()) {
-
-          $timeout(function () {
-            vxgPlayer.src(url);
-          }, 1000);
-
-          $timeout(function () {
-            vxgPlayer.play();
-          }, 2000);
-
-          $timeout(function () {
-            $('.vxgplayer-loader').addClass('hidden');
-          }, 3000);
-        } else {
-          var vlc = '<embed width="640" height="360" ng-show="!ctrl.isChrome()" type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2" id="vlc" loop="yes" autoplay="yes" target="' + url + '"></embed>';
-          document.getElementById("vxgPlayerWrapper__embed").innerHTML = vlc;
-        }
-      }
-    };
-
     service.reset = function () {
       document.getElementById("html5video").pause();
       service.epizodes = [];
       service.videoSrc = '';
-      service.ta3LiveStreamUrl = '';
       service.playing = '';
-
+      service.ta3LiveStreamUrl = $sce.trustAsResourceUrl('');
       $('#flashHlsVideoPlayer').replaceWith('<div id="flashHlsVideoPlayer"></div>');
-
       $('#jojLiveStream').hide();
-
-      if (service.isChrome()) {
-        if (vxgPlayer && vxgPlayer.isPlaying()) {
-          vxgPlayer.stop();
-        }
-      } else {
-        document.getElementById('vxgPlayerWrapper__embed').innerHTML = '';
-      }
-
-      $('#vxgPlayerWrapper').addClass('vxgHidden');
-      $('.vxgplayer-loader').removeClass('hidden');
       $('#flashHlsVideoPlayer').addClass('vxgHidden');
     };
 
-    service.playMarkizaArchiveItem = function (epizode, autoplay) {
-      service.playing = 'markizaArchive';
+    service.playTA3Live = function () {
       service.reset();
+      service.playing = 'ta3';
+      service.ta3LiveStreamUrl = $sce.trustAsResourceUrl('http://www.ta3.com/live.html?embed=1');
+    };
+
+    service.playFlashHlsStream = function (url, autoplay) {
+      service.reset();
+      service.playing = 'flashHlsVideo';
+      if (mobileAndTabletcheck()) {
+        window.open(url);
+      } else {
+        $('#flashHlsVideoPlayer').removeClass('vxgHidden');
+        loadStream('flashHlsVideoPlayer', url, autoplay);
+      }
+    };
+
+    service.playMarkizaArchiveItem = function (epizode, autoplay) {
+      service.reset();
+      service.playing = 'markizaArchive';
       service.epizode = epizode;
-      MarkizaService.getStreamUrls(epizode.url).then(function (stream) {
-        service.playing = 'flashHlsVideo';
-        if (mobileAndTabletcheck()) {
-          window.open(stream);
-        } else {
-          $('#flashHlsVideoPlayer').removeClass('vxgHidden');
-          loadStream('flashHlsVideoPlayer', stream, autoplay);
-        }
+      MarkizaService.getStreamUrls(epizode.url).then(function (streamableUrl) {
+        service.playFlashHlsStream(streamableUrl, autoplay);
         ga('send', {
           hitType: 'event',
           eventCategory: 'Play',
@@ -91,16 +61,10 @@ angular.module('joj.shared')
     };
 
     service.playMarkizaVideoId = function (id, autoplay) {
-      service.playing = 'markizaArchive';
       service.reset();
-      MarkizaService.getStreamUrlsFromId(id).then(function (stream) {
-        service.playing = 'flashHlsVideo';
-        if (mobileAndTabletcheck()) {
-          window.open(stream);
-        } else {
-          $('#flashHlsVideoPlayer').removeClass('vxgHidden');
-          loadStream('flashHlsVideoPlayer', stream, autoplay);
-        }
+      service.playing = 'markizaArchive';
+      MarkizaService.getStreamUrlsFromId(id).then(function (streamableUrl) {
+        service.playFlashHlsStream(streamableUrl, autoplay);
         ga('send', {
           hitType: 'event',
           eventCategory: 'Play',
@@ -111,8 +75,8 @@ angular.module('joj.shared')
     };
 
     service.playJojArchiveItem = function (epizode) {
-      service.playing = 'jojArchive';
       service.reset();
+      service.playing = 'jojArchive';
       service.epizode = epizode;
       joj.getStreamUrls(epizode.url).then(function (streams) {
         service.videoFromArchiveUrl = $sce.trustAsResourceUrl(joj.findHighQualityStream(streams));
@@ -128,8 +92,8 @@ angular.module('joj.shared')
     };
 
     service.playJojArchiveVideoId = function (id, autoplay) {
-      service.playing = 'jojArchive';
       service.reset();
+      service.playing = 'jojArchive';
       joj.getStreamUrlsFromId(id).then(function (streams) {
         service.videoFromArchiveUrl = $sce.trustAsResourceUrl(joj.findHighQualityStream(streams));
         service.playing = 'jojArchive';
@@ -141,6 +105,24 @@ angular.module('joj.shared')
           eventLabel: id
         });
       });
+    };
+
+    service.playJOJLiveStream = function () {
+      service.reset();
+      service.playing = 'jojLiveStream';
+      joj.playLiveStream('jojLiveStream');
+    };
+
+    service.playJOJPlusLiveStream = function () {
+      service.reset();
+      service.playing = 'jojLiveStream';
+      jojplus.playLiveStream('jojLiveStream');
+    };
+
+    service.playWAULiveStream = function () {
+      service.reset();
+      service.playing = 'jojLiveStream';
+      wau.playLiveStream('jojLiveStream');
     };
 
     var openInVlc = function (url) {
@@ -172,7 +154,7 @@ angular.module('joj.shared')
         hls_fragmentloadmaxretry : -1,
         hls_manifestloadmaxretry : -1,
         hls_capleveltostage : false,
-        hls_maxlevelcappingmode : "downscale",
+        hls_maxlevelcappingmode : "downscale"
       };
 
       // Embed the player SWF:
