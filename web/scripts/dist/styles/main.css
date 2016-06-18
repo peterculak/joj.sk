@@ -1,0 +1,171 @@
+.center-vertical {
+  width: 100%;
+  clear: both;
+  float: none;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center; }
+
+.vxgPlayerWrapper {
+  float: left; }
+
+.vxgHidden {
+  position: absolute;
+  top: -5000px;
+  left: -5000px;
+  height: 0px !important; }
+
+.vxgplayer-error {
+  display: none !important; }
+
+.hidden {
+  display: none !important; }
+
+.player-screen {
+  top: auto;
+  position: relative; }
+
+.progress-player {
+  left: 50%;
+  top: 180px;
+  position: absolute; }
+
+.vlc-help {
+  position: absolute;
+  left: calc(50% - 230px); }
+
+#mb_button--share {
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+  padding: 0;
+  margin: 0; }
+
+#mb_button--back {
+  position: fixed;
+  top: 6px;
+  right: 20px;
+  padding: 0;
+  margin: 0; }
+
+.md-dialog-content a {
+  color: #ff4081; }
+
+md-tab-content md-content div {
+  height: calc(100vh - 66px); }
+
+md-toolbar.md-default-theme:not(.md-menu-toolbar) .md-button:not(.md-raised), md-toolbar:not(.md-menu-toolbar) .md-button:not(.md-raised) {
+  color: black; }
+
+video {
+  width: 640px;
+  height: 360px; }
+
+#ta3frame {
+  width: 640px;
+  height: 360px; }
+
+@media (min-width: 640px) {
+  md-grid-list md-grid-tile md-grid-tile-footer h3 {
+    font-weight: bold; } }
+
+@media (max-width: 640px) {
+  video {
+    height: auto;
+    position: relative;
+    padding-bottom: 14px;
+    width: 100%; }
+  .epizodes {
+    margin-top: 60px; }
+  .progress-player {
+    left: 160px; }
+  #ta3frame {
+    width: 320px;
+    height: 160px; }
+  #mb_button--share {
+    bottom: 20px; } }
+
+.navbar-header md-icon {
+  color: rgba(255, 255, 255, 0.74); }
+
+.menu {
+  position: absolute;
+  z-index: 1; }
+
+md-grid-tile {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat; }
+  md-grid-tile:hover {
+    cursor: pointer; }
+  md-grid-tile div {
+    height: 100%; }
+
+md-icon.play {
+  color: rgba(255, 255, 255, 0.18);
+  font-size: 500%;
+  -webkit-transform: translate(-50%, -160%);
+          transform: translate(-50%, -160%);
+  transition: all 350ms cubic-bezier(0.215, 0.61, 0.215, 1);
+  -webkit-transition: all 350ms cubic-bezier(0.215, 0.61, 0.215, 1);
+  -moz-transition: all 350ms cubic-bezier(0.215, 0.61, 0.215, 1);
+  -o-transition: all 350ms cubic-bezier(0.215, 0.61, 0.215, 1); }
+  md-icon.play--small {
+    font-size: 220%;
+    -webkit-transform: translateY(-70%);
+            transform: translateY(-70%); }
+  md-icon.play:hover {
+    color: white; }
+
+.repeated-item {
+  transition: opacity 1s, -webkit-transform 1s cubic-bezier(0.2, 1, 0.3, 1);
+  transition: opacity 1s, transform 1s cubic-bezier(0.2, 1, 0.3, 1);
+  /*
+  We're using CSS transitions for when
+  the enter and move events are triggered
+  for the element that has the .repeated-item
+  class
+  */
+  /*
+   The ng-enter-active and ng-move-active
+   are where the transition destination properties
+   are set so that the animation knows what to
+   animate.
+  */
+  /*
+    We're using CSS keyframe animations for when
+    the leave event is triggered for the element
+    that has the .repeated-item class
+  */ }
+  .repeated-item.ng-enter, .repeated-item.ng-move {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 140px, 0);
+    transform: translate3d(0, 140px, 0); }
+  .repeated-item.ng-enter.ng-enter-active, .repeated-item.ng-move.ng-move-active {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); }
+  .repeated-item.ng-leave {
+    -webkit-animation: 0.5s my_animation;
+    animation: 0.5s my_animation; }
+  .repeated-item.ng-enter-stagger {
+    transition-delay: 0.05s;
+    -webkit-animation-delay: 0.05s;
+            animation-delay: 0.05s;
+    transition-duration: 0s; }
+
+@keyframes my_animation {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
+
+/*
+  Unfortunately each browser vendor requires
+  its own definition of keyframe animation code...
+*/
+@-webkit-keyframes my_animation {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }

@@ -27,7 +27,6 @@
 }
 
 .player-screen {
-  left: calc(50% - 320px);
   top: auto;
   position: relative;
 }
@@ -76,6 +75,9 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar) .md-button:not(.md-raised), md
 video {
   width: 640px;
   height: 360px;
+  left: 50%;
+  position: relative;
+  transform: translateX(-50%);
 }
 
 #ta3frame {
@@ -91,14 +93,10 @@ video {
 
 @media (max-width:640px) {
   video {
-    width: 80%;
     height: auto;
     position: relative;
-    top: 80px;
-    left: 20px;
-  }
-  .player-screen {
-    left: calc(50% - 160px);
+    padding-bottom: 14px;
+    width: 100%;
   }
 
   .epizodes {

@@ -33,7 +33,7 @@
 <?php wp_head(); ?>
 
 <link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/themeOverrides.css?v=1.1" type="text/css" media="screen" />
-<link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/streamtv.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="/scripts/dist/styles/main.css" type="text/css" media="screen" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 
