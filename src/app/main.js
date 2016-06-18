@@ -71,7 +71,12 @@ angular.module('joj', [
         $mdSidenav(navID)
           .toggle()
           .then(function () {
-            //$log.debug("toggle " + navID + " is done");
+            ga('send', {
+              hitType: 'event',
+              eventCategory: 'Navigation',
+              eventAction: 'Left Menu',
+              eventLabel: 'opened'
+            });
           });
       }, 100);
     }

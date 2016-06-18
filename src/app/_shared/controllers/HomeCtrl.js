@@ -117,10 +117,6 @@ angular.module('joj.shared')
       }
     };
 
-    ctrl.toggleLeft = function () {
-      $mdSidenav('left').toggle();
-    };
-
     ctrl.ta3Live = function () {
       ctrl.channel = 'ta3';
       Player.playTA3Live();
@@ -243,8 +239,4 @@ angular.module('joj.shared')
     ctrl.base64decode = function (name) {
       return window.atob(name);
     };
-
-    $timeout(function(){
-      //$('#vxgPlayerWrapper').addClass('vxgHidden');
-    }, 2000);
   });
