@@ -1,0 +1,43 @@
+#EXTM3U
+#EXTINF:0,CT 1
+http://gogo.jksw.cz:8001
+#EXTINF:0,CT2
+http://gogo.jksw.cz:8002
+#EXTINF:0,NOVA
+http://gogo.jksw.cz:8003
+#EXTINF:0,PRIMA FAMILY
+http://gogo.jksw.cz:8004
+#EXTINF:0,MUSIC 1
+http://gogo.jksw.cz:8005
+#EXTINF:0,RTL
+http://gogo.jksw.cz:8008
+#EXTINF:0,PRO 7
+http://gogo.jksw.cz:8009
+#EXTINF:0,SAT 1
+http://gogo.jksw.cz:8010
+#EXTINF:0,EURONEWS
+http://gogo.jksw.cz:8013
+#EXTINF:0,CT 4 SPORT
+http://gogo.jksw.cz:8014
+#EXTINF:0,CT 24
+http://gogo.jksw.cz:8015
+#EXTINF:0,OCKO
+http://gogo.jksw.cz:8016
+#EXTINF:0,NOE TV
+http://gogo.jksw.cz:8017
+#EXTINF:0,TV PAPRIKA
+http://gogo.jksw.cz:8018
+#EXTINF:0,PRIMA LOVE
+http://gogo.jksw.cz:8019
+#EXTINF:0,NOVA CINEMA
+http://gogo.jksw.cz:8020
+#EXTINF:0,PRIMA COOL
+http://gogo.jksw.cz:8021
+#EXTINF:0,TV BARRANDOV
+http://gogo.jksw.cz:8022
+#EXTINF:0,NOVA SPORT
+http://gogo.jksw.cz:8023
+#EXTINF:0,VH 1 CLASSIC
+http://gogo.jksw.cz:8024
+#EXTINF:0,FANDA
+http://gogo.jksw.cz:8025
