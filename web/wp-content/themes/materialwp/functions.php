@@ -1,4 +1,64 @@
 <?php
+function insert_relacie() {
+    global $wpdb;
+    $results = $wpdb->get_results( 'SELECT * FROM relacia', ARRAY_A );
+
+    foreach ($results as $relacia) {
+        wp_insert_term(
+            $relacia['title'],
+            'category',
+            [
+                'description'	=> $relacia['title'],
+                'slug' 		=> sanitize_title($relacia['title'])
+            ]
+        );
+    }
+}
+
+function insert_videa() {
+    global $wpdb;
+
+    $m = $wpdb->get_results( 'SELECT count(*) as count FROM video where duration > \'00:05:00\' and relacia_id is not null', ARRAY_A );
+
+    $categories = $wpdb->get_results( 'SELECT * FROM wp_term_taxonomy where taxonomy = \'category\'', ARRAY_A );
+
+    $c = [];
+    foreach ($categories as $category) {
+        $c[$category['description']] = $category['term_taxonomy_id'];
+    }
+
+    $max = (int)$m[0]['count'];
+    $batch = 1000;
+
+    $rounds = $max / $batch;
+    for ($i=0; $i<=$rounds; $i++) {
+        $start = $i * $batch;
+        $limit = sprintf(' limit %d, %d', $start, $batch);
+        $sql = 'SELECT v.*, (select r.title from relacia r where r.id = v.relacia_id) relaciaTitle FROM video v where v.duration > \'00:05:00\' and v.relacia_id is not null ' . $limit;
+        $results = $wpdb->get_results( $sql, ARRAY_A );
+        foreach ($results as $video) {
+            if (isset($video['relaciaTitle']) && $video['relaciaTitle']) {
+                $categoryId = (int)$c[$video['relaciaTitle']];
+                $postarr = [
+                    'post_title' => $video['title'],
+                    'post_category' => [$categoryId],
+                    'post_status' => 'publish',
+                    'post_date' => $video['date'],
+                    'post_content' => '<div id="flashHlsVideoPlayer"></div><script type="text/javascript">
+<!--
+loadStream(\'' . $video['url'] .'\', true);
+//--></script>'
+                ];
+                wp_insert_post( $postarr);
+            }
+        }
+    }
+}
+
+//add_action( 'after_setup_theme', 'insert_relacie' );
+//add_action( 'after_setup_theme', 'insert_videa' );
+
+
 /**
  * materialwp functions and definitions
  *
